@@ -1,0 +1,14 @@
+Package: FloodingAnalysis
+Title: STAT 4620/5620 Flooding Project
+Version: 0.0.0.9000
+Authors@R: 
+    person("Kyle", "Allie", email = "kyledrallie@gmail.com", role = c("aut", "cre")),
+    person("Fatma", "Sharhan", email = "johndoe@example.com", role = "aut"),
+    person("Margo", "Paris", email = "johndoe@example.com", role = "aut"),
+    person("Thu", "Thi Minh Nguyen", email = "johndoe@example.com", role = "aut")
+Description: This package will contain all the data/visuals/analysis for our project.
+License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
+    license
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
