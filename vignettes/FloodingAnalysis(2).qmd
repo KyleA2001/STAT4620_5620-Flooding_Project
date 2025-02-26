@@ -1,0 +1,98 @@
+---
+title: "Flooding Analysis"
+author: "Kyle Allie, Thu Nguyen, Margo Paris, Fatma Sarhan"
+date: "`r Sys.Date()`"
+output: 
+  pdf_document:
+    latex_engine: xelatex  
+link-citations: true
+knitr:
+  opts_chunk:
+    collapse: true
+    comment: '#>'
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+# Front Matter
+
+-   **Course:** Data Analysis STAT 4620/5620 Winter 24-25
+-   **GitHub Repository:**
+    https://github.com/KyleA2001/STAT4620_5620-Flooding_Project.git
+
+# Abstract
+
+Summary in 150 words (Best done last, summarizes the whole project)
+
+# Keywords
+
+Listing out 10 key words max
+
+# Introduction
+
+Over the past few years, Nova Scotia has faced various floods as a
+result of thunderstorms, heavy rain, and extreme weather conditions.
+These events severely impacted communities, leading to evacuations,
+property damage, infrastructure loss, and loss of life. Certain areas in
+Nova Scotia, particularly its coastal regions, are especially vulnerable
+to these events. With the increasing frequency and severity of extreme
+weather due to climate change, the risk of flooding in Nova Scotia is
+expected to grow.
+
+Modeling these rare extreme events is challenging due to their rarity,
+yet their societal and economic impacts can be profound and severe. This
+research aims to understand the relationships between various climatic
+factors and water surge levels at selected locations across Nova Scotia.
+The analysis will be followed by predictions of the return periods and
+surge levels in the studied regions. Sophisticated and relevant
+statistical models will be employed to investigate this research.
+
+This research will address two key questions:
+
+1.  What is the relationship between various climatic factors and water
+    surge levels across Nova Scotia?
+
+2.  How can the most significant correlated factors be used to predict
+    future flooding catastrophes in Nova Scotia?
+
+Through these investigations, this study aims to contribute valuable
+predictions and insights that will aid in understanding and reducing
+future flooding risks in the province.
+
+# Data Description
+
+
+# Methods
+
+– Provide a brief description of the analytical tools you will used –
+Discuss why the method is appropriate in the context of the research
+question and the data, including any assumptions required by the method.
+
+# Analysis
+
+– Show the code used to actually apply the methods to the data. –
+Include model validation.
+
+# Results
+
+– Present and discuss the outputs of your methods. – Include any
+visualisations of the analysis.
+
+# Conclusions
+
+– Discuss the results of the previous section in the context of the
+research question. 
+– Give an answer to your research question and
+discuss any uncertainty in your results. 
+– If appropriate, discuss why
+the research question cannot be fully answered using the data and
+techniques available.
+
+# References
+
+– Cite data sources. – 
+
+Cite literature and other sources useful for
+explaining the background information, research question, and analytical
+tools.

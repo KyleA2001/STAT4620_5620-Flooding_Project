@@ -9,10 +9,47 @@ knitr:
     collapse: true
     comment: '#>'
 ---
+1. Front Matter
+– List each member of your group
+– Include “Data Analysis STAT 4620/5620 Winter 24-25”
+– Include a link to the project’s GitHub repository
 
-```{r}
-#| label: setup
-#library(FloodingAnalysis)
-```
+2. Abstract (150 words)
+
+3. Keywords (max 10)
+
+4. Introduction
+– State the research question and provide any necessary background information
+
+5. Data Description
+– Describe the data being careful to define each variable, including measurement
+units if applicable.
+– Provide any exploratory visualisations relevant to the research question
+
+6. Methods
+– Provide a brief description of the analytical tools you will used
+– Discuss why the method is appropriate in the context of the research question
+and the data, including any assumptions required by the method.
+
+7. Analysis
+– Show the code used to actually apply the methods to the data.
+– Include model validation.
+
+8. Results
+– Present and discuss the outputs of your methods.
+– Include any visualisations of the analysis.
+
+9. Conclusions
+– Discuss the results of the previous section in the context of the research ques-
+tion.
+– Give an answer to your research question and discuss any uncertainty in your
+results.
+– If appropriate, discuss why the research question cannot be fully answered using
+the data and techniques available.
+
+10. References
+– Cite data sources.
+– Cite literature and other sources useful for explaining the background informa-
+tion, research question, and analytical tools.
 
 
