@@ -1,55 +1,90 @@
 ---
 title: "Flooding Analysis"
-vignette: >
-  %\VignetteIndexEntry{FloodingAnalysis}
-  %\VignetteEngine{quarto::html}
-  %\VignetteEncoding{UTF-8}
-knitr:
-  opts_chunk:
-    collapse: true
-    comment: '#>'
+subtitle: "Data Analysis STAT 4620/5620 Winter 24-25"
+author: "Kyle Allie, Thu Nguyen, Margo Paris, Fatma Sarhan"
+date: today
+date-format: "YYYY-MM-DD"
+format: 
+  pdf:
+    toc: false  
+    latex_engine: xelatex 
+editor: source
+header-includes:
+  - \usepackage{hyperref}
+  - \usepackage{graphicx}   
 ---
-1. Front Matter
-– List each member of your group
-– Include “Data Analysis STAT 4620/5620 Winter 24-25”
-– Include a link to the project’s GitHub repository
+\begin{center}
+    \href{https://github.com/KyleA2001/STAT4620\_5620-Flooding\_Project.git}{ https://github.com/KyleA2001/STAT4620\_5620-Flooding\_Project.git}
+\end{center}
 
-2. Abstract (150 words)
+\newpage
 
-3. Keywords (max 10)
+# Abstract
 
-4. Introduction
-– State the research question and provide any necessary background information
+Summary in 150 words (Best done last, summarizes the whole project)
 
-5. Data Description
-– Describe the data being careful to define each variable, including measurement
-units if applicable.
-– Provide any exploratory visualisations relevant to the research question
+# Keywords
 
-6. Methods
-– Provide a brief description of the analytical tools you will used
-– Discuss why the method is appropriate in the context of the research question
-and the data, including any assumptions required by the method.
+Listing out 10 key words max
 
-7. Analysis
-– Show the code used to actually apply the methods to the data.
-– Include model validation.
+# Introduction
 
-8. Results
-– Present and discuss the outputs of your methods.
-– Include any visualisations of the analysis.
+Over the past few years, Nova Scotia has faced various floods as a result of thunderstorms, heavy rain, and extreme weather conditions. These events severely impacted communities, leading to evacuations, property damage, infrastructure loss, and loss of life. Certain areas in Nova Scotia, particularly its coastal regions, are especially vulnerable to these events. With the increasing frequency and severity of extreme weather due to climate change, the risk of flooding in Nova Scotia is expected to grow.
 
-9. Conclusions
-– Discuss the results of the previous section in the context of the research ques-
-tion.
-– Give an answer to your research question and discuss any uncertainty in your
-results.
-– If appropriate, discuss why the research question cannot be fully answered using
-the data and techniques available.
+Modeling these rare extreme events is challenging due to their rarity, yet their societal and economic impacts can be profound and severe. This research aims to understand the relationships between various climatic factors and water surge levels at selected locations across Nova Scotia. The analysis will be followed by predictions of the return periods and surge levels in the studied regions. Sophisticated and relevant statistical models will be employed to investigate this research.
 
-10. References
-– Cite data sources.
-– Cite literature and other sources useful for explaining the background informa-
-tion, research question, and analytical tools.
+This research will address two key questions:
 
+1.  What is the relationship between various climatic factors and water surge levels across Nova Scotia?
 
+2.  How can the most significant correlated factors be used to predict future flooding catastrophes in Nova Scotia?
+
+Through these investigations, this study aims to contribute valuable predictions and insights that will aid in understanding and reducing future flooding risks in the province.
+
+# Data Description
+
+In this section, we describe the data used for the analysis. Below is the summary table for the data:
+
+```{=latex}
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{ % Resizes the table to fit the width of the page
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Variables} & \textbf{Units} & \textbf{Description} & \textbf{Frequency} \\
+\hline
+Date & days & Date when data was recorded & Daily \\
+Location & & Halifax and Yarmouth &  \\
+Water Level & m (meters) & Height above datum or reference system & Hourly \\
+Water Surge & m (meters) & Water rise due to water level and tide height & Hourly \\
+Air Temperature & °C & Air temperature & Daily min/max, Hourly avg \\
+Wind Speed & km/h & Wind speed & Daily min/max, Hourly avg \\
+Rainfall & mm & Precipitation (not including snow) & Real daily value \\
+\hline
+\end{tabular}
+}
+\caption{Data description summary}
+\end{table}
+```
+
+# Methods
+
+– Provide a brief description of the analytical tools you will used – Discuss why the method is appropriate in the context of the research question and the data, including any assumptions required by the method.
+
+# Analysis
+
+– Show the code used to actually apply the methods to the data. – Include model validation.
+
+# Results
+
+– Present and discuss the outputs of your methods. – Include any visualisations of the analysis.
+
+# Conclusions
+
+– Discuss the results of the previous section in the context of the research question. – Give an answer to your research question and discuss any uncertainty in your results. – If appropriate, discuss why the research question cannot be fully answered using the data and techniques available.
+
+# References
+
+– Cite data sources. –
+
+Cite literature and other sources useful for explaining the background information, research question, and analytical tools.
