@@ -16,3 +16,6 @@ Suggests:
     knitr,
     quarto
 VignetteBuilder: quarto
+Depends: 
+    R (>= 3.5)
+LazyData: true
