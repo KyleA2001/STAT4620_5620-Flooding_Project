@@ -30,7 +30,8 @@ Listing out 10 key words max
 
 # Introduction
 
-Over the past few years, Nova Scotia has faced various floods as a result of thunderstorms, heavy rain, and extreme weather conditions. These events severely impacted communities, leading to evacuations, property damage, infrastructure loss, and loss of life. Certain areas in Nova Scotia, particularly its coastal regions, are especially vulnerable to these events. With the increasing frequency and severity of extreme weather due to climate change, the risk of flooding in Nova Scotia is expected to grow.
+
+Over the past decade, Nova Scotia has experienced an increasing number of flooding events resulting from thunderstorms, heavy rain, and extreme weather conditions. These events severely impacted communities, leading to evacuations, property damage, infrastructure loss, and loss of life. The province's geographic location along the Atlantic Ocean, and its coastal regions makes Nova Scotia vulnerable to these events. As the frequency and severity of extreme weather conditions continue to rise due to climate change, there has been an increase interest to study how various climatic factors are related to these flooding events. 
 
 Modeling these rare extreme events is challenging due to their rarity, yet their societal and economic impacts can be profound and severe. This research aims to understand the relationships between various climatic factors and storm surge levels at selected locations across Nova Scotia. The analysis will be followed by predictions of the return periods and surge levels in the studied regions. Sophisticated and relevant statistical models will be employed to investigate this research.
 
@@ -68,11 +69,20 @@ Rainfall & mm & Precipitation (not including snow) & Real daily value \\
 \end{table}
 ```
 
+(Waiting for Ethan for a response about including Variable selection. Unsure what section would be best to include it in)
+
+
+The following covarites that will be used in the model are water level, air temperature, and wind speed. They will fit into a model to determine if any of them can predictor the response variable, storm surge. 
+
+Multiple covarites were consider for what could possibly have an effect on Storm Surge, but including every variable would lead to overfitting the model, and lead to inaccurate predictions. For a much simpler model, three main factors were choose to believe to have an effect of storm surge.
+
+Storm Surge is a value that cannot be directly recorded, it has to be calculated instead.
 
 
 # Methods
 
-– Provide a brief description of the analytical tools you will used – Discuss why the method is appropriate in the context of the research question and the data, including any assumptions required by the method.
+– Provide a brief description of the analytical tools you will used 
+– Discuss why the method is appropriate in the context of the research question and the data, including any assumptions required by the method.
 
 During the initial start of the project, a various amount of methods were brought up. It was decided that the two main methods to answer question 1 of the research would be GLMs and Time Series. GLMs were considered because it would help provided a baseline to figure out what factors affect tidal storm surge. Unfortunately, there were some limitations and violated assumptions that prevented the use of this model.
 
@@ -84,8 +94,11 @@ The dependence on time lead to the use of GAMMs (Generalized Additive Mixed Mode
 
 GAMMs assume that the random effects are independent. Since the data collected is from two different locations, the random effect from each location should be independent from each other. Another assumption is that Storm Surge should be able to follow a certain distribution. For the research the assumption is that the model follows a Normal Distribution. One of the important assumptions is temporal correlation, where observations in the past influence future values. The random effect to the model accounts for this.
 
-(Stuck on the conclusion with this. Unsure based on the given GAMM code, and what it is leading to).
+(Insert code for acf)
 
+ACF (Autocorrelation Function) is a method that will show how much a a variable at one time is related to its value at previous times. Since the research is studying storm surge, ACF will show if today's storm surge value was influenced from its values yesterday, before than, etc... ACF helps identity any patterns in the time series data, like seasonality or trends. If the current and past value show to be highly correlated, then the data is not random and there is some predictability in the structure. 
+
+Using ACF on the GAMM model, their is high correlation between the data points, suggesting that the data collected for each time are dependent. This violates the assumption of GAMMs, and therefore makes it unusable for the model. 
 
 The other model that will be used for this analysis is Time Series. Time Series models the sequence of data points in an equally spaced time interval. The method is used to analyze trends, patterns, and behaviours over time. The importance of this model is to analyze historical data to help understand any underlying patterns, predict future values, and see how (or if any for out research) certain factors influence storm surge over time. 
 
@@ -93,10 +106,7 @@ The goal of the research is to see what climatic factors affect storm surge over
 
 Time Series models assume that the data is stationary and no autocorrelation in the residuals. (Unsure what else to add)
 
-ACF (Autocorrelation Function) is a method that will show how much a a variable at one time is related to its value at previous times. Since the research is studying storm surge, ACF will show if today's storm surge value was influenced from its values yesterday, before than, etc... ACF helps identity any patterns in the time series data, like seasonality or trends. If the current and past value show to be highly correlated, then the data is not random and there is some predictability in the structure. 
-
 Since the research analyzes storm sure data, ACF will help look at temporal dependencies. This will help identify how much past climatic factors influences storm surges behaviour. 
-
 
 CCF(Cross-Correlation Function) is the same as ACF, but instead examines the relationship between two different time series, with more flexibility to look at different points in time. When using CCF for the model, it is testing how strongly the response variable (Storm Surge) is related to another variable (predictor variables like rain, wind speed, and temperature) over different lags. For the research, CCF can help to see if rain, wind speed, and/or temperature have an immediate or delayed effect on storm surge. 
 
@@ -105,13 +115,20 @@ VAR(Vector Auto regression) (not 100% about this model)
 Granger Causality (Not 100% sure)
 
 
+Question 2's method is missing....
+
+
 # Analysis
 
 – Show the code used to actually apply the methods to the data. – Include model validation.
 
+Bring over code 
+
 # Results
 
 – Present and discuss the outputs of your methods. – Include any visualisations of the analysis.
+
+Bring over code 
 
 # Conclusions
 
