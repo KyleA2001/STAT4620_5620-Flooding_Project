@@ -30,11 +30,10 @@ Listing out 10 key words max
 
 # Introduction
 
+
 Over the past decade, Nova Scotia has experienced an increasing number of flooding events resulting from thunderstorms, heavy rain, and extreme weather conditions. These events severely impacted communities, leading to evacuations, property damage, infrastructure loss, and loss of life. The province's geographic location along the Atlantic Ocean, and its coastal regions makes Nova Scotia vulnerable to these events. As the frequency and severity of extreme weather conditions continue to rise due to climate change, there has been an increase interest to study how various climatic factors are related to these flooding events. 
 
-One of the 
-
-
+Modeling these rare extreme events is challenging due to their rarity, yet their societal and economic impacts can be profound and severe. This research aims to understand the relationships between various climatic factors and storm surge levels at selected locations across Nova Scotia. The analysis will be followed by predictions of the return periods and surge levels in the studied regions. Sophisticated and relevant statistical models will be employed to investigate this research.
 
 This research will address two key questions:
 
