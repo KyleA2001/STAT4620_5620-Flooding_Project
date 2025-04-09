@@ -3,7 +3,7 @@
 #Calculating the maximum storm surges for Halifax:
 
 rm(list=ls())
-full.data = read.csv("~/Documents/Dalhousie/Data Analysis/Project/EVA/linear_interpolation_df.csv") #This part need to be switched to the full dataset created by Thu
+full.data = read.csv("Data/linear_interpolation_df.csv") #This part need to be switched to the full dataset created by Thu
 
 names(full.data)
 # Extract two columns by name
@@ -123,7 +123,7 @@ data.frame(Return_Period = T_values, Return_Level = return_levels)
 #Same things with an other data set
 #Calculating the maximum storm surges for Halifax:
 rm(list=ls())
-full.data = read.csv("~/Documents/Dalhousie/Data Analysis/Project/EVA/combination_df_v1.csv") #This part need to be switched to the full dataset created by Thu
+full.data = read.csv("Data/combination_df.csv") #This part need to be switched to the full dataset created by Thu
 
 names(full.data)
 # Extract two columns by name
