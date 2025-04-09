@@ -162,6 +162,22 @@ Bring over code
 
 – Discuss the results of the previous section in the context of the research question. – Give an answer to your research question and discuss any uncertainty in your results. – If appropriate, discuss why the research question cannot be fully answered using the data and techniques available.
 
+
+Missingness
+The presence of missing values in our variable of interest could pose a challenge in this project. Many of the time series methods used in this report typically do not support missing data. However, our dataset contains some time gaps. 
+For the first question, we only included covariate data when the response variable was available, which led to the removal of some information from our dataset. Missingness can be problematic as it results in the loss of valuable data. To address this, we used a time interval without gaps, which is shorter than the initial interval but still assumed to be sufficiently long to provide a realistic representation of the dataset.
+Then for the second question, we considered methods for predicting missing values to mitigate this issue.
+
+Covariates
+For the second question, we aimed to predict storm surges, initially using only water surge data and then incorporating additional correlated covariates. We expected different results, potentially leading to more accurate predictions. However, adding covariates did not significantly improve the predictions, suggesting that storm surge is primarily influenced by storm surge itself. This raises several discussion points regarding the model:
+-	A flawed implementation can yield unsatisfactory results. Even if we apply the formula as suggested in R, the literature indicates that incorporating covariates requires a more complex approach than initially assumed.
+-	We selected only highly correlated covariates for the model. However, adding a strongly correlated variable may not provide additional useful information. The literature suggests that experimenting with less correlated variables could lead to more meaningful improvements.
+As an alternative, predicting water surge levels could be approached using a simpler model. Instead of employing Extreme Value Analysis (EVA) for long-term predictions with covariates (a complex procedure), we propose using Long Short-Term Memory (LSTM) methods to make short-term predictions, leveraging the results obtained in the first question.
+
+Non stationarity
+A critical aspect of the model that needs to be highlighted is its non-stationarity in the context of EVA. Our response variable, storm surge, is influenced by sea level, which has been shown to be increasing over time (as documented in the literature). Consequently, storm surge is also expected to rise over time. Despite this, we assumed that non-stationarity does not affect our results, even though this assumption might not hold. Further investigation may be required to assess the impact of this assumption on our findings.
+
+
 # References
 
 – Cite data sources. –
