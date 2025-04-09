@@ -3,7 +3,7 @@
 # Calculating the maximum storm surges for Yarmouth:
 # Using full data
 rm(list=ls())
-full.data = read.csv("~/Documents/Dalhousie/Data Analysis/Project/EVA/linear_interpolation_df.csv") #This part need to be switched to the full dataset created by Thu
+full.data = read.csv("Data/linear_interpolation_df.csv") #This part need to be switched to the full dataset created by Thu
 
 # Extract two columns by name
 full.max.data = full.data[, c("date", "location","avg_wind_speed")]
@@ -81,7 +81,7 @@ lines(T_values,upper.bounds, type = "o", pch = 19, col = "red",lty = 2)
 
 ##Calculating the maximum storm surges for yarmouth:
 rm(list=ls())
-full.data = read.csv("~/Documents/Dalhousie/Data Analysis/Project/EVA/combination_df_v1.csv") #This part need to be switched to the
+full.data = read.csv("Data/combination_df.csv") #This part need to be switched to the
 
 # Extract two columns by name
 full.max.data = full.data[, c("date", "location","avg_wind_speed")]
