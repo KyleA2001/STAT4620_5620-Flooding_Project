@@ -1,5 +1,5 @@
 ---
-title: "Flooding Analysis"
+title: "Climate Conditions and Flooding Disasters in Nova Scotia"
 subtitle: "Data Analysis STAT 4620/5620 Winter 24-25"
 author: "Kyle Allie, Thu Nguyen, Margo Paris, Fatma Sarhan"
 date: today
@@ -11,7 +11,8 @@ format:
 editor: source
 header-includes:
   - \usepackage{hyperref}
-  - \usepackage{graphicx}   
+  - \usepackage{graphicx}  
+bibliography: ../References/citations.bib 
 ---
 \begin{center}
   \vspace{-5mm}
@@ -24,16 +25,21 @@ header-includes:
 
 Summary in 150 words (Best done last, summarizes the whole project)
 
-# Keywords
+# Keywords (max 10)
 
-Listing out 10 key words max
+- Storm Surge
+- Generalized Additive Mixed Models (GAMM)
+- Time Series
+- Autocorrelation Function (ACF)
+- Cross-Correlation Function (CCF)
 
 # Introduction
 
+Over the past decade, Nova Scotia has experienced an increasing number of flooding events resulting from thunderstorms, heavy rain, and extreme weather conditions. These events have significantly impacted communities, resulting in evacuations, property damage, infrastructure loss, and loss of life. The province's geographic location along the Atlantic Ocean and its coastal regions make Nova Scotia vulnerable to these events. As the frequency and severity of extreme weather conditions continue to rise due to climate change, there has been an growing interest to study how various climatic factors are related to these flooding events. 
 
-Over the past decade, Nova Scotia has experienced an increasing number of flooding events resulting from thunderstorms, heavy rain, and extreme weather conditions. These events severely impacted communities, leading to evacuations, property damage, infrastructure loss, and loss of life. The province's geographic location along the Atlantic Ocean, and its coastal regions makes Nova Scotia vulnerable to these events. As the frequency and severity of extreme weather conditions continue to rise due to climate change, there has been an increase interest to study how various climatic factors are related to these flooding events. 
+One of the most significant components involved with flooding is storm surge, the sudden rise in water level which is created by both the water level and the tide height. Storm Surge can be derived using the difference from the observed water level and the fitted tide values. In this study, the observed water level data were obtained from the Government of Canada Data Archives, while the fitted tide values were calculated using the R package "ftide." Using both these values, the storm surge response variable was derived, which is used to explore which climatic factors are most closely associated with storm surge.
 
-Modeling these rare extreme events is challenging due to their rarity, yet their societal and economic impacts can be profound and severe. This research aims to understand the relationships between various climatic factors and storm surge levels at selected locations across Nova Scotia. The analysis will be followed by predictions of the return periods and surge levels in the studied regions. Sophisticated and relevant statistical models will be employed to investigate this research.
+Modeling these extreme weather events can be challenging due to their rarity and the complex way multiple climatic factors may interact.  Although flooding events are relatively infrequent, their impact can cause Significant societal and economic damage, highlighting the need for improved forecasting tools.  This research seeks to understand the relationship between various climatic factors and storm surge levels at selected locations across Nova Scotia. A secondary objective is to use these findings to forecast the likelihood of future flooding events based on the most significant contributing climatic factors.
 
 This research will address two key questions:
 
@@ -41,11 +47,11 @@ This research will address two key questions:
 
 2.  How can the most significant correlated factors be used to predict future flooding catastrophes in Nova Scotia?
 
-Through these investigations, this study aims to contribute valuable predictions and insights that will aid in understanding and reducing future flooding risks in the province.
+Through these investigations, this study aims to contribute valuable predictions and  insights that will aid in understanding, and reducing future flooding risks in the province.
 
 # Data Description
 
-In this section, we describe the data used for the analysis. Below is the summary table for the data:
+In this section, we describe the data used for the analysis. Below is the summary table for the data obtained from the Government of Canada:
 
 ```{=latex}
 \begin{table}[h]
@@ -69,15 +75,37 @@ Rainfall & mm & Precipitation (not including snow) & Real daily value \\
 \end{table}
 ```
 
-(Waiting for Ethan for a response about including Variable selection. Unsure what section would be best to include it in)
+The following covariates will be used in the model: air temperature, rain, and wind speed. These variables were selected because of their potential to influence storm surge levels, with each factor known to play a role in flood behavior. The goal is to fit these covariates into a model to determine whether any of them can significantly predict the response variable, storm surge. 
+
+Various covariates were considered for inclusion in the model, given the potential influence of multiple climatic factors on storm surge. However, including too many variables could result in overfitting, where the model captures noise rather than meaningful patterns, leading to inaccurate predictions. To avoid this, a simpler approach was taken by narrowing down the key variables that have the strongest observed relationships with storm surge.
+
+One way flooding can occur is through heavy rainfall, which is one of the most significant factors in causing floods. If the amount of water from rain rises faster than it can return to the ocean or be absorbed by the soil, this leads to flooding. Given its significant impact on flood events, rainfall was chosen as a key variable in this study.
+
+Rainfall itself is influenced by many factors, but one primary factor is air temperature. As temperatures rise, the atmosphere's ability to hold moisture increases, leading to greater rainfall amounts. Air temperature is one of the leading meteorological factors that interacts with heavy storms[@AirTemperature]. Therefore, it is important that air temperature is considered when examining storm surge.
+
+Finally, wind speed was considered an important variable based because wind can increase flood magnitudes, durations, and spatial extents[@Windspeed]. This highlights the significant role that wind plays in the intensity and reach of flooding events, especially along coastal regions. Given that Nova Scotia is a coastal province, the impact of wind on flood events is particularly relevant. Thus, wind speed was included in this study as a critical climatic factor to understand its contribution to storm surge and flooding, especially in combination with other factors like rainfall and air temperature. 
+
+Overall, these three covarites were decided to use in the study with storm surge due to their importance, and creating a simpler model. 
 
 
-The following covarites that will be used in the model are water level, air temperature, and wind speed. They will fit into a model to determine if any of them can predictor the response variable, storm surge. 
+Storm surge is a critical value in flood and storm impact analysis, but it cannot be directly observed. Instead, it must be calculated using the following formula:
 
-Multiple covarites were consider for what could possibly have an effect on Storm Surge, but including every variable would lead to overfitting the model, and lead to inaccurate predictions. For a much simpler model, three main factors were choose to believe to have an effect of storm surge.
+$$
+\text{Storm Surge} = \text{Observed Water Level} - \text{Fitted Tide}
+$$
+The observed water level is obtained from archived data provided by the Government of Canada. This data was measured at two separate locations: Halifax and Yarmouth.
 
-Storm Surge is a value that cannot be directly recorded, it has to be calculated instead.
+The fitted tide uses the function ftide, where it fits the tidal data using any set of harmonic constiuents. This function takes in three main components:
 
+- x: A numeric vector object giving the water levels; it allows for missing values.
+
+- dto: A date vector of same length as ’x’ which should be a POSIXct object; it does
+not allow for missing values.
+
+- hcn: A vector of constituent names. Here, we specify only the 4 major harmonic
+constituents, hc4.
+
+By applying this function to the observed water levels, the predicted storm surge values can be calculated. This function allows for the accurate estimation of storm surge at the specified locations based on tide and observations water levels.
 
 # Methods
 
@@ -90,14 +118,13 @@ Generalized Linear Models (GLMs) are a traditional linear regression that handle
 
 An assumption that GLMs have is that all observations are independent. However, the data collected violates this assumption because the observations are dependent on time, meaning that values recorded at one time point are likely influenced by previous observations. This temporal dependency introduces autocorrelation, where data points closer in time are more similar, making GLMs less suitable for capturing these patterns. As a result, applying a method that accounts for time dependence was necessary to better model the data.
 
-The dependence on time lead to the use of GAMMs (Generalized Additive Mixed Models). "Generalized Additive Models (GAMs) are a versatile statistical modeling technique used to analyze complex relationships within data. Unlike linear models, GAMs can capture non-linear patterns by combining multiple smooth functions of predictor variables." (Basheer, 2024). The model does not account for time dependence or correlated observations. This is where the model choice extends to GAMMs that accounts for both. 
+The dependence on time lead to the use of GAMMs (Generalized Additive Mixed Models). Generalized Additive Models (GAMs) are a versatile statistical modeling technique used to analyze complex relationships within data. Unlike linear models, GAMs can capture non-linear patterns by combining multiple smooth functions of predictor variables[@GAMM]. The model does not account for time dependence or correlated observations. This is where the model choice extends to GAMMs that accounts for both. 
 
 GAMMs assume that the random effects are independent. Since the data collected is from two different locations, the random effect from each location should be independent from each other. Another assumption is that Storm Surge should be able to follow a certain distribution. For the research the assumption is that the model follows a Normal Distribution. One of the important assumptions is temporal correlation, where observations in the past influence future values. The random effect to the model accounts for this.
 
 (Insert code for acf)
 
 ACF (Autocorrelation Function) is a method that will show how much a a variable at one time is related to its value at previous times. Since the research is studying storm surge, ACF will show if today's storm surge value was influenced from its values yesterday, before than, etc... ACF helps identity any patterns in the time series data, like seasonality or trends. If the current and past value show to be highly correlated, then the data is not random and there is some predictability in the structure. 
-
 Using ACF on the GAMM model, their is high correlation between the data points, suggesting that the data collected for each time are dependent. This violates the assumption of GAMMs, and therefore makes it unusable for the model. 
 
 The other model that will be used for this analysis is Time Series. Time Series models the sequence of data points in an equally spaced time interval. The method is used to analyze trends, patterns, and behaviours over time. The importance of this model is to analyze historical data to help understand any underlying patterns, predict future values, and see how (or if any for out research) certain factors influence storm surge over time. 
@@ -126,7 +153,8 @@ Bring over code
 
 # Results
 
-– Present and discuss the outputs of your methods. – Include any visualisations of the analysis.
+– Present and discuss the outputs of your methods. 
+– Include any visualizations of the analysis.
 
 Bring over code 
 
@@ -134,11 +162,25 @@ Bring over code
 
 – Discuss the results of the previous section in the context of the research question. – Give an answer to your research question and discuss any uncertainty in your results. – If appropriate, discuss why the research question cannot be fully answered using the data and techniques available.
 
+
+Missingness
+The presence of missing values in our variable of interest could pose a challenge in this project. Many of the time series methods used in this report typically do not support missing data. However, our dataset contains some time gaps. 
+For the first question, we only included covariate data when the response variable was available, which led to the removal of some information from our dataset. Missingness can be problematic as it results in the loss of valuable data. To address this, we used a time interval without gaps, which is shorter than the initial interval but still assumed to be sufficiently long to provide a realistic representation of the dataset.
+Then for the second question, we considered methods for predicting missing values to mitigate this issue.
+
+Covariates
+For the second question, we aimed to predict storm surges, initially using only water surge data and then incorporating additional correlated covariates. We expected different results, potentially leading to more accurate predictions. However, adding covariates did not significantly improve the predictions, suggesting that storm surge is primarily influenced by storm surge itself. This raises several discussion points regarding the model:
+-	A flawed implementation can yield unsatisfactory results. Even if we apply the formula as suggested in R, the literature indicates that incorporating covariates requires a more complex approach than initially assumed.
+-	We selected only highly correlated covariates for the model. However, adding a strongly correlated variable may not provide additional useful information. The literature suggests that experimenting with less correlated variables could lead to more meaningful improvements.
+As an alternative, predicting water surge levels could be approached using a simpler model. Instead of employing Extreme Value Analysis (EVA) for long-term predictions with covariates (a complex procedure), we propose using Long Short-Term Memory (LSTM) methods to make short-term predictions, leveraging the results obtained in the first question.
+
+Non stationarity
+A critical aspect of the model that needs to be highlighted is its non-stationarity in the context of EVA. Our response variable, storm surge, is influenced by sea level, which has been shown to be increasing over time (as documented in the literature). Consequently, storm surge is also expected to rise over time. Despite this, we assumed that non-stationarity does not affect our results, even though this assumption might not hold. Further investigation may be required to assess the impact of this assumption on our findings.
+
+
 # References
 
 – Cite data sources. –
 
 Cite literature and other sources useful for explaining the background information, research question, and analytical tools.
-
-https://www.analyticsvidhya.com/blog/2023/09/understanding-generalized-additive-models-gams-a-comprehensive-guide/#h-definition-of-gams, Cite later
 
