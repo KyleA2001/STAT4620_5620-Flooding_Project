@@ -112,9 +112,11 @@ By applying this function to the observed water levels, the predicted storm surg
 – Provide a brief description of the analytical tools you will used 
 – Discuss why the method is appropriate in the context of the research question and the data, including any assumptions required by the method.
 
+## Question 1
+
 During the initial start of the project, a various amount of methods were brought up. It was decided that the two main methods to answer question 1 of the research would be GLMs and Time Series. GLMs were considered because it would help provided a baseline to figure out what factors affect tidal storm surge. Unfortunately, there were some limitations and violated assumptions that prevented the use of this model.
 
-Generalized Linear Models (GLMs) are a traditional linear regression that handles a wider range of data types (Continuous, count, etc...). What this model does not account for is the limitations of time-dependent data. The data collected in this research depends on the time it was collected, to find a relationship with storm surge and use for future prediction. Without the use of time data in the model, their will not be any acurate predictions.
+Generalized Linear Models (GLMs) are a traditional linear regression that handles a wider range of data types (Continuous, count, etc...). What this model does not account for is the limitations of time-dependent data. The data collected in this research depends on the time it was collected, to find a relationship with storm surge and use for future prediction. Without the use of time data in the model, their will not be any accurate predictions.
 
 An assumption that GLMs have is that all observations are independent. However, the data collected violates this assumption because the observations are dependent on time, meaning that values recorded at one time point are likely influenced by previous observations. This temporal dependency introduces autocorrelation, where data points closer in time are more similar, making GLMs less suitable for capturing these patterns. As a result, applying a method that accounts for time dependence was necessary to better model the data.
 
@@ -122,12 +124,40 @@ The dependence on time lead to the use of GAMMs (Generalized Additive Mixed Mode
 
 GAMMs assume that the random effects are independent. Since the data collected is from two different locations, the random effect from each location should be independent from each other. Another assumption is that Storm Surge should be able to follow a certain distribution. For the research the assumption is that the model follows a Normal Distribution. One of the important assumptions is temporal correlation, where observations in the past influence future values. The random effect to the model accounts for this.
 
-(Insert code for acf)
+ACF (Autocorrelation Function) is a method that will show how much a a variable at one time is related to its value at previous times. Since the research is studying storm surge, ACF will show if today's storm surge value was influenced from its values yesterday, before than, etc... ACF helps identity any patterns in the time series data, like seasonality or trends. If the current and past value show to be highly correlated, then the data is not random and there is some predictability in the structure.
 
-ACF (Autocorrelation Function) is a method that will show how much a a variable at one time is related to its value at previous times. Since the research is studying storm surge, ACF will show if today's storm surge value was influenced from its values yesterday, before than, etc... ACF helps identity any patterns in the time series data, like seasonality or trends. If the current and past value show to be highly correlated, then the data is not random and there is some predictability in the structure. 
-Using ACF on the GAMM model, their is high correlation between the data points, suggesting that the data collected for each time are dependent. This violates the assumption of GAMMs, and therefore makes it unusable for the model. 
 
-The other model that will be used for this analysis is Time Series. Time Series models the sequence of data points in an equally spaced time interval. The method is used to analyze trends, patterns, and behaviours over time. The importance of this model is to analyze historical data to help understand any underlying patterns, predict future values, and see how (or if any for out research) certain factors influence storm surge over time. 
+```{r}
+library(readr)
+library(mgcv)
+library(here)
+
+interpolation_df <- (read_csv(here("Data", "linear_interpolation_df.csv"), 
+      show_col_types = FALSE))
+
+# Convert date to numeric format 
+interpolation_df$date_num <- as.numeric(
+  as.Date(interpolation_df$date))
+
+# Fit the GAMM model
+halifax_gamm <- gamm(avg_water_surge ~ 
+                       s(avg_temperature) + 
+                       s(avg_wind_speed) + 
+                       s(rain) + 
+                       s(date_num, bs = "cs") + 
+                       ti(rain, avg_wind_speed),
+                       data = interpolation_df)
+
+# Plot the ACF of residuals
+acf(residuals(halifax_gamm$lme))
+
+```
+
+Using ACF on the GAMM model, there is high correlation between the data points, suggesting that the data collected for each time are dependent. This violates the assumption of GAMMs, and therefore makes it unusable for the model. 
+
+
+
+The other method that will be used for this analysis is Time Series. Time Series models the sequence of data points in an equally spaced time interval. The method is used to analyze trends, patterns, and behaviours over time. The importance of this model is to analyze historical data to help understand any underlying patterns, predict future values, and see how (or if any for out research) certain factors influence storm surge over time. 
 
 The goal of the research is to see what climatic factors affect storm surge over time. Time series modeling will help examine if these variables have a time-based relationship with storm surge. GAMMs was helpful for modeling non-linear, time-dependent relationships between the predictors and the response variable. However, it might not accurately represent the complex nature of time series data.
 
