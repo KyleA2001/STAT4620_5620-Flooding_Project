@@ -147,12 +147,9 @@ halifax_gamm <- gamm(avg_water_surge ~
 
 # Plot the ACF of residuals
 acf(residuals(halifax_gamm$lme))
-
 ```
 
 Using ACF on the GAMM model, there is high correlation between the data points, suggesting that the data collected for each time are dependent. This violates the assumption of GAMMs, and therefore makes it unusable for the model. 
-
-
 
 The other method that will be used for this analysis is Time Series. Time Series models the sequence of data points in an equally spaced time interval. The method is used to analyze trends, patterns, and behaviours over time. The importance of this model is to analyze historical data to help understand any underlying patterns, predict future values, and see how (or if any for out research) certain factors influence storm surge over time. 
 
@@ -169,8 +166,14 @@ VAR(Vector Auto regression) (not 100% about this model)
 Granger Causality (Not 100% sure)
 
 
-Question 2's method is missing....
+## Question 2
 
+\indent Since we are interested in flooding incidents in the coast of Nova Scotia, we want to identify and model the extreme storm surge levels that are associated with such events. Extreme value analysis (EVA) is a statistical method used to assess, model, and predict the behavior of extreme events or rare occurrences. It seeks to assess the probability of events that are more extreme than any previously observed. These extreme events are often characterized by their low probability of occurrence but high potential for severe consequences. One of the EVA methods utilized here is known as the Block Maxima (BM) approach. Simply, the BM analysis divides the observation period into non-overlapping periods of equal size $n$, known as blocks. Attention is restricted to the maximum observation in the block, known as the block maxima. In many contexts, it is common to see the block being set to a year, where our block maximas are annual maximas. These block maximas can be fitted to what is known as the Generalized Extreme Value (GEV) distribution.  Given we are working with two locations, Halifax and Yarmouth, we let $y_j$ be the vector holding the annual maximas for the $j^{th}$ location and is of length $N_j$, which is the number of years observed for location $j$. This $y_j$ vector contains the $y_{ji}$ values which represent the $i^{th}$ years annual maxima in the $j^{th}$ location. These annual maximas are assumed to follow the GEV distribution, and have the following information: 
+
+$${y_{ji}} \sim GEV(\mu_j,\sigma_j,\xi_j), \text{for } i =1,2,\cdots, N_j, \mbox{ and } j = 1,2.$$
+The density function for $y_{ji}$ is: 
+
+$$g(y\mid \mu_j,\sigma_j,\xi_j) = \frac{1}{\sigma_j} \left\{1 + \xi_j \left(\frac{y - \mu_j}{\sigma_j}\right)\right\}\exp \left\{- \left[1 + \xi_j \left(\frac{y- \mu_j}{\sigma_j}\right)\right]^{-\frac{1}{\xi_j}}\right\}.$$
 
 # Analysis
 
