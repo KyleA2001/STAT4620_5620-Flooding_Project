@@ -1,6 +1,7 @@
 # install.packages("vars")
 library(vars)
 library(tseries)
+library(forecast)
 
 linear_interpolation_df = read.csv("data/linear_interpolation_df.csv")
 
@@ -42,6 +43,50 @@ halifax_ordered_surge <- halifax_var_surge[order(halifax_var_surge[, "Pr(>|t|)"]
 
 # View the ordered coefficients and p-values
 halifax_ordered_surge
+
+# Model RMSE
+# Train RMSE = 0.08396238
+rmse_model = sqrt(mean(halifax_var_model$varresult$avg_water_surge$residuals^2))
+
+# --- Check overfitting ---
+# Time-series cross-validation using rolling windows
+tsCV_VAR <- function(data, start, h = 7, p = 2) {
+  n <- nrow(data)
+  e <- numeric(n - start - h + 1)
+
+  for (i in 1:(n - start - h + 1)) {
+    # Training data
+    train <- data[1:(start + i - 1), ]
+
+    # Test data (h rows starting at position start+i)
+    test <- data[(start + i):(start + i + h - 1), , drop = FALSE]
+
+    # Fit model
+    model <- VAR(train, p = p, type = "none")
+
+    # Generate h-step ahead forecasts
+    pred <- predict(model, n.ahead = h)
+
+    # Extract forecasted values for water surge (all h steps)
+    forecasts <- pred$fcst$avg_water_surge[1:h, "fcst"]
+
+    # Extract actual values
+    actuals <- test$avg_water_surge
+
+    # Calculate error for this forecast window (mean across all h steps)
+    e[i] <- mean(actuals - forecasts)
+  }
+
+  # Calculate RMSE
+  rmse <- sqrt(mean(e^2, na.rm = TRUE))
+
+  return(list(e = e, rmse = rmse))
+}
+
+# Example
+cv_res_1 = tsCV_VAR(halifax_var, start = 18000, h = 1, p = 7)
+# Test RMSE = 0.09233205
+cv_res$rmse
 
 # ---- Fit storm surge and wind speed ----
 halifax_var2 <- halifax_var[c("avg_water_surge", "avg_wind_speed")]
