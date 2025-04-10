@@ -23,14 +23,14 @@ summary(location_gamm$lme)
 # Smooth Term
 summary(location_gamm$gam)
 
-png("visualization/location_gamm_acf_res.png", width=1200, height=600)
+png("visualization/location_gamm_acf_res.png", width=1200, height=500)
 par(mfrow=c(1, 2))
 acf(residuals(location_gamm$lme), main="ACF of residuals of Random Effect part in GAMM")
 acf(residuals(location_gamm$gam), main="ACF of residuals of Smooth part in GAMM")
 dev.off()
 
 # Extract residuals of Smooth
-png("visualization/location_gamm_res_gam.png", width=1200, height=600)
+png("visualization/location_gamm_res_gam.png", width=1200, height=500)
 par(mfrow=c(1, 2))
 residuals_gamm_location_gam <- resid(location_gamm$gam)
 residuals_pearson_location_gam <- residuals(location_gamm$gam, type = "pearson")
