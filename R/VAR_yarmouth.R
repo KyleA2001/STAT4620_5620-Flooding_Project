@@ -17,11 +17,15 @@ adf_test
 # All time series are stationary
 
 # AIC(n) 20 HQ(n) 19 SC(n) 11 FPE(n) 20
+# The higher the lag the smaller AIC
 VARselect(yarmouth_var, lag.max = 20, type = "none")
 
 # Fit for all climatic factors
 yarmouth_var_model <- VAR(yarmouth_var, p = 7, type = "none")
-summary(yarmouth_var_model)
+
+# R square = 0.5598, AIC = -40582.28
+summary(yarmouth_var_model$varresult$avg_water_surge)
+AIC(yarmouth_var_model$varresult$avg_water_surge)
 
 # Residual ACF plot
 png("visualization/ym_VAR_acf_res.png", width=800, height=600)
@@ -38,72 +42,37 @@ yarmouth_ordered_surge <- yarmouth_var_surge[order(yarmouth_var_surge[, "Pr(>|t|
 # View the ordered coefficients and p-values
 yarmouth_ordered_surge
 
-# Fit only the past value of the storm surge
-# AIC = -93541.71
-yarmouth_var_lm2 = lm(yarmouth_var$avg_water_surge[2:nrow(yarmouth_var)] ~ yarmouth_var$avg_water_surge[1:(nrow(yarmouth_var)-1)])
-summary(yarmouth_var_lm2)
-step(yarmouth_var_lm2)
+# ---- Fit storm surge and wind speed ----
+yarmouth_var2 <- yarmouth_var[c("avg_water_surge", "avg_wind_speed")]
+yarmouth_var_model2 <- VAR(yarmouth_var2, p = 1, type = "none")
 
-par(mfrow=c(2, 2))
-plot(yarmouth_var_lm2)
+# R square = 0.5031, AIC = -38267.76
+summary(yarmouth_var_model2$varresult$avg_water_surge)
+AIC(yarmouth_var_model2$varresult$avg_water_surge)
+
+# Residual ACF plot
+png("visualization/ym_VAR_model2_acf_res.png", width=800, height=600)
+par(mfrow=c(1, 1))
+acf(yarmouth_var_model2$varresult$avg_water_surge$residuals, main="VAR ACF Residuals Model 2 - Yarmouth")
 dev.off()
+
+# ---- Fit only the past value of the storm surge ----
+yarmouth_var_model3 = arima(yarmouth_var$avg_water_surge, order=c(1,0,0))
+summary(yarmouth_var_model3)
+
+# Get fitted values
+fitted_values <- yarmouth_var$avg_water_surge - residuals(yarmouth_var_model3)
+
+# Calculate R-squared
+SSE <- sum(residuals(yarmouth_var_model3)^2)
+SST <- sum((yarmouth_var$avg_water_surge - mean(yarmouth_var$avg_water_surge))^2)
+r_squared <- 1 - SSE/SST
+print(r_squared)
+
+# R square = 0.5005421, AIC = -38167
+AIC(yarmouth_var_model3)
 
 png("visualization/ym_acf_res_surgel1.png", width=800, height=600)
 par(mfrow=c(1, 1))
-acf(yarmouth_var_lm2$residuals, main="VAR ACF Residuals Model 2 - Yarmouth")
-dev.off()
-
-# APPLY FOR LAG DATA
-# Define lag order
-p <- 2  # Example: 2 lags
-
-# Create lagged dataset but exclude lags of avg_water_surge
-yarmouth_data_lags <- embed(as.matrix(yarmouth_var), p + 1)  # Embed function creates lagged matrix
-
-# Convert to a dataframe
-yarmouth_lagged_df <- as.data.frame(yarmouth_data_lags)
-
-# Rename columns for clarity
-colnames(yarmouth_lagged_df) <- c("avg_water_surge", "avg_temperature", "avg_wind_speed", "rain",
-                                 "avg_water_surge.l1", "avg_temperature.l1", "avg_wind_speed.l1", "rain.l1",
-                                 "avg_water_surge.l2", "avg_temperature.l2", "avg_wind_speed.l2", "rain.l2")
-
-# Fit linear model without avg_water_surge lags
-yarmouth_var_custom <- lm(
-  avg_water_surge ~ avg_temperature.l1 + avg_wind_speed.l1 + rain.l1 +
-    avg_temperature.l2 + avg_wind_speed.l2 + rain.l2,
-  data = yarmouth_lagged_df
-)
-
-# AIC = -80832.06
-summary(yarmouth_var_custom)  # Check results
-step(yarmouth_var_custom)
-# does not have much difference between the AIC of the best and the original model
-
-# Residual Check
-par(mfrow=c(2, 2))
-plot(yarmouth_var_custom)
-
-png("visualization/ym_acf_res_covariates_lag.png", width=800, height=600)
-par(mfrow=c(1, 1))
-acf(yarmouth_var_custom$residuals, main="VAR ACF Residuals Model 3 - Yarmouth")
-dev.off()
-
-# Fit linear model without avg_water_surge lags
-yarmouth_var_custom_v2 <- lm(avg_water_surge ~ avg_water_surge.l1 + avg_wind_speed.l1,
-                            data = yarmouth_lagged_df)
-
-# AIC = -94436.89
-summary(yarmouth_var_custom_v2)  # Check results
-step(yarmouth_var_custom_v2)
-
-# Residual Check
-png("visualization/ym_res_analysis_surge_wind_l1.png", width=800, height=600)
-par(mfrow=c(2, 2))
-plot(yarmouth_var_custom_v2)
-dev.off()
-
-png("visualization/ym_acf_res_surge_wind_l1.png", width=800, height=600)
-par(mfrow=c(1, 1))
-acf(yarmouth_var_custom_v2$residuals, main="VAR ACF Residuals Model 4 - Yarmouth")
+acf(na.omit(yarmouth_var_model3$resid), main="VAR ACF Residuals Model 3 - Yarmouth")
 dev.off()
