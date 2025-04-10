@@ -127,11 +127,8 @@ GAMMs assume that the random effects are independent. Since the data collected i
 ACF (Autocorrelation Function) is a method that will show how much a a variable at one time is related to its value at previous times. Since the research is studying storm surge, ACF will show if today's storm surge value was influenced from its values yesterday, before than, etc... ACF helps identity any patterns in the time series data, like seasonality or trends. If the current and past value show to be highly correlated, then the data is not random and there is some predictability in the structure.
 
 
-```{r}
-library(readr)
-library(mgcv)
-library(here)
-
+```{r, eval=FALSE}
+# 
 interpolation_df <- (read_csv(here("Data", "linear_interpolation_df.csv"), 
       show_col_types = FALSE))
 
@@ -181,14 +178,57 @@ Question 2's method is missing....
 
 Bring over code 
 
+```{=latex}
+\begin{figure}[htb!]
+  \includegraphics{../visualization/acf_halifax.png}
+  \caption{Autocorrelation Function (ACF) plot for Halifax for differents varirables: storm surge (top left), wind speed (top right), temperature (bottom left) and Rain (bottom right).}
+  \label{Bedford}
+\end{figure}
+```
+
+```{=latex}
+\begin{figure}[htb!]
+  \includegraphics{../visualization/acf_yarmouth.png}
+  \caption{Autocorrelation Function (ACF) plot for Yarmourth for differents varirables: storm surge (top left), wind speed (top right), temperature (bottom left) and Rain (bottom right).}
+  \label{Bedford}
+\end{figure}
+```
+
 ACF Analysis 
 The Autocorrelation Function (ACF) plots for Halifax and Yarmouth (Figures X and X) provide insight into how each variable correlates with itself over time. For both locations, we examine storm surge, wind speed, temperature, and rainfall. As expected, the plots display similar general patterns across locations, indicating that these variables behave in comparable ways. The ACF for storm surge, shown in the top left plot, reveals a strong temporal autocorrelation that gradually decreases but remains significant (above the blue confidence lines) even at 50 lags. This suggests that storm surge events exhibit persistent memory effects and follow cyclical patterns. In contrast, the wind speed ACF, presented in the top right plot, shows significant autocorrelation at lags 0 and 1, but the correlation rapidly declines thereafter. This suggests that wind events are relatively short-lived, with little long-term persistence. The bottom left plot displays the ACF for temperature, which exhibits the strongest and most persistent autocorrelation among all variables. The very gradual decline in correlation highlights a strong temporal persistence in temperature patterns, likely reflecting seasonal cycles and day-to-day stability. Finally, the bottom right plot presents the ACF for rainfall, which shows little to no significant autocorrelation beyond lag 0. This suggests that rainfall events are largely independent from one time period to the next, with minimal influence from past occurrences.
 In summary, the ACF analysis highlights distinct temporal behaviors across variables. Storm surges exhibit long-term dependencies and cyclical patterns, wind speed fluctuations are short-lived, temperature is highly persistent due to seasonal effects, and rainfall events occur independently with no significant memory. These differences reflect the underlying physical and meteorological drivers governing each variable.
 
+```{=latex}
+\begin{figure}[htb!]
+  \includegraphics{../visualization/ccf_halifax.png}
+  \caption{Cross correlation Function (CCF) plot for Halifax considering differents variables:  storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom).}
+  \label{Bedford}
+\end{figure}
+```
+
+
+```{=latex}
+\begin{figure}[htb!]
+  \includegraphics{../visualization/acf_halifax.png}
+  \caption{Cross correlation Function (CCF) plot for Halifax considering differents variables:  storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom).}
+  \label{Bedford}
+\end{figure}
+```
+
+
+```{=latex}
+\begin{figure}[htb!]
+  \includegraphics{../visualization/ccf_yarmouth.png}
+  \caption{Cross Correlation Function (CCF) plot for Yarmourth considering differents variables:  storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom).}
+  \label{ccf_yarmouth}
+\end{figure}
+```
 
 Cross-Correlation Analysis 
-The Partial Cross-Correlation Function (P-CCF) plots reveal relationships between water surge and other variables. The Figure X and X discuss respectively of the results Halifax and Yarmouth. The top plot discuss about water surge vs. wind speed, present  a positive correlation at lag 0 and several subsequent lags. This suggests wind events immediately impact water surge, with effects persisting through multiple time periods. The pattern indicates wind speed is a driver of water surge events. In contrast storm surge vs. temperature shows a strong negative correlation that gradually diminishes over time. This inverse relationship is particularly pronounced for Halifax. That suggests lower temperatures are associated with higher water surge events (possibly related to winter storm patterns). The last plot on the bottom discuss about water surge vs. rain. A positive correlation at very short lags (0-1) is identifiable. The relationship weakens quickly over time, indicating that rainfall has a short-term impact on water surges but little long-term influence
+The Partial Cross-Correlation Function (P-CCF) plots reveal relationships between water surge and other variables. The Figure X and Figure~\ref{ccf_yarmouth} discuss respectively of the results Halifax and Yarmouth. The top plot discuss about water surge vs. wind speed, present  a positive correlation at lag 0 and several subsequent lags. This suggests wind events immediately impact water surge, with effects persisting through multiple time periods. The pattern indicates wind speed is a driver of water surge events. In contrast storm surge vs. temperature shows a strong negative correlation that gradually diminishes over time. This inverse relationship is particularly pronounced for Halifax. That suggests lower temperatures are associated with higher water surge events (possibly related to winter storm patterns). The last plot on the bottom discuss about water surge vs. rain. A positive correlation at very short lags (0-1) is identifiable. The relationship weakens quickly over time, indicating that rainfall has a short-term impact on water surges but little long-term influence
 The patterns are generally similar between Halifax and Yarmouth, suggesting regional consistency in meteorological relationships. The temperature-surge negative correlation appears particularly strong in Halifax. Moreover, Halifax shows some interesting phase shifts in the wind-surge relationship that might indicate more complex coastal geography effects. These relationships suggest that water surge events in Nova Scotia are primarily driven by wind conditions, with secondary influences from temperature patterns and immediate rainfall. The negative correlation with temperature likely reflects seasonal storm patterns, with more significant surge events occurring during colder months
+
+
 
 
 EVA

@@ -18,7 +18,7 @@ annual.maximas.yarmouth = full.max.data.yarmouth[, .(max_wind = max(avg_wind_spe
                                                  by = .(year = year(date))]
 #28 years
 plot(annual.maximas.yarmouth, xlab = "years", ylab= "Storm surge annual maxima")
-title("Yarmouth annual maxima storm surge (1956-2024")
+title("Yarmouth annual maxima storm surge (1956-2024)")
 
 # Fit these yarmouth annual maximas using the GEV.
 library(ismev)
