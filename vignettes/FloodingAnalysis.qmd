@@ -266,6 +266,10 @@ The minimal difference between the initial and covariate models suggests that wi
 
 Bring over code 
 
+The analysis of water surge in Nova Scotia, particularly in Halifax and Yarmouth, highlights strong temporal dependencies and key climatic influences. Wind speed emerges as a primary driver, with immediate and delayed effects, though its impact is complex. Temperature shows a notable negative correlation with surge levels, aligning with seasonal storm patterns, while rainfall has only a short-term influence. Surge events exhibit strong autocorrelation, with past water levels being the most reliable predictors.
+
+Different modeling approaches provide complementary insights. Vector autoregression captures multivariate influences, while generalized additive mixed models account for geographic differences but leave residual autocorrelation. Extreme value analysis indicates that Halifax experiences higher surge extremes than Yarmouth, though adding wind as a covariate yields little improvement, suggesting its effect is already embedded in surge data. This implies that simpler models may be sufficient for extreme event forecasting, while more complex approaches help understand broader surge dynamics.
+
 # Conclusions
 
 – Discuss the results of the previous section in the context of the research question. – Give an answer to your research question and discuss any uncertainty in your results. – If appropriate, discuss why the research question cannot be fully answered using the data and techniques available.
