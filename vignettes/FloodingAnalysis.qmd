@@ -7,9 +7,7 @@ date-format: "YYYY-MM-DD"
 format: 
   pdf:
     toc: false  
-    latex_engine: xelatex
-    figures:
-      path: ../visualization
+    latex_engine: xelatex 
 editor: source
 header-includes:
   - \usepackage{hyperref}
@@ -128,9 +126,32 @@ GAMMs assume that the random effects are independent. Since the data collected i
 
 ACF (Autocorrelation Function) is a method that will show how much a a variable at one time is related to its value at previous times. Since the research is studying storm surge, ACF will show if today's storm surge value was influenced from its values yesterday, before than, etc... ACF helps identity any patterns in the time series data, like seasonality or trends. If the current and past value show to be highly correlated, then the data is not random and there is some predictability in the structure.
 
+
+```{r, eval=FALSE}
+# 
+interpolation_df <- (read_csv(here("Data", "linear_interpolation_df.csv"), 
+      show_col_types = FALSE))
+
+# Convert date to numeric format 
+interpolation_df$date_num <- as.numeric(
+  as.Date(interpolation_df$date))
+
+# Fit the GAMM model
+halifax_gamm <- gamm(avg_water_surge ~ 
+                       s(avg_temperature) + 
+                       s(avg_wind_speed) + 
+                       s(rain) + 
+                       s(date_num, bs = "cs") + 
+                       ti(rain, avg_wind_speed),
+                       data = interpolation_df)
+
+# Plot the ACF of residuals
+acf(residuals(halifax_gamm$lme))
+```
+
 Using ACF on the GAMM model, there is high correlation between the data points, suggesting that the data collected for each time are dependent. This violates the assumption of GAMMs, and therefore makes it unusable for the model. 
 
-The other method that will be used for this analysis is Time Series. Time Series models the sequence of data points in an equally spaced time interval. The method is used to analyze trends, patterns, and behaviours over time. The importance of this model is to analyze historical data to help understand any underlying patterns, predict future values, and see how (or if any for the research) certain factors influence storm surge over time. 
+The other method that will be used for this analysis is Time Series. Time Series models the sequence of data points in an equally spaced time interval. The method is used to analyze trends, patterns, and behaviours over time. The importance of this model is to analyze historical data to help understand any underlying patterns, predict future values, and see how (or if any for out research) certain factors influence storm surge over time. 
 
 The goal of the research is to see what climatic factors affect storm surge over time. Time series modeling will help examine if these variables have a time-based relationship with storm surge. GAMMs was helpful for modeling non-linear, time-dependent relationships between the predictors and the response variable. However, it might not accurately represent the complex nature of time series data.
 
@@ -160,8 +181,10 @@ $$g(y\mid \mu_j,\sigma_j,\xi_j) = \frac{1}{\sigma_j} \left\{1 + \xi_j \left(\fra
 
 Bring over code 
 
+# Question 2
+
 ```{=latex}
-\begin{figure}[h]
+\begin{figure}[htb!]
   \includegraphics{../visualization/acf_halifax.png}
   \caption{Autocorrelation Function (ACF) plot for Halifax for differents varirables: storm surge (top left), wind speed (top right), temperature (bottom left) and Rain (bottom right).}
   \label{Bedford}
@@ -169,48 +192,69 @@ Bring over code
 ```
 
 ```{=latex}
-\begin{figure}[h]
+\begin{figure}[htb!]
   \includegraphics{../visualization/acf_yarmouth.png}
   \caption{Autocorrelation Function (ACF) plot for Yarmourth for differents varirables: storm surge (top left), wind speed (top right), temperature (bottom left) and Rain (bottom right).}
   \label{Bedford}
 \end{figure}
 ```
 
-ACF Analysis 
+**ACF Analysis** 
 The Autocorrelation Function (ACF) plots for Halifax and Yarmouth (Figures X and X) provide insight into how each variable correlates with itself over time. For both locations, we examine storm surge, wind speed, temperature, and rainfall. As expected, the plots display similar general patterns across locations, indicating that these variables behave in comparable ways. The ACF for storm surge, shown in the top left plot, reveals a strong temporal autocorrelation that gradually decreases but remains significant (above the blue confidence lines) even at 50 lags. This suggests that storm surge events exhibit persistent memory effects and follow cyclical patterns. In contrast, the wind speed ACF, presented in the top right plot, shows significant autocorrelation at lags 0 and 1, but the correlation rapidly declines thereafter. This suggests that wind events are relatively short-lived, with little long-term persistence. The bottom left plot displays the ACF for temperature, which exhibits the strongest and most persistent autocorrelation among all variables. The very gradual decline in correlation highlights a strong temporal persistence in temperature patterns, likely reflecting seasonal cycles and day-to-day stability. Finally, the bottom right plot presents the ACF for rainfall, which shows little to no significant autocorrelation beyond lag 0. This suggests that rainfall events are largely independent from one time period to the next, with minimal influence from past occurrences.
 In summary, the ACF analysis highlights distinct temporal behaviors across variables. Storm surges exhibit long-term dependencies and cyclical patterns, wind speed fluctuations are short-lived, temperature is highly persistent due to seasonal effects, and rainfall events occur independently with no significant memory. These differences reflect the underlying physical and meteorological drivers governing each variable.
 
+
+
+
 ```{=latex}
-\begin{figure}[h]
-  \includegraphics[width=0.4\linewidth]{../visualization/ccf_halifax.png}
+\begin{figure}[htb!]
+  \includegraphics{../visualization/ccf_halifax.png}
   \caption{Cross correlation Function (CCF) plot for Halifax considering differents variables:  storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom).}
   \label{Bedford}
 \end{figure}
 ```
 
 
-```{=latex}
-\begin{figure}[h]
-  \includegraphics[width=0.4\linewidth]{../visualization/acf_halifax.png}
-  \caption{Cross correlation Function (CCF) plot for Halifax considering differents variables:  storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom).}
-  \label{Bedford}
-\end{figure}
-```
-
 
 ```{=latex}
-\begin{figure}[h]
-  \includegraphics[width=0.2\linewidth]{../visualization/ccf_yarmouth.png}
+\begin{figure}[htb!]
+  \includegraphics{../visualization/ccf_yarmouth.png}
   \caption{Cross Correlation Function (CCF) plot for Yarmourth considering differents variables:  storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom).}
   \label{ccf_yarmouth}
 \end{figure}
 ```
 
-Cross-Correlation Analysis 
+**Cross-Correlation Analysis** 
 The Partial Cross-Correlation Function (P-CCF) plots reveal relationships between water surge and other variables. The Figure X and Figure~\ref{ccf_yarmouth} discuss respectively of the results Halifax and Yarmouth. The top plot discuss about water surge vs. wind speed, present  a positive correlation at lag 0 and several subsequent lags. This suggests wind events immediately impact water surge, with effects persisting through multiple time periods. The pattern indicates wind speed is a driver of water surge events. In contrast storm surge vs. temperature shows a strong negative correlation that gradually diminishes over time. This inverse relationship is particularly pronounced for Halifax. That suggests lower temperatures are associated with higher water surge events (possibly related to winter storm patterns). The last plot on the bottom discuss about water surge vs. rain. A positive correlation at very short lags (0-1) is identifiable. The relationship weakens quickly over time, indicating that rainfall has a short-term impact on water surges but little long-term influence
 The patterns are generally similar between Halifax and Yarmouth, suggesting regional consistency in meteorological relationships. The temperature-surge negative correlation appears particularly strong in Halifax. Moreover, Halifax shows some interesting phase shifts in the wind-surge relationship that might indicate more complex coastal geography effects. These relationships suggest that water surge events in Nova Scotia are primarily driven by wind conditions, with secondary influences from temperature patterns and immediate rainfall. The negative correlation with temperature likely reflects seasonal storm patterns, with more significant surge events occurring during colder months
 
-EVA
+
+
+
+
+
+**Var** 
+The analysis employed a Vector Autoregression (VAR) model to examine the relationship between multiple climatic variables and water surge dynamics over time. Prior to model estimation, the stationarity of all time series variables—average water surge, average temperature, average wind speed, and rainfall—was assessed using the Augmented Dickey-Fuller (ADF) test. The results confirmed that all variables were stationary (p-value = 0.01 for each variable), allowing for VAR modeling without the need for differencing.
+Different lag orders were explored, with a maximum of 20 lags considered. The selection criteria provided varying recommendations: the Akaike Information Criterion (AIC) suggested 20 lags, the Hannan-Quinn Criterion (HQ) recommended 19, while the Schwarz Criterion (SC) indicated an optimal lag order of 11. The Final Prediction Error (FPE) aligned with AIC, selecting 20 lags. This variation aligns with the well-documented tendency of AIC to favor higher lag orders due to its relatively weaker penalty on model complexity.
+The primary model incorporated all climatic factors using a VAR(7) specification, including average water surge, temperature, wind speed, and rainfall with seven lags. This model explained approximately 62.6% of the variation in water surge (R-squared = 0.6262) and exhibited the lowest AIC (-39278.16), suggesting the best overall fit. Among the most significant predictors, the strongest influence was the previous water surge at lag 1 (coefficient = 0.635). Wind speed showed a negative relationship at lag 1 (-0.00168) but a positive effect at lag 2 (0.00109). Rainfall displayed a delayed negative effect at lag 2 (-0.00085). Residual analysis using the autocorrelation function (ACF) plot indicated no significant autocorrelation, confirming that the model effectively captured temporal dependencies.
+A simplified model was then considered, incorporating only water surge and wind speed with a single lag (VAR(1)). This model explained 59% of the variance (R-squared = 0.5908) and had a higher AIC (-37666.21), suggesting a comparatively poorer fit. However, both included variables remained highly significant (p < 2e-16), with wind speed showing a consistent positive effect (0.000702) on water surge. Although residual autocorrelation was minimal, it was slightly higher than in the full VAR(7) model.
+To further isolate the influence of past water surge levels, an autoregressive (AR) model was estimated. This model, focusing exclusively on the temporal dependence of water surge, had an R-squared of 0.4713, explaining 47% of the variance. The AIC value was -38196.53, positioning it between the simplified VAR(1) model and the full VAR(7) model. The autoregressive coefficient (0.6865) indicated a strong temporal dependence, reinforcing the role of past water surge levels as the primary determinant of future surges.
+The results highlight key insights into the dynamics of water surge variation. Water surge exhibits strong autocorrelation, with previous surge levels serving as the most influential predictor. The inclusion of climatic factors significantly improves predictive power, increasing explained variance from 47% (AR model) to 62% (full VAR model). Wind speed exerts both immediate and delayed effects, displaying an initial negative influence followed by positive effects at later lags, suggesting a complex interaction with water dynamics. Rainfall primarily exerts a delayed negative impact, with significant effects observed at lags 2, 3, and 7, whereas temperature influences are less consistent across time lags.
+Overall, while the full VAR(7) model provides the best fit for accurately capturing storm surge dynamics, the VAR(1) model with wind speed represents a viable alternative for operational use, balancing predictive capability with model simplicity. The absence of significant overfitting, as confirmed by time series cross-validation, further supports the robustness of these models. These findings underscore the complex interplay between past water surge levels and climatic factors in shaping surge dynamics in Halifax, emphasizing the importance of multivariate approaches for improved forecasting.
+
+
+
+
+**GAMM**
+The analysis employed a Generalized Additive Mixed Model (GAMM) to investigate the relationship between water surge and climatic predictors, accounting for location as a random effect. The model incorporated smooth terms for temperature, wind speed, rainfall, and date, allowing for the capture of seasonal patterns and nonlinear trends in water surge dynamics.
+The autocorrelation function (ACF) plots reveal a strong temporal structure in the data. The random effect component exhibits a high autocorrelation at lag 1, around 1, which gradually decreases but remains above the significance threshold after 45 lags. This pattern suggests that the random effect structure does not fully account for the temporal dependencies present in the data. Similarly, the smooth component demonstrates a comparable autocorrelation at lag 1 but with a more persistent decline. The fact that autocorrelation remains significant across all lags indicates that residual temporal dependencies remain unmodeled within the smooth terms.
+Residual diagnostic plots provide further insight into the model’s performance. The residuals versus fitted values plot for the GAM shows a fairly uniform spread around zero, though some deviation is observed, particularly at higher fitted values where extreme residuals become more prominent. The quantile-quantile (QQ) plot highlights moderate departures from normality, particularly in the upper tail, where observed values exceed theoretical expectations. The residuals from the linear mixed effects (LME) component display a similar pattern, albeit with slightly improved normality. Nevertheless, minor deviations from normality persist at both extremes, reinforcing the idea that some residual structure remains unaccounted for in the model.
+The findings underscore the presence of persistent temporal autocorrelation, indicating that the model may benefit from refinements. The inclusion of an explicit autocorrelation structure, such as a first-order autoregressive (AR(1)) correlation term, could help in capturing the remaining dependencies. Additionally, incorporating more time-related predictors or interactions may enhance explanatory power. Alternative smoothing parameter adjustments or different basis functions could refine the model’s ability to account for temporal trends.
+Despite these areas for improvement, the model effectively captures major patterns in the data. Residuals are generally well-behaved, displaying symmetry around zero and no clear signs of heteroscedasticity. While slight deviations from normality exist, they do not pose substantial issues for inference. The model offers a strong foundation for understanding water surge dynamics, but adjustments to better account for temporal dependencies could further enhance its predictive performance and overall robustness.
+
+# Question 2
+
+**EVA**
 Looking at the overall pattern, both locations show storm surge return levels increasing with longer return periods, following a logarithmic curve that flattens at higher return periods. This is typical in extreme value analysis with the difference between a 50-year and 100-year event is less dramatic than between a 2-year and 10-year event.  Comparing both location, Halifax consistently shows higher return levels (approximately 0.08-0.10m higher) compared to Yarmouth across all return periods. Halifax's 100-year return level reaches about 0.71m while Yarmouth's reaches about 0.62m. The Figure X and X represent the case with wind as covariates. The covariate analysis produced remarkably similar results to the initial analysis. For Halifax, differences between initial and covariate models are extremely small (0.0001-0.0003m), for Yarmouth, differences are slightly larger but still minor (0.0049-0.0116m). Both graphs show upper and lower confidence bounds (red dotted lines). The confidence interval widens as the return period increases, reflecting greater uncertainty in predicting more extreme events. 
 The minimal difference between the initial and covariate models suggests that wind speed doesn't significantly improve storm surge prediction beyond what the initial EVA model already captures. This could mean that wind speed is already implicitly represented in your storm surge data; the relationship between wind speed and storm surge in these locations isn't strong enough to substantially improve predictions or, that other factors might be more important in determining extreme storm surge events
 
