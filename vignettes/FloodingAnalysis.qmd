@@ -49,6 +49,36 @@ This research will address two key questions:
 
 Through these investigations, this study aims to contribute valuable predictions and  insights that will aid in understanding, and reducing future flooding risks in the province.
 
+
+
+INtroduction 2
+
+Storm surges are one of the most significant geophysical risks affecting coastal regions, often leading to substantial loss of life and property (Von Storch & Woth, 2008). They occur when strong winds and low atmospheric pressure cause an abnormal rise in sea level, pushing water onto the shore. As coastal populations and infrastructure expand, vulnerability to storm surges is increasing, contributing to a growing crisis in urbanized coastal areas where natural hazards are causing unprecedented damage (Helderop & Grubesic, 2019).
+
+Nova Scotia, with its extensive coastline along the Atlantic Ocean, is particularly susceptible to storm surges, which frequently exacerbate flooding events. Over the past decade, the province has experienced an increase in extreme weather conditions, including heavy rainfall and strong winds, resulting in catastrophic floods that have damaged infrastructure, displaced communities, and disrupted ecosystems. As climate change intensifies these weather patterns, understanding the climatic drivers of storm surges is crucial for improving flood risk management.
+
+Storm surge is influenced by multiple meteorological and oceanographic factors, with wind speed, atmospheric pressure, temperature, and rainfall playing key roles. Prior studies have shown that wind speed is a primary driver of storm surge height, with pre-landfall wind speeds explaining up to 80% of surge variance (Jordan, 2008; Irish et al., 2014). Rising sea surface temperatures have also been linked to stronger storm systems, leading to more intense surges (Lavender et al., 2018; Grinsted et al., 2013). While heavy rainfall contributes to overall flood risk, its direct correlation with storm surge is less pronounced compared to wind and pressure effects (Zheng et al., 2014; Zhang et al., 2021).
+
+Modeling these extreme weather events can be challenging due to their rarity and the complex way multiple climatic factors may interact.  Although flooding events are relatively infrequent, their impact can cause Significant societal and economic damage, highlighting the need for improved forecasting tools.  This research seeks to understand the relationship between various climatic factors and storm surge levels at selected locations across Nova Scotia. A secondary objective is to use these findings to forecast the likelihood of future flooding events based on the most significant contributing climatic factors.
+
+This study aims to model storm surge levels in Nova Scotia using wind speed, temperature, and rainfall as covariates. Our objectives are:
+
+1.	To analyze the relationship between various climatic factors and storm surge levels across Nova Scotia.
+2.	To determine how the most significant correlated factors can be used to predict future flooding events in the region.
+
+By identifying key predictors of storm surge, this research will contribute to the development of better forecasting models, helping communities mitigate the risks associated with extreme coastal flooding.
+
+
+References
+- Grinsted, A., Moore, J. C., & Jevrejeva, S. (2013). Projected Atlantic hurricane surge threat from rising temperatures. Proceedings of the National Academy of Sciences, 110(14), 5369–5373.
+- Helderop, E., & Grubesic, T. H. (2019). A New Era of Storm Surge Risk Along the World’s Coasts. Natural Hazards, 98(2), 1099–1120.
+- Irish, J. L., Resio, D. T., & Ratcliff, J. J. (2014). The influence of storm size on hurricane surge. Journal of Engineering for the Marine Environment, 228(1), 48–58.
+- Jordan, M. R. (2008). Modeling wind-induced storm surges using the Princeton Ocean Model. Geophysical Research Letters, 35(LXXXX), 1-5.
+- Lavender, S. L., & Walsh, K. J. E. (2018). Sensitivity of Tropical Cyclone Storm Surge to Sea Surface Temperature. Natural Hazards and Earth System Sciences, 18(3), 795–805.
+- Von Storch, H., & Woth, K. (2008). Storm surges: Perspectives and options. Nature Geoscience, 1(9), 488–489.
+- Zhang, W., Villarini, G., & Smith, J. A. (2021). Probabilistic characterization of extreme storm surges induced by tropical cyclones. Journal of Climate, 34(18), 7531–7550.
+
+
 # Data Description
 
 In this section, we describe the data used for the analysis. Below is the summary table for the data obtained from the Government of Canada:
