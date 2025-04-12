@@ -32,34 +32,17 @@ Summary in 150 words (Best done last, summarizes the whole project)
 - Time Series
 - Autocorrelation Function (ACF)
 - Cross-Correlation Function (CCF)
+- Extreme value analysis (EVA)
 
 # Introduction
 
-Over the past decade, Nova Scotia has experienced an increasing number of flooding events resulting from thunderstorms, heavy rain, and extreme weather conditions. These events have significantly impacted communities, resulting in evacuations, property damage, infrastructure loss, and loss of life. The province's geographic location along the Atlantic Ocean and its coastal regions make Nova Scotia vulnerable to these events. As the frequency and severity of extreme weather conditions continue to rise due to climate change, there has been an growing interest to study how various climatic factors are related to these flooding events. 
-
-One of the most significant components involved with flooding is storm surge, the sudden rise in water level which is created by both the water level and the tide height. Storm Surge can be derived using the difference from the observed water level and the fitted tide values. In this study, the observed water level data were obtained from the Government of Canada Data Archives, while the fitted tide values were calculated using the R package "ftide." Using both these values, the storm surge response variable was derived, which is used to explore which climatic factors are most closely associated with storm surge.
-
-Modeling these extreme weather events can be challenging due to their rarity and the complex way multiple climatic factors may interact.  Although flooding events are relatively infrequent, their impact can cause Significant societal and economic damage, highlighting the need for improved forecasting tools.  This research seeks to understand the relationship between various climatic factors and storm surge levels at selected locations across Nova Scotia. A secondary objective is to use these findings to forecast the likelihood of future flooding events based on the most significant contributing climatic factors.
-
-This research will address two key questions:
-
-1.  What is the relationship between various climatic factors and storm surge levels across Nova Scotia?
-
-2.  How can the most significant correlated factors be used to predict future flooding catastrophes in Nova Scotia?
-
-Through these investigations, this study aims to contribute valuable predictions and  insights that will aid in understanding, and reducing future flooding risks in the province.
-
-
-
-INtroduction 2
-
-Storm surges are one of the most significant geophysical risks affecting coastal regions, often leading to substantial loss of life and property (Von Storch & Woth, 2008). They occur when strong winds and low atmospheric pressure cause an abnormal rise in sea level, pushing water onto the shore. As coastal populations and infrastructure expand, vulnerability to storm surges is increasing, contributing to a growing crisis in urbanized coastal areas where natural hazards are causing unprecedented damage (Helderop & Grubesic, 2019).
+Storm surges are one of the most significant geophysical risks affecting coastal regions, often leading to substantial loss of life and property.^[@R-Vonstorch2008] They occur when strong winds and low atmospheric pressure cause an abnormal rise in sea level, pushing water onto the shore. As coastal populations and infrastructure expand, vulnerability to storm surges is increasing, contributing to a growing crisis in urbanized coastal areas where natural hazards are causing unprecedented damage.^[@R-Helderop2019]
 
 Nova Scotia, with its extensive coastline along the Atlantic Ocean, is particularly susceptible to storm surges, which frequently exacerbate flooding events. Over the past decade, the province has experienced an increase in extreme weather conditions, including heavy rainfall and strong winds, resulting in catastrophic floods that have damaged infrastructure, displaced communities, and disrupted ecosystems. As climate change intensifies these weather patterns, understanding the climatic drivers of storm surges is crucial for improving flood risk management.
 
-Storm surge is influenced by multiple meteorological and oceanographic factors, with wind speed, atmospheric pressure, temperature, and rainfall playing key roles. Prior studies have shown that wind speed is a primary driver of storm surge height, with pre-landfall wind speeds explaining up to 80% of surge variance (Jordan, 2008; Irish et al., 2014). Rising sea surface temperatures have also been linked to stronger storm systems, leading to more intense surges (Lavender et al., 2018; Grinsted et al., 2013). While heavy rainfall contributes to overall flood risk, its direct correlation with storm surge is less pronounced compared to wind and pressure effects (Zheng et al., 2014; Zhang et al., 2021).
+Storm surge is influenced by multiple meteorological and oceanographic factors, with wind speed, atmospheric pressure, temperature, and rainfall playing key roles. Prior studies have shown that wind speed is a primary driver of storm surge height, with pre-landfall wind speeds explaining up to 80% of surge variance.^[@R-Jordan2008;@R-Irish2014] Rising sea surface temperatures have also been linked to stronger storm systems, leading to more intense surges.^[@R-Lavender2018;@R-Grinsted2013] While heavy rainfall contributes to overall flood risk, its direct correlation with storm surge is less pronounced compared to wind and pressure effects.^[@R-Zhang2021]
 
-Modeling these extreme weather events can be challenging due to their rarity and the complex way multiple climatic factors may interact.  Although flooding events are relatively infrequent, their impact can cause Significant societal and economic damage, highlighting the need for improved forecasting tools.  This research seeks to understand the relationship between various climatic factors and storm surge levels at selected locations across Nova Scotia. A secondary objective is to use these findings to forecast the likelihood of future flooding events based on the most significant contributing climatic factors.
+Modeling these extreme weather events can be challenging due to their rarity and the complex way multiple climatic factors may interact.  Although flooding events are relatively infrequent, their impact can cause Significant societal and economic damage, highlighting the need for improved forecasting tools. This research seeks to understand the relationship between various climatic factors and storm surge levels at selected locations across Nova Scotia. A secondary objective is to use these findings to forecast the likelihood of future flooding events based on the most significant contributing climatic factors.
 
 This study aims to model storm surge levels in Nova Scotia using wind speed, temperature, and rainfall as covariates. Our objectives are:
 
@@ -67,17 +50,6 @@ This study aims to model storm surge levels in Nova Scotia using wind speed, tem
 2.	To determine how the most significant correlated factors can be used to predict future flooding events in the region.
 
 By identifying key predictors of storm surge, this research will contribute to the development of better forecasting models, helping communities mitigate the risks associated with extreme coastal flooding.
-
-
-References
-- Grinsted, A., Moore, J. C., & Jevrejeva, S. (2013). Projected Atlantic hurricane surge threat from rising temperatures. Proceedings of the National Academy of Sciences, 110(14), 5369–5373.
-- Helderop, E., & Grubesic, T. H. (2019). A New Era of Storm Surge Risk Along the World’s Coasts. Natural Hazards, 98(2), 1099–1120.
-- Irish, J. L., Resio, D. T., & Ratcliff, J. J. (2014). The influence of storm size on hurricane surge. Journal of Engineering for the Marine Environment, 228(1), 48–58.
-- Jordan, M. R. (2008). Modeling wind-induced storm surges using the Princeton Ocean Model. Geophysical Research Letters, 35(LXXXX), 1-5.
-- Lavender, S. L., & Walsh, K. J. E. (2018). Sensitivity of Tropical Cyclone Storm Surge to Sea Surface Temperature. Natural Hazards and Earth System Sciences, 18(3), 795–805.
-- Von Storch, H., & Woth, K. (2008). Storm surges: Perspectives and options. Nature Geoscience, 1(9), 488–489.
-- Zhang, W., Villarini, G., & Smith, J. A. (2021). Probabilistic characterization of extreme storm surges induced by tropical cyclones. Journal of Climate, 34(18), 7531–7550.
-
 
 # Data Description
 
@@ -156,7 +128,6 @@ GAMMs assume that the random effects are independent. Since the data collected i
 
 ACF (Autocorrelation Function) is a method that will show how much a a variable at one time is related to its value at previous times. Since the research is studying storm surge, ACF will show if today's storm surge value was influenced from its values yesterday, before than, etc... ACF helps identity any patterns in the time series data, like seasonality or trends. If the current and past value show to be highly correlated, then the data is not random and there is some predictability in the structure.
 
-
 ```{r, eval=FALSE}
 # 
 interpolation_df <- (read_csv(here("Data", "linear_interpolation_df.csv"), 
@@ -181,7 +152,7 @@ acf(residuals(halifax_gamm$lme))
 
 Using ACF on the GAMM model, there is high correlation between the data points, suggesting that the data collected for each time are dependent. This violates the assumption of GAMMs, and therefore makes it unusable for the model. 
 
-The other method that will be used for this analysis is Time Series. Time Series models the sequence of data points in an equally spaced time interval. The method is used to analyze trends, patterns, and behaviours over time. The importance of this model is to analyze historical data to help understand any underlying patterns, predict future values, and see how (or if any for out research) certain factors influence storm surge over time. 
+The other method that will be used for this analysis is Time Series. Time Series models the sequence of data points in an equally spaced time interval. The method is used to analyze trends, patterns, and behaviours over time. The importance of this model is to analyze historical data to help understand any underlying patterns, predict future values, and see how (or if any throughout the research) certain factors influence storm surge over time. 
 
 The goal of the research is to see what climatic factors affect storm surge over time. Time series modeling will help examine if these variables have a time-based relationship with storm surge. GAMMs was helpful for modeling non-linear, time-dependent relationships between the predictors and the response variable. However, it might not accurately represent the complex nature of time series data.
 
@@ -191,7 +162,7 @@ Since the research analyzes storm sure data, ACF will help look at temporal depe
 
 CCF(Cross-Correlation Function) is the same as ACF, but instead examines the relationship between two different time series, with more flexibility to look at different points in time. When using CCF for the model, it is testing how strongly the response variable (Storm Surge) is related to another variable (predictor variables like rain, wind speed, and temperature) over different lags. For the research, CCF can help to see if rain, wind speed, and/or temperature have an immediate or delayed effect on storm surge. 
 
-VAR(Vector Auto regression) (not 100% about this model)
+VAR(Vector Auto regression (not 100% about this model)
 
 Granger Causality (Not 100% sure)
 
@@ -234,8 +205,6 @@ The Autocorrelation Function (ACF) plots for Halifax and Yarmouth (Figures X and
 In summary, the ACF analysis highlights distinct temporal behaviors across variables. Storm surges exhibit long-term dependencies and cyclical patterns, wind speed fluctuations are short-lived, temperature is highly persistent due to seasonal effects, and rainfall events occur independently with no significant memory. These differences reflect the underlying physical and meteorological drivers governing each variable.
 
 
-
-
 ```{=latex}
 \begin{figure}[htb!]
   \includegraphics{../visualization/ccf_halifax.png}
@@ -260,9 +229,6 @@ The patterns are generally similar between Halifax and Yarmouth, suggesting regi
 
 
 
-
-
-
 **Var** 
 The analysis employed a Vector Autoregression (VAR) model to examine the relationship between multiple climatic variables and water surge dynamics over time. Prior to model estimation, the stationarity of all time series variables—average water surge, average temperature, average wind speed, and rainfall—was assessed using the Augmented Dickey-Fuller (ADF) test. The results confirmed that all variables were stationary (p-value = 0.01 for each variable), allowing for VAR modeling without the need for differencing.
 Different lag orders were explored, with a maximum of 20 lags considered. The selection criteria provided varying recommendations: the Akaike Information Criterion (AIC) suggested 20 lags, the Hannan-Quinn Criterion (HQ) recommended 19, while the Schwarz Criterion (SC) indicated an optimal lag order of 11. The Final Prediction Error (FPE) aligned with AIC, selecting 20 lags. This variation aligns with the well-documented tendency of AIC to favor higher lag orders due to its relatively weaker penalty on model complexity.
@@ -271,8 +237,6 @@ A simplified model was then considered, incorporating only water surge and wind 
 To further isolate the influence of past water surge levels, an autoregressive (AR) model was estimated. This model, focusing exclusively on the temporal dependence of water surge, had an R-squared of 0.4713, explaining 47% of the variance. The AIC value was -38196.53, positioning it between the simplified VAR(1) model and the full VAR(7) model. The autoregressive coefficient (0.6865) indicated a strong temporal dependence, reinforcing the role of past water surge levels as the primary determinant of future surges.
 The results highlight key insights into the dynamics of water surge variation. Water surge exhibits strong autocorrelation, with previous surge levels serving as the most influential predictor. The inclusion of climatic factors significantly improves predictive power, increasing explained variance from 47% (AR model) to 62% (full VAR model). Wind speed exerts both immediate and delayed effects, displaying an initial negative influence followed by positive effects at later lags, suggesting a complex interaction with water dynamics. Rainfall primarily exerts a delayed negative impact, with significant effects observed at lags 2, 3, and 7, whereas temperature influences are less consistent across time lags.
 Overall, while the full VAR(7) model provides the best fit for accurately capturing storm surge dynamics, the VAR(1) model with wind speed represents a viable alternative for operational use, balancing predictive capability with model simplicity. The absence of significant overfitting, as confirmed by time series cross-validation, further supports the robustness of these models. These findings underscore the complex interplay between past water surge levels and climatic factors in shaping surge dynamics in Halifax, emphasizing the importance of multivariate approaches for improved forecasting.
-
-
 
 
 **GAMM**
