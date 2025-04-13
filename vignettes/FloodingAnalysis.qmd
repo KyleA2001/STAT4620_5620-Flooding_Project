@@ -193,7 +193,17 @@ $$g(y\mid \mu_j,\sigma_j,\xi_j) = \frac{1}{\sigma_j} \left\{1 + \xi_j \left(\fra
 
 Bring over code 
 
-# Question 2
+
+
+
+# Results
+
+– Present and discuss the outputs of your methods. 
+– Include any visualizations of the analysis.
+
+Bring over code 
+
+# Question 1
 
 ```{=latex}
 \begin{figure}[htb!]
@@ -264,22 +274,16 @@ Looking at the overall pattern, both locations show storm surge return levels in
 The minimal difference between the initial and covariate models suggests that wind speed doesn't significantly improve storm surge prediction beyond what the initial EVA model already captures. This could mean that wind speed is already implicitly represented in your storm surge data; the relationship between wind speed and storm surge in these locations isn't strong enough to substantially improve predictions or, that other factors might be more important in determining extreme storm surge events
 
 
-# Results
-
-– Present and discuss the outputs of your methods. 
-– Include any visualizations of the analysis.
-
-Bring over code 
-
-The analysis of water surge in Nova Scotia, particularly in Halifax and Yarmouth, highlights strong temporal dependencies and key climatic influences. Wind speed emerges as a primary driver, with immediate and delayed effects, though its impact is complex. Temperature shows a notable negative correlation with surge levels, aligning with seasonal storm patterns, while rainfall has only a short-term influence. Surge events exhibit strong autocorrelation, with past water levels being the most reliable predictors.
-
-Different modeling approaches provide complementary insights. Vector autoregression captures multivariate influences, while generalized additive mixed models account for geographic differences but leave residual autocorrelation. Extreme value analysis indicates that Halifax experiences higher surge extremes than Yarmouth, though adding wind as a covariate yields little improvement, suggesting its effect is already embedded in surge data. This implies that simpler models may be sufficient for extreme event forecasting, while more complex approaches help understand broader surge dynamics.
-
 # Conclusions
 
 – Discuss the results of the previous section in the context of the research question. – Give an answer to your research question and discuss any uncertainty in your results. – If appropriate, discuss why the research question cannot be fully answered using the data and techniques available.
 
+Conclusion
+The analysis of water surge in Nova Scotia, particularly in Halifax and Yarmouth, highlights strong temporal dependencies and key climatic influences. Wind speed emerges as a primary driver, with immediate and delayed effects, though its impact is complex. Temperature shows a notable negative correlation with surge levels, aligning with seasonal storm patterns, while rainfall has only a short-term influence. Surge events exhibit strong autocorrelation, with past water levels being the most reliable predictors.
 
+Different modeling approaches provide complementary insights. Vector autoregression captures multivariate influences, while generalized additive mixed models account for geographic differences but leave residual autocorrelation. Extreme value analysis indicates that Halifax experiences higher surge extremes than Yarmouth, though adding wind as a covariate yields little improvement, suggesting its effect is already embedded in surge data. This implies that simpler models may be sufficient for extreme event forecasting, while more complex approaches help understand broader surge dynamics.
+
+Discussion
 Missingness
 The presence of missing values in our variable of interest could pose a challenge in this project. Many of the time series methods used in this report typically do not support missing data. However, our dataset contains some time gaps. 
 For the first question, we only included covariate data when the response variable was available, which led to the removal of some information from our dataset. Missingness can be problematic as it results in the loss of valuable data. To address this, we used a time interval without gaps, which is shorter than the initial interval but still assumed to be sufficiently long to provide a realistic representation of the dataset.
