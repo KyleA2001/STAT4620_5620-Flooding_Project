@@ -38,9 +38,9 @@ Summary in 150 words (Best done last, summarizes the whole project)
 
 Storm surges are one of the most significant geophysical risks affecting coastal regions, often leading to substantial loss of life and property.^[@R-Vonstorch2008] They occur when strong winds and low atmospheric pressure cause an abnormal rise in sea level, pushing water onto the shore. As coastal populations and infrastructure expand, vulnerability to storm surges is increasing, contributing to a growing crisis in urbanized coastal areas where natural hazards are causing unprecedented damage.^[@R-Helderop2019]
 
-Nova Scotia, with its extensive coastline along the Atlantic Ocean, is particularly susceptible to storm surges, which frequently exacerbate flooding events. Over the past decade, the province has experienced an increase in extreme weather conditions, including heavy rainfall and strong winds, resulting in catastrophic floods that have damaged infrastructure, displaced communities, and disrupted ecosystems. As climate change intensifies these weather patterns, understanding the climatic drivers of storm surges is crucial for improving flood risk management.
+Nova Scotia, with its extensive coastline along the Atlantic Ocean, is particularly susceptible to storm surges, which frequently exacerbate flooding events. Over the past decade, the province has experienced an increase in extreme weather conditions, including heavy rainfall and strong winds, resulting in catastrophic floods that have damaged infrastructure, displaced communities, and disrupted ecosystems [Childs, M. (2017)]. As climate change intensifies these weather patterns, understanding the climatic drivers of storm surges is crucial for improving flood risk management [Simonović, S. P. (2012)].
 
-Storm surge is influenced by multiple meteorological and oceanographic factors, with wind speed, atmospheric pressure, temperature, and rainfall playing key roles. Prior studies have shown that wind speed is a primary driver of storm surge height, with pre-landfall wind speeds explaining up to 80% of surge variance.^[@R-Jordan2008;@R-Irish2014] Rising sea surface temperatures have also been linked to stronger storm systems, leading to more intense surges.^[@R-Lavender2018;@R-Grinsted2013] While heavy rainfall contributes to overall flood risk, its direct correlation with storm surge is less pronounced compared to wind and pressure effects.^[@R-Zhang2021]
+Storm surge is influenced by multiple meteorological and oceanographic factors, the main factor is wind speed but others have been identified like atmospheric pressure, temperature, and rainfall playing key roles.^[Resio, D. T., & Westerink, J. J., 2008] Prior studies have shown that wind speed is a main driver of storm surge height.^[] Rising sea surface temperatures have also been linked to stronger storm systems, leading to more intense surges.^[Needham, H. F., Keim, B. D., & Sathiaraj, D. (2015)] While heavy rainfall contributes to overall flood risk, its direct correlation with storm surge is less pronounced compared to wind and pressure effects.^[Fang, J. et. al, 2021]
 
 Modeling these extreme weather events can be challenging due to their rarity and the complex way multiple climatic factors may interact.  Although flooding events are relatively infrequent, their impact can cause Significant societal and economic damage, highlighting the need for improved forecasting tools. This research seeks to understand the relationship between various climatic factors and storm surge levels at selected locations across Nova Scotia. A secondary objective is to use these findings to forecast the likelihood of future flooding events based on the most significant contributing climatic factors.
 
@@ -50,6 +50,17 @@ This study aims to model storm surge levels in Nova Scotia using wind speed, tem
 2.	To determine how the most significant correlated factors can be used to predict future flooding events in the region.
 
 By identifying key predictors of storm surge, this research will contribute to the development of better forecasting models, helping communities mitigate the risks associated with extreme coastal flooding.
+
+
+Childs, M. (2017). Urban Flooding in Halifax, Nova Scotia: The extent of the issue and the approach through policy.
+
+Fang, J., Wahl, T., Fang, J., Sun, X., Kong, F., & Liu, M. (2021). Compound flood potential from storm surge and heavy precipitation in coastal China: dependence, drivers, and impacts. Hydrology and Earth System Sciences, 25(8), 4403-4416.
+
+Needham, H. F., Keim, B. D., & Sathiaraj, D. (2015). A review of tropical cyclone‐generated storm surges: Global data sources, observations, and impacts. Reviews of Geophysics, 53(2), 545-591.
+
+Resio, D. T., & Westerink, J. J. (2008). Modeling the physics of storm surges. Physics Today, 61(9), 33-38.
+
+Simonović, S. P. (2012). Floods in a changing climate: risk management (Vol. 4). Cambridge University Press.
 
 # Data Description
 
