@@ -38,9 +38,9 @@ Summary in 150 words (Best done last, summarizes the whole project)
 
 Storm surges are one of the most significant geophysical risks affecting coastal regions, often leading to substantial loss of life and property.^[@R-Vonstorch2008] They occur when strong winds and low atmospheric pressure cause an abnormal rise in sea level, pushing water onto the shore. As coastal populations and infrastructure expand, vulnerability to storm surges is increasing, contributing to a growing crisis in urbanized coastal areas where natural hazards are causing unprecedented damage.^[@R-Helderop2019]
 
-Nova Scotia, with its extensive coastline along the Atlantic Ocean, is particularly susceptible to storm surges, which frequently exacerbate flooding events. Over the past decade, the province has experienced an increase in extreme weather conditions, including heavy rainfall and strong winds, resulting in catastrophic floods that have damaged infrastructure, displaced communities, and disrupted ecosystems [Childs, M. (2017)]. As climate change intensifies these weather patterns, understanding the climatic drivers of storm surges is crucial for improving flood risk management [Simonović, S. P. (2012)].
+Nova Scotia, with its extensive coastline along the Atlantic Ocean, is particularly susceptible to storm surges, which frequently exacerbate flooding events. Over the past decade, the province has experienced an increase in extreme weather conditions, including heavy rainfall and strong winds, resulting in catastrophic floods that have damaged infrastructure, displaced communities, and disrupted ecosystems .^[@R-Childs2017] As climate change intensifies these weather patterns, understanding the climatic drive.^[@R-Simonovic2012]
 
-Storm surge is influenced by multiple meteorological and oceanographic factors, the main factor is wind speed but others have been identified like atmospheric pressure, temperature, and rainfall playing key roles.^[Resio, D. T., & Westerink, J. J., 2008] Prior studies have shown that wind speed is a main driver of storm surge height.^[] Rising sea surface temperatures have also been linked to stronger storm systems, leading to more intense surges.^[Needham, H. F., Keim, B. D., & Sathiaraj, D. (2015)] While heavy rainfall contributes to overall flood risk, its direct correlation with storm surge is less pronounced compared to wind and pressure effects.^[Fang, J. et. al, 2021]
+Storm surge is influenced by multiple meteorological and oceanographic factors, the main factor is wind speed but others have been identified like atmospheric pressure, temperature, and rainfall playing key roles.^[@R-Resio2008] Prior studies have shown that wind speed is a main driver of storm surge height. Rising sea surface temperatures have also been linked to stronger storm systems, leading to more intense surges.^[@R-Needham2015] While heavy rainfall contributes to overall flood risk, its direct correlation with storm surge is less pronounced compared to wind and pressure effects.^[@R-Fang2021]
 
 Modeling these extreme weather events can be challenging due to their rarity and the complex way multiple climatic factors may interact.  Although flooding events are relatively infrequent, their impact can cause Significant societal and economic damage, highlighting the need for improved forecasting tools. This research seeks to understand the relationship between various climatic factors and storm surge levels at selected locations across Nova Scotia. A secondary objective is to use these findings to forecast the likelihood of future flooding events based on the most significant contributing climatic factors.
 
@@ -51,16 +51,6 @@ This study aims to model storm surge levels in Nova Scotia using wind speed, tem
 
 By identifying key predictors of storm surge, this research will contribute to the development of better forecasting models, helping communities mitigate the risks associated with extreme coastal flooding.
 
-
-Childs, M. (2017). Urban Flooding in Halifax, Nova Scotia: The extent of the issue and the approach through policy.
-
-Fang, J., Wahl, T., Fang, J., Sun, X., Kong, F., & Liu, M. (2021). Compound flood potential from storm surge and heavy precipitation in coastal China: dependence, drivers, and impacts. Hydrology and Earth System Sciences, 25(8), 4403-4416.
-
-Needham, H. F., Keim, B. D., & Sathiaraj, D. (2015). A review of tropical cyclone‐generated storm surges: Global data sources, observations, and impacts. Reviews of Geophysics, 53(2), 545-591.
-
-Resio, D. T., & Westerink, J. J. (2008). Modeling the physics of storm surges. Physics Today, 61(9), 33-38.
-
-Simonović, S. P. (2012). Floods in a changing climate: risk management (Vol. 4). Cambridge University Press.
 
 # Data Description
 
@@ -94,7 +84,7 @@ Various covariates were considered for inclusion in the model, given the potenti
 
 One way flooding can occur is through heavy rainfall, which is one of the most significant factors in causing floods. If the amount of water from rain rises faster than it can return to the ocean or be absorbed by the soil, this leads to flooding. Given its significant impact on flood events, rainfall was chosen as a key variable in this study.
 
-Rainfall itself is influenced by many factors, but one primary factor is air temperature. As temperatures rise, the atmosphere's ability to hold moisture increases, leading to greater rainfall amounts. Air temperature is one of the leading meteorological factors that interacts with heavy storms.^[@R-AirTemperature] Therefore, it is important that air temperature is considered when examining storm surge.
+Rainfall itself is influenced by many factors, but one primary factor is air temperature. As temperatures rise, the atmosphere's ability to hold moisture increases, leading to greater rainfall amounts. Air temperature is one of the most important meteorological factors that interacts with heavy storms.^[@R-AirTemperature] Therefore, it is important that air temperature is considered when examining storm surge.
 
 Finally, wind speed was considered an important variable based because wind can increase flood magnitudes, durations, and spatial extents.^[@R-Windspeed] This highlights the significant role that wind plays in the intensity and reach of flooding events, especially along coastal regions. Given that Nova Scotia is a coastal province, the impact of wind on flood events is particularly relevant. Thus, wind speed was included in this study as a critical climatic factor to understand its contribution to storm surge and flooding, especially in combination with other factors like rainfall and air temperature. 
 
@@ -203,7 +193,7 @@ Bring over code
 
 Bring over code 
 
-# Question 1
+## Question 1
 
 ```{=latex}
 \begin{figure}[htb!]
@@ -267,7 +257,7 @@ Residual diagnostic plots provide further insight into the model’s performance
 The findings underscore the presence of persistent temporal autocorrelation, indicating that the model may benefit from refinements. The inclusion of an explicit autocorrelation structure, such as a first-order autoregressive (AR(1)) correlation term, could help in capturing the remaining dependencies. Additionally, incorporating more time-related predictors or interactions may enhance explanatory power. Alternative smoothing parameter adjustments or different basis functions could refine the model’s ability to account for temporal trends.
 Despite these areas for improvement, the model effectively captures major patterns in the data. Residuals are generally well-behaved, displaying symmetry around zero and no clear signs of heteroscedasticity. While slight deviations from normality exist, they do not pose substantial issues for inference. The model offers a strong foundation for understanding water surge dynamics, but adjustments to better account for temporal dependencies could further enhance its predictive performance and overall robustness.
 
-# Question 2
+## Question 2
 
 **EVA**
 Looking at the overall pattern, both locations show storm surge return levels increasing with longer return periods, following a logarithmic curve that flattens at higher return periods. This is typical in extreme value analysis with the difference between a 50-year and 100-year event is less dramatic than between a 2-year and 10-year event.  Comparing both location, Halifax consistently shows higher return levels (approximately 0.08-0.10m higher) compared to Yarmouth across all return periods. Halifax's 100-year return level reaches about 0.71m while Yarmouth's reaches about 0.62m. The Figure X and X represent the case with wind as covariates. The covariate analysis produced remarkably similar results to the initial analysis. For Halifax, differences between initial and covariate models are extremely small (0.0001-0.0003m), for Yarmouth, differences are slightly larger but still minor (0.0049-0.0116m). Both graphs show upper and lower confidence bounds (red dotted lines). The confidence interval widens as the return period increases, reflecting greater uncertainty in predicting more extreme events. 
@@ -283,7 +273,7 @@ The analysis of water surge in Nova Scotia, particularly in Halifax and Yarmouth
 
 Different modeling approaches provide complementary insights. Vector autoregression captures multivariate influences, while generalized additive mixed models account for geographic differences but leave residual autocorrelation. Extreme value analysis indicates that Halifax experiences higher surge extremes than Yarmouth, though adding wind as a covariate yields little improvement, suggesting its effect is already embedded in surge data. This implies that simpler models may be sufficient for extreme event forecasting, while more complex approaches help understand broader surge dynamics.
 
-Discussion
+# Discussion
 Missingness
 The presence of missing values in our variable of interest could pose a challenge in this project. Many of the time series methods used in this report typically do not support missing data. However, our dataset contains some time gaps. 
 For the first question, we only included covariate data when the response variable was available, which led to the removal of some information from our dataset. Missingness can be problematic as it results in the loss of valuable data. To address this, we used a time interval without gaps, which is shorter than the initial interval but still assumed to be sufficiently long to provide a realistic representation of the dataset.
