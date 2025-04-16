@@ -3,10 +3,10 @@ Title: STAT 4620/5620 Flooding Project
 Version: 0.0.0.9000
 Authors@R: 
     person("Kyle", "Allie", email = "kyledrallie@gmail.com", role = c("aut", "cre")),
-    person("Fatma", "Sharhan", email = "johndoe@example.com", role = "aut"),
-    person("Margo", "Paris", email = "johndoe@example.com", role = "aut"),
-    person("Thu", "Thi Minh Nguyen", email = "johndoe@example.com", role = "aut")
-Description: This package will contain all the data/visuals/analysis for our project.
+    person("Fatma", "Sharhan", email = "ft971435@dal.ca", role = "aut"),
+    person("Margo", "Paris", email = "mr887562@dal.ca", role = "aut"),
+    person("Thu", "Thi Minh Nguyen", email = "thu.nguyen@dal.ca", role = "aut")
+Description: Analysis of storm surge data using Autocorrelation, Cross-correlation, Generalized Additive Mixed Models, Vector Autoregression, Granger Causality, and Extreme Value Analysis.
 License: `use_mit_license()`, `use_gpl3_license()` or friends to pick a
     license
 Encoding: UTF-8
@@ -18,4 +18,16 @@ Suggests:
 VignetteBuilder: quarto
 Depends: 
     R (>= 3.5)
+Imports:
+    ggplot2,
+    dplyr, 
+    lubridate,
+    ismev,
+    evd,
+    nlme,
+    mgcv,
+    lmtest,
+    vars,
+    tseries,
+    forecast
 LazyData: true
