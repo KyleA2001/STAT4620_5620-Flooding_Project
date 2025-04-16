@@ -34,7 +34,7 @@ Summary in 150 words (Best done last, summarizes the whole project)
 - Cross-Correlation Function (CCF)
 - Extreme value analysis (EVA)
 
-# Introduction
+# 1. Introduction
 
 Storm surges are one of the most significant geophysical risks affecting coastal regions, often leading to substantial loss of life and property.^[@R-Vonstorch2008] They occur when strong winds and low atmospheric pressure cause an abnormal rise in sea level, pushing water onto the shore. As coastal populations and infrastructure expand, vulnerability to storm surges is increasing, contributing to a growing crisis in urbanized coastal areas where natural hazards are causing unprecedented damage.^[@R-Helderop2019]
 
@@ -52,7 +52,7 @@ This study aims to model storm surge levels in Nova Scotia using wind speed, tem
 By identifying key predictors of storm surge, this research will contribute to the development of better forecasting models, helping communities mitigate the risks associated with extreme coastal flooding.
 
 
-# Data Description
+# 2. Data Description
 
 In this section, we describe the data used for the analysis. Below is the summary table for the data obtained from the Government of Canada:
 
@@ -100,20 +100,88 @@ The observed water level is obtained from archived data provided by the Governme
 
 The fitted tide uses the function ftide, where it fits the tidal data using any set of harmonic constiuents. This function takes in three main components:
 
-- x: A numeric vector object giving the water levels; it allows for missing values.
+- `x`: A numeric vector object giving the water levels; it allows for missing values.
 
-- dto: A date vector of same length as ’x’ which should be a POSIXct object; it does
+- `dto`: A date vector of same length as ’x’ which should be a POSIXct object; it does
 not allow for missing values.
 
-- hcn: A vector of constituent names. Here, we specify only the 4 major harmonic
-constituents, hc4.
+- `hcn`: A vector of constituent names. Here, we specify only the 4 major harmonic
+constituents, `hc4`.
 
 By applying this function to the observed water levels, the predicted storm surge values can be calculated. This function allows for the accurate estimation of storm surge at the specified locations based on tide and observations water levels.
 
-# Methods
+# 3. Methods
 
-– Provide a brief description of the analytical tools you will used 
-– Discuss why the method is appropriate in the context of the research question and the data, including any assumptions required by the method.
+## 3.1 Auto- and Cross-correlation
+
+The auto-correlation function is a scaled version of the auto-covariance, that is used to understand the dependence structure of the time series process. It measures how current values of the time series are related to past values across various lags. The auto-correlation of a general time series ($X_t$) at lag $h$ is determined by 
+
+$$\rho_X(h)=\frac{\text{Cov}(X_{t+h},X_t)}{\text{Var}(X_t)}=\frac{\gamma_X(h)}{\gamma_X(0)}$$
+
+where $\gamma_X(h)$ is the auto-covariance function of the time series at lag $h$. 
+
+The cross-correlation is used to evaluate the relationship between two time series at different lags. For two general time series ($X_t$) and ($Y_t$), the cross-correlation at lag $h$ is defined as
+
+$$\rho_{XY}(h)=\frac{\text{Cov}(X_{t+h}, Y_t)}{\sqrt{\text{Var}(X_{t})\text{Var}(Y_t)}}=\frac{\gamma_{XY}(h)}{\sqrt{\gamma_X(0)\gamma_Y(0)}}$$
+
+where $\gamma_{XY}(h)$ is the cross-covariance function of two time series at lag $h$.
+
+In `R`, functions `acf()`, and `ccf()` in package `stats` can be use to compute and visualize the autocorrelation of a single time series and cross-correlation between two time series, respectively. 
+
+## 3.2 Generalized Additive Mixed Models
+
+Generalized additive mixed effect models (GAMMs) are statistical models that combine the flexibility of Generalized Additive Models (GAMs) with the ability to account for random effects in mixed-effect models. Specifically, GAMMs capture non-linear relationships between predictors and the response variable by applying smooth functions to each predictor. Moreover, it also incorporates random effects to account for group or cluster-level variability in the data. The model is typically expressed as:
+
+$$y_i=f_Y(y_i; \mu_i, \theta)$$
+$$g(\mu_i)=X\beta+Zw+\sum_{i=k}^Kf_i(x_i)$$
+$$w\sim N(0, \sigma^2)$$
+
+where $f_Y$ is the distribution of the response variable, $g$ is the link function, $f_i$ is the smooth function, $X\beta$ is the fixed effects, $Zw$ is the random effects.
+
+In addition, GAMMs assume smooth, additive relationships between predictors and the response, with random effects accounting for grouped or correlated data. In this study, both residuals and random effects are assumed to follow a normal distribution with constant variance, and the response variable is modeled as belonging to the exponential family. In `R`, the `mgcv` package provides the `gamm()` function, which fits GAMMs using the `nlme` package and allows for both non-linear predictor effects and random effects. Model diagnostics can be performed using the `mgcv::gam.check()` function.
+
+## 3.3 Vector Autogressive
+
+A VAR model is a more generalized version of the univariate autoregressive model. It comprises one equation per variable in the system including a constant and lags of all of the variables in the system.
+
+Consider $\mathbf{Y}_t$ be a $p\times 1$ vector of time series variables at time $t$. The VAR($k$) model is determined by 
+$$
+\mathbf{Y}_t=\beta_0+\Phi_1\mathbf{Y}_{t-1}+\Phi_2\mathbf{Y}_{t-2}+\dots + \Phi_k\mathbf{Y}_{t-k}+\epsilon_t
+$$
+where 
+
+$\mathbf{Y}_t = [y_{1t}, y_{2t}, \dots, y_{pt}]^T$ is the vector of $p$ endogenous variables at time $t$, 
+
+$\beta_0$ is a $p\times 1$ vector of intercept terms, 
+
+$\Phi_i$ is a $p\times p$ matrix of autoregressive coefficients for lag $i=1, \dots, k$,
+
+$\epsilon_t$ is a $p\times 1$ vector of error terms assumed to be white noise: $\epsilon_t\sim N(0, \Sigma_\epsilon)$, where $\Sigma_\epsilon$ is the $p\times p$ covariance matrix.
+
+In `R`, the `VAR()` function from the vars package can be used to fit a VAR($k$) model for multivariate time series data (i.e., more than one time series). For a univariate time series, the `arima()` function from the `stats` package can be used to fit ARIMA models. 
+
+To assess overfitting, rolling-origin cross-validation can be applied to a multivariate time series using a VAR model which can be visualized as the image below. At each step, the VAR model is trained on an expanding window of the training data, and $h$-step ahead forecasts are produced, where $h=1$ in the visualization. The forecast accuracy is then evaluated by comparing these predictions to the actual values of the chosen target variable.
+
+![Visualization of the cross validation for time series with one step ahead forecast](https://otexts.com/fpp3/fpp_files/figure-html/cv1-1.png)
+
+
+
+## 3.4 Granger Causality 
+
+Granger Causality is a statistical technique that determines whether one time series can predict another. In a VAR($k$) model with $p$ variables, variable `x` is said to Granger-cause variable `y` if the past values of `x` provide statistically significant information about the future values of `y` that cannot be explained by the past values of `y` itself. The test determines whether the coefficients for the lagged values of `x` are jointly significant in the equation for `y`.  If they are, we reject the null hypothesis, which holds that `x` does not cause `y`. However, it is important to note that Granger causality identifies predictive relationships rather than direct causal links.
+
+Consider the system with only one target variable $y_t$ with $p$ explanatory variables $x_{1t}, x_{2t}, \dots, x_{pt}$ in VAR($k$) model as follows:
+$$
+y_t=\beta_0+\sum_{i=1}^k\alpha_iy_{t-i}+\sum_{j=1}^p\sum_{i=1}^k\beta_{ji}x_{j, t-i}+\epsilon_t
+$$
+where $\beta_0$ is an intercept, $\alpha_i$ are coefficients corresponding to the lagged of the target variable $y_t$, and $\beta_{ji}$ are coefficients for the lags of explanatory variables $x_j$ for $j=1, \dots, p$.
+
+The test for Granger causality in the above model involves in whether a specific variable $x_j$ Granger-causes $y_t$, the null hypothesis is as follows:
+$$H_0: \beta_{j1}=\beta_{j2}=\dots =\beta_{jk}=0$$
+
+The rejection of the null hypothesis suggest that past values of $x_j$ contain predictive information about $y_t$ beyond what can be explained by the past values of $y_t$ alone or we can say $x_j$ Granger-causes $y_t$. 
+
+## 3.5 Extreme value analysis
 
 ## Question 1
 
@@ -127,10 +195,7 @@ The dependence on time lead to the use of GAMMs (Generalized Additive Mixed Mode
 
 GAMMs assume that the random effects are independent. Since the data collected is from two different locations, the random effect from each location should be independent from each other. Another assumption is that Storm Surge should be able to follow a certain distribution. For the research the assumption is that the model follows a Normal Distribution. One of the important assumptions is temporal correlation, where observations in the past influence future values. The random effect to the model accounts for this.
 
-ACF (Autocorrelation Function) is a method that will show how much a a variable at one time is related to its value at previous times. Since the research is studying storm surge, ACF will show if today's storm surge value was influenced from its values yesterday, before than, etc... ACF helps identity any patterns in the time series data, like seasonality or trends. If the current and past value show to be highly correlated, then the data is not random and there is some predictability in the structure.
-
 ```{r, eval=FALSE}
-# 
 interpolation_df <- (read_csv(here("Data", "linear_interpolation_df.csv"), 
       show_col_types = FALSE))
 
@@ -177,16 +242,11 @@ The density function for $y_{ji}$ is:
 
 $$g(y\mid \mu_j,\sigma_j,\xi_j) = \frac{1}{\sigma_j} \left\{1 + \xi_j \left(\frac{y - \mu_j}{\sigma_j}\right)\right\}\exp \left\{- \left[1 + \xi_j \left(\frac{y- \mu_j}{\sigma_j}\right)\right]^{-\frac{1}{\xi_j}}\right\}.$$
 
-# Analysis
+# 4. Analysis
 
-– Show the code used to actually apply the methods to the data. – Include model validation.
+## 4.1 
 
-Bring over code 
-
-
-
-
-# Results
+# 5. Results
 
 – Present and discuss the outputs of your methods. 
 – Include any visualizations of the analysis.
@@ -264,7 +324,9 @@ Looking at the overall pattern, both locations show storm surge return levels in
 The minimal difference between the initial and covariate models suggests that wind speed doesn't significantly improve storm surge prediction beyond what the initial EVA model already captures. This could mean that wind speed is already implicitly represented in your storm surge data; the relationship between wind speed and storm surge in these locations isn't strong enough to substantially improve predictions or, that other factors might be more important in determining extreme storm surge events
 
 
-# Conclusions
+# 6. Conclusion and Discussion
+
+## 6.1 Conclusion
 
 – Discuss the results of the previous section in the context of the research question. – Give an answer to your research question and discuss any uncertainty in your results. – If appropriate, discuss why the research question cannot be fully answered using the data and techniques available.
 
@@ -273,7 +335,7 @@ The analysis of water surge in Nova Scotia, particularly in Halifax and Yarmouth
 
 Different modeling approaches provide complementary insights. Vector autoregression captures multivariate influences, while generalized additive mixed models account for geographic differences but leave residual autocorrelation. Extreme value analysis indicates that Halifax experiences higher surge extremes than Yarmouth, though adding wind as a covariate yields little improvement, suggesting its effect is already embedded in surge data. This implies that simpler models may be sufficient for extreme event forecasting, while more complex approaches help understand broader surge dynamics.
 
-# Discussion
+# 6.2 Discussion
 Missingness
 The presence of missing values in our variable of interest could pose a challenge in this project. Many of the time series methods used in this report typically do not support missing data. However, our dataset contains some time gaps. 
 For the first question, we only included covariate data when the response variable was available, which led to the removal of some information from our dataset. Missingness can be problematic as it results in the loss of valuable data. To address this, we used a time interval without gaps, which is shorter than the initial interval but still assumed to be sufficiently long to provide a realistic representation of the dataset.
