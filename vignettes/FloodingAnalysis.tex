@@ -1,0 +1,2166 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  letterpaper,
+  DIV=11,
+  numbers=noendperiod]{scrartcl}
+
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math}
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else  
+    % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+% definitions for citeproc citations
+\NewDocumentCommand\citeproctext{}{}
+\NewDocumentCommand\citeproc{mm}{%
+  \begingroup\def\citeproctext{#2}\cite{#1}\endgroup}
+\makeatletter
+ % allow citations to break across lines
+ \let\@cite@ofmt\@firstofone
+ % avoid brackets around text for \cite:
+ \def\@biblabel#1{}
+ \def\@cite#1#2{{#1\if@tempswa , #2\fi}}
+\makeatother
+\newlength{\cslhangindent}
+\setlength{\cslhangindent}{1.5em}
+\newlength{\csllabelwidth}
+\setlength{\csllabelwidth}{3em}
+\newenvironment{CSLReferences}[2] % #1 hanging-indent, #2 entry-spacing
+ {\begin{list}{}{%
+  \setlength{\itemindent}{0pt}
+  \setlength{\leftmargin}{0pt}
+  \setlength{\parsep}{0pt}
+  % turn on hanging indent if param 1 is 1
+  \ifodd #1
+   \setlength{\leftmargin}{\cslhangindent}
+   \setlength{\itemindent}{-1\cslhangindent}
+  \fi
+  % set entry spacing
+  \setlength{\itemsep}{#2\baselineskip}}}
+ {\end{list}}
+\usepackage{calc}
+\newcommand{\CSLBlock}[1]{\hfill\break\parbox[t]{\linewidth}{\strut\ignorespaces#1\strut}}
+\newcommand{\CSLLeftMargin}[1]{\parbox[t]{\csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLRightInline}[1]{\parbox[t]{\linewidth - \csllabelwidth}{\strut#1\strut}}
+\newcommand{\CSLIndent}[1]{\hspace{\cslhangindent}#1}
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  pdftitle={Climate Conditions and Flooding Disasters in Nova Scotia},
+  pdfauthor={Kyle Allie, Thu Nguyen, Margo Paris, Fatma Sarhan}
+}
+\KOMAoption{captions}{tableheading}
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same} % disable monospaced font for URLs
+\hypersetup{
+  pdftitle={Climate Conditions and Flooding Disasters in Nova Scotia},
+  pdfauthor={Fatma Sarhan, Margo Paris, Thu Nguyen, Kyle Allie},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{Climate Conditions and Flooding Disasters in Nova Scotia}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Data Analysis STAT 4620/5620 Winter 24-25}
+\author{Fatma Sarhan, Margo Paris, Thu Nguyen, Kyle Allie}
+\date{}
+
+\begin{document}
+\maketitle
+
+
+\begin{center}
+  \vspace{2mm}
+  \textbf{Project's Github Repository} \\
+  \texttt{\href{https://github.com/KyleA2001/STAT4620_5620-Flooding_Project.git}{github.com/KyleA2001/STAT4620\_5620-Flooding\_Project.git}}
+\end{center}
+
+\newpage
+
+\section{Abstract}\label{abstract}
+
+Summary in 150 words (Best done last, summarizes the whole project)
+
+\section{Keywords}\label{keywords}
+
+\begin{itemize}
+\tightlist
+\item
+  Storm Surge
+\item
+  Autocorrelation Function (ACF)
+\item
+  Cross-Correlation Function (CCF)
+\item
+  Generalized Additive Mixed Models (GAMMs)
+\item
+  Vector Autoregression (VAR)
+\item
+  Granger-Causality
+\item
+  Extreme Value Analysis (EVA)
+\end{itemize}
+
+\section{1. Introduction}\label{introduction}
+
+Storm surges are one of the most significant geophysical risks affecting
+coastal regions, often leading to substantial loss of life and
+property\footnote{Von Storch and Woth (2008)}. They occur when strong
+winds and low atmospheric pressure cause an abnormal rise in sea level,
+pushing water onto the shore. As coastal populations and infrastructure
+expand, vulnerability to storm surges is increasing, contributing to a
+growing crisis in urbanized coastal areas where natural hazards are
+causing unprecedented damage\footnote{Helderop and Grubesic (2019)}.
+
+Nova Scotia, with its extensive coastline along the Atlantic Ocean, is
+particularly susceptible to storm surges, which frequently exacerbate
+flooding events. Over the past decade, the province has experienced an
+increase in extreme weather conditions, including heavy rainfall and
+strong winds, resulting in catastrophic floods that have damaged
+infrastructure, displaced communities, and disrupted
+ecosystems\footnote{Childs (2017)}. As climate change intensifies these
+weather patterns, understanding the climatic drive\footnote{Simonović
+  (2012)}.
+
+Storm surge is influenced by multiple meteorological and oceanographic
+factors, the main factor is wind speed but others have been identified
+like atmospheric pressure, temperature, and rainfall playing key
+roles\footnote{Resio and Westerink (2008)}. Prior studies have shown
+that wind speed is a main driver of storm surge height. Rising sea
+surface temperatures have also been linked to stronger storm systems,
+leading to more intense surges\footnote{Needham, Keim, and Sathiaraj
+  (2015)}. While heavy rainfall contributes to overall flood risk, its
+direct correlation with storm surge is less pronounced compared to wind
+and pressure effects\footnote{Fang et al. (2021)}.
+
+Modeling these extreme weather events can be challenging due to their
+rarity and the complex way multiple climatic factors may interact.
+Although flooding events are relatively infrequent, their impact can
+cause significant societal and economic damage, highlighting the need
+for improved analysis and forecast tools. This research seeks to
+understand the relationship between various climatic factors and storm
+surge levels at selected locations in Nova Scotia including Halifax and
+Yarmouth. Then these findings are used to forecast the likelihood of
+future flooding events based on the most significant contributing
+climatic factor.
+
+This study aims to model storm surge levels in Nova Scotia using wind
+speed, temperature, and rainfall as climatic covariates. It seeks to
+address the following research questions:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  What is the relationship between various climatic factors and water
+  surge levels across Nova Scotia?
+\item
+  How can the most significant correlated factors predict future
+  flooding catastrophes in Nova Scotia?
+\end{enumerate}
+
+By identifying key predictors of storm surge, this research enhances our
+understanding of how climatic factors contribute to flooding disasters
+and supports the development of improved forecasting models, helping
+communities mitigate the risks associated with extreme coastal flooding.
+
+\section{2. Data}\label{data}
+
+\subsection{2.1 Description}\label{description}
+
+The data used in this study were compiled from multiple sources,
+including Environment and Climate Change Canada\footnote{weatherstats.ca
+  (2024)}, and the Government of Canada\footnote{Fisheries and Oceans
+  Canada (2024)}. Specifically, water level data were retrieved from the
+Government of Canada, while wind speed, temperature, and rainfall data
+were sourced from Environment and Climate Change Canada.
+
+Using the collected water level measurements, storm surge levels were
+derived through a pre-processing step, which is detailed in a later
+section.
+
+Data were collected for two coastal locations:
+
+\begin{itemize}
+\item
+  Halifax: From January 1961 to August 2014.
+\item
+  Yarmouth: From May 1956 to December 2023.
+\end{itemize}
+
+Due to limitations in the available data within the examined time frame
+and insights from other researchers, three covariates were selected for
+analysis: air temperature, wind speed, and rainfall. A description of
+these covariates is provided below:
+
+\begin{table}[h]
+\centering
+\resizebox{\textwidth}{!}{ % Resizes the table to fit the width of the page
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Variables} & \textbf{Units} & \textbf{Description} & \textbf{Frequency} \\
+\hline
+Date & days & Date when data was recorded & Daily \\
+Location & & Halifax and Yarmouth &  \\
+Water Level & m & Height above datum or reference system & Hourly \\
+Storm Surge & m & Water level - R calculate tidal component  & Hourly \\
+Air Temperature & °C & Air temperature & Daily min/max/avg \\
+Wind Speed & km/h & Wind speed & Daily min/max/avg \\
+Rainfall & mm & Precipitation (not including snow) & Real daily value \\
+\hline
+\end{tabular}
+}
+\caption{Data description summary}
+\end{table}
+
+\subsection{2.2 Data Pre-processing}\label{data-pre-processing}
+
+\textbf{Storm Surge Calculation}
+
+Storm surge is a key variable in flood and storm impact analysis, but it
+cannot be directly measured. Instead, it is derived using the following
+formula\footnote{Stephenson (2017)}:
+
+\[
+\text{Storm Surge} = \text{Observed Water Level} - \text{Fitted Tide}
+\]
+
+As mentioned previously, the observed water levels data for Halifax and
+Yarmouth are obtained from archived records provided by the Government
+of Canada.
+
+To estimate the fitted tide component, the \texttt{ftide()} function
+from the TideHarmonics package in R is used. This function models tidal
+patterns based on harmonic constituents and requires three main inputs:
+
+\begin{itemize}
+\item
+  \texttt{x}: A numeric vector object containing water level
+  measurements, where missing values are allowed
+\item
+  \texttt{dto}: A date-time vector (of class \texttt{POSIXct}) of the
+  same length as \texttt{x}, where missing values are not permitted.
+\item
+  \texttt{hcn}: A vector of harmonic constituent names. In this
+  analysis, we use the four major constituents, \texttt{hc4}.
+\end{itemize}
+
+By applying this \texttt{ftide()} using the observed water level data,
+we generate fitted tide values, which are then subtracted from the
+observed levels to compute the storm surge. This approach enables
+accurate estimation of storm surge at both locations, based on tidal
+patterns and observed water level data. It is important to note that
+this stage of the pre-processing was completed as part of a pre-existing
+project, and the corresponding code has not been included in this
+project. Also, there are some references to water surge level in the
+analysis displaying later, that is equal to storm surge.
+
+\textbf{Missingness Interpolation}
+
+In this study, linear interpolation was used to fill in missing values
+for the covariates. This method estimates missing values between two
+known data points by assuming a linear change between them. Suppose
+there are two known data points (\(t_1, y_1\)) and (\(t_2, y_2\)), and
+we aim to estimate the value at some point \(t\) where \(t_1<t<t_2\).
+The interpolated value is given by
+
+\[y(t)=y_1+\frac{y_2-y_1}{t_2-t_1}\times (t-t_1)\]
+
+A cutoff of 15 days was applied, meaning that gaps of 15 days or fewer
+were interpolated using this method, while longer gaps were left
+untreated. However, linear interpolation assumes a constant rate of
+change between data points, which may oversimplify real-world
+variability, potentially smoothing over short-term fluctuations and
+underestimating uncertainty in the data.
+
+In this analysis, daily average values of storm surge levels are
+computed and used alongside the corresponding daily average values of
+wind speed, rain, and temperature. After preprocessing, the final
+dataset includes 18,569 observations for Halifax and 19,582 for
+Yarmouth. The daily storm surge level and its associated covariates for
+Halifax are presented in Figure~\ref{fig-ts_halifax} below. From the
+plots, it appears that storm surge level and wind speed exhibit a
+similar pattern, especially when compared to the other two variables.
+The corresponding visualization for Yarmouth is provided in
+Figure~\ref{fig-ts_yarmouth} in the appendix.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{../visualization/ts_halifax.png}
+
+}
+
+\caption{\label{fig-ts_halifax}Daily time series of climatic factors in
+Halifax (storm surge, wind speed, rain, and temperature.)}
+
+\end{figure}%
+
+\section{3. Methods}\label{methods}
+
+\subsection{3.1 Auto- and Cross-correlation (ACF and
+CCF)}\label{auto--and-cross-correlation-acf-and-ccf}
+
+The auto-correlation function is a scaled version of the
+auto-covariance, that is used to understand the dependence structure of
+the time series process. It measures how current values of the time
+series are related to past values across various lags. The
+auto-correlation of a general time series (\(X_t\)) at lag \(h\) is
+determined by
+
+\[\rho_X(h)=\frac{\text{Cov}(X_{t+h},X_t)}{\text{Var}(X_t)}=\frac{\gamma_X(h)}{\gamma_X(0)}\]
+
+where \(\gamma_X(h)\) is the auto-covariance function of the time series
+at lag \(h\).
+
+The cross-correlation is used to evaluate the relationship between two
+time series at different lags. For two general time series (\(X_t\)) and
+(\(Y_t\)), the cross-correlation at lag \(h\) is defined as
+
+\[\rho_{XY}(h)=\frac{\text{Cov}(X_{t+h}, Y_t)}{\sqrt{\text{Var}(X_{t})\text{Var}(Y_t)}}=\frac{\gamma_{XY}(h)}{\sqrt{\gamma_X(0)\gamma_Y(0)}}\]
+
+where \(\gamma_{XY}(h)\) is the cross-covariance function of two time
+series at lag \(h\).
+
+In \texttt{R}, functions \texttt{acf()}, and \texttt{ccf()} in package
+\texttt{stats} are used to compute and visualize the autocorrelation of
+a single time series and cross-correlation between two time series,
+respectively.
+
+\subsection{3.2 Generalized Additive Mixed Models
+(GAMMs)}\label{generalized-additive-mixed-models-gamms}
+
+Generalized additive mixed effect models (GAMMs) are statistical models
+that combine the flexibility of Generalized Additive Models (GAMs) with
+the ability to account for random effects in mixed-effect models.
+Specifically, GAMMs capture non-linear relationships between predictors
+and the response variable by applying smooth functions to each
+predictor. Moreover, it also incorporates random effects to account for
+group or cluster-level variability in the data. The model is typically
+expressed as:
+
+\[y_i=f_Y(y_i; \mu_i, \theta)\]
+\[g(\mu_i)=X\beta+Zw+\sum_{i=k}^Kf_i(x_i)\] \[w\sim N(0, \sigma^2)\]
+
+where \(f_Y\) is the distribution of the response variable, \(g\) is the
+link function, \(f_i\) is the smooth function, \(X\beta\) is the fixed
+effects, \(Zw\) is the random effects.
+
+In addition, GAMMs assume smooth, additive relationships between
+predictors and the response, with random effects accounting for grouped
+or correlated data. In this study, both residuals and random effects are
+assumed to follow a normal distribution with constant variance, and the
+response variable is modeled as belonging to the exponential family. In
+\texttt{R}, the \texttt{mgcv} package provides the \texttt{gamm()}
+function, which fits GAMMs using the \texttt{nlme} package and allows
+for both non-linear predictor effects and random effects. Model
+diagnostics can be performed using the \texttt{mgcv::gam.check()}
+function.
+
+\subsection{3.3 Vector Autogressive
+(VAR)}\label{vector-autogressive-var}
+
+A VAR model is a more generalized version of the univariate
+autoregressive model. It comprises one equation per variable in the
+system including a constant and lags of all of the variables in the
+system.
+
+Consider \(\mathbf{Y}_t\) be a \(p\times 1\) vector of time series
+variables at time \(t\). The VAR(\(k\)) model is determined by \[
+\mathbf{Y}_t=\beta_0+\Phi_1\mathbf{Y}_{t-1}+\Phi_2\mathbf{Y}_{t-2}+\dots + \Phi_k\mathbf{Y}_{t-k}+\epsilon_t
+\] where
+
+\(\mathbf{Y}_t = [y_{1t}, y_{2t}, \dots, y_{pt}]^T\) is the vector of
+\(p\) endogenous variables at time \(t\),
+
+\(\beta_0\) is a \(p\times 1\) vector of intercept terms,
+
+\(\Phi_i\) is a \(p\times p\) matrix of autoregressive coefficients for
+lag \(i=1, \dots, k\),
+
+\(\epsilon_t\) is a \(p\times 1\) vector of error terms assumed to be
+white noise: \(\epsilon_t\sim N(0, \Sigma_\epsilon)\), where
+\(\Sigma_\epsilon\) is the \(p\times p\) covariance matrix.
+
+In \texttt{R}, the \texttt{VAR()} function from the vars package can be
+used to fit a VAR(\(k\)) model for multivariate time series data (i.e.,
+more than one time series). For a univariate time series, the
+\texttt{arima()} function from the \texttt{stats} package can be used to
+fit ARIMA models.
+
+To assess overfitting, rolling-origin cross-validation can be applied to
+a multivariate time series using a VAR model which can be visualized as
+the image below. At each step, the VAR model is trained on an expanding
+window of the training data, and \(h\)-step ahead forecasts are
+produced, where \(h=1\) in Figure Figure~\ref{fig-ts_CV}. The forecast
+accuracy is then evaluated by comparing these predictions to the actual
+values of the chosen target variable.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{FloodingAnalysis_files/mediabag/cv1-1.png}
+
+}
+
+\caption{\label{fig-ts_CV}Visualization of the cross validation for time
+series with one step ahead forecast.}
+
+\end{figure}%
+
+\subsection{3.4 Granger Causality}\label{granger-causality}
+
+Granger Causality is a statistical technique that determines whether one
+time series can predict another. In a VAR(\(k\)) model with \(p\)
+variables, variable \texttt{x} is said to Granger-cause variable
+\texttt{y} if the past values of \texttt{x} provide statistically
+significant information about the future values of \texttt{y} that
+cannot be explained by the past values of \texttt{y} itself. The test
+determines whether the coefficients for the lagged values of \texttt{x}
+are jointly significant in the equation for \texttt{y}. If they are, we
+reject the null hypothesis, which holds that \texttt{x} does not cause
+\texttt{y}. However, it is important to note that Granger causality
+identifies predictive relationships rather than direct causal links.
+
+Consider the system with only one target variable \(y_t\) with \(p\)
+explanatory variables \(x_{1t}, x_{2t}, \dots, x_{pt}\) in VAR(\(k\))
+model as follows: \[
+y_t=\beta_0+\sum_{i=1}^k\alpha_iy_{t-i}+\sum_{j=1}^p\sum_{i=1}^k\beta_{ji}x_{j, t-i}+\epsilon_t
+\] where \(\beta_0\) is an intercept, \(\alpha_i\) are coefficients
+corresponding to the lagged of the target variable \(y_t\), and
+\(\beta_{ji}\) are coefficients for the lags of explanatory variables
+\(x_j\) for \(j=1, \dots, p\).
+
+The test for Granger causality in the above model involves in whether a
+specific variable \(x_j\) Granger-causes \(y_t\), the null hypothesis is
+as follows: \[H_0: \beta_{j1}=\beta_{j2}=\dots =\beta_{jk}=0\]
+
+The rejection of the null hypothesis suggest that past values of \(x_j\)
+contain predictive information about \(y_t\) beyond what can be
+explained by the past values of \(y_t\) alone or we can say \(x_j\)
+Granger-causes \(y_t\). In \texttt{R}, the function
+\texttt{vars::causality()} is commonly used to compute test statistics
+for Granger causality within the context of VAR(\(k\)). Additionally,
+\texttt{the\ lmtest::grangertest()} function can be used to perform
+Granger causality tests in a more general (bivariate) setting.
+
+\subsection{3.5 Extreme Value Analysis
+(EVA)}\label{extreme-value-analysis-eva}
+
+\indent Given the focus on flooding incidents along the coast of Nova
+Scotia, it is important to identify and model the extreme storm surge
+levels associated with these events. Extreme Value Analysis (EVA) is a
+statistical framework designed to analyze, model, and predict the
+behavior of rare or extreme occurrences. Its goal is to estimate the
+probability of events that exceed all previously observed values. These
+extreme events are often characterized by their low probability of
+occurrence but high potential for severe consequences.
+
+\indent The EVA method employed in the second research question is the
+Block Maxima (BM) approach. This technique involves dividing the full
+observation period into non-overlapping intervals of equal length \(n\),
+referred to as blocks. From each block, only the maximum
+observation---called the block maxima---is retained for analysis. Often,
+these blocks correspond to calendar years, resulting in annual maxima.
+These maximas are then modeled using the Generalized Extreme Value (GEV)
+distribution.
+
+\indent In this study, data from two locations---Halifax and
+Yarmouth---are considered. For each location \(j\), let \(y_j\) denote
+the vector of annual maximas, which has length \(N_j\), the number of
+years of data available at that site. Each entry \(y_{ji}\) in this
+vector represents the annual maximum for year \(i\) at location \(j\).
+These annual maximas are assumed to follow the GEV
+distribution\footnote{Coles (2001)},
+
+\[{y_{ji}} \sim GEV(\mu_j,\sigma_j,\xi_j), \text{for } i =1,2,\cdots, N_j, \mbox{ and } j = 1,2.\]
+
+The density function for \(y_{ji}\) is:
+
+\[g(y\mid \mu_j,\sigma_j,\xi_j) = \frac{1}{\sigma_j} \left\{1 + \xi_j \left(\frac{y - \mu_j}{\sigma_j}\right)\right\}\exp \left\{- \left[1 + \xi_j \left(\frac{y- \mu_j}{\sigma_j}\right)\right]^{-\frac{1}{\xi_j}}\right\}.\]
+
+where \(\mu_j,\xi_j \in \mathbb{R}\), \(\sigma_j >0\), and,
+
+\[y \in [ \mu_j - \frac{\sigma_j}{\xi_j}, \infty] \text{ if } \xi_j > 0,\]
+\[y \in (-\infty,\infty)  \text{ if } \xi_j = 0,\]
+\[y \in [\infty,  \mu_j + \frac{\sigma_j}{\xi_j}] \text{ if } \xi_j < 0.\]
+
+These annual maximas are fitted to the GEV distribution using the
+\texttt{gev.fit()} function in \texttt{R}, which takes the vector of
+annual maximas as input. To assess the quality of the fit, the
+\texttt{gev.diag()} function can be used to produce diagnostic plots,
+helping to identify any notable deviations from the assumptions of the
+model, particularly normality.
+
+Once the GEV model is fitted, maximum likelihood estimates (MLEs) for
+the three parameters---location (\(\mu\)), scale (\(\sigma\)), and shape
+(\(\xi\))---are obtained. These estimates are then used to calculate
+return levels corresponding to various return periods. A return level,
+denoted \(z_p\), quantifies risk by representing the value expected to
+be exceeded on average once every \(\frac{1}{p}\) years. For
+\(0 < p < 1\), the MLE of the return level \(z_p\) is calculated as
+follows:
+
+\[\hat z_p = \hat\mu - \frac{\hat\sigma}{\hat\xi} [1-y_p^{-\hat\xi}], \text{ } y_p = - \log(1-p)\].
+
+For confidence interval calculations of these return levels, by the
+delta method we have,
+
+\[\operatorname{Var}(\hat{z}_{p}) \approx \nabla z_{p}^{T} V \nabla z_{p},\]
+
+where \(V\) is the variance-covariance matrix of
+\((\hat{\mu}, \hat{\sigma}, \hat{\xi})\) and
+
+\begin{align*}
+\nabla z_{p}^{T} 
+&= \left[\frac{\partial z_{p}}{\partial \mu}, \frac{\partial z_{p}}{\partial \sigma}, \frac{\partial z_{p}}{\partial \xi}\right] \\
+&= \left[1, -\xi^{-1}(1 - y_{p}^{-\xi}), \sigma \xi^{-2}(1 - y_{p}^{-\xi}) - \sigma \xi^{-1} y_{p}^{-\xi} \log y_{p}\right]
+\end{align*}
+
+With that, we have \((1-\alpha)*100\%\) confidence intervals constructed
+using,
+
+\[CI(\hat z_p)=\hat z_p\pm z_{\alpha/2}\cdot\mathrm{SE}(\hat z_p), \text{where } \mathrm{SE}(\hat z_p) = \sqrt{\operatorname{Var}(\hat{z}_{p})}\]
+Return levels can also be estimated while incorporating
+covariates---such as wind speed---to potentially improve accuracy. In
+this approach, the model is modified so that the location parameter
+\(\mu\) is expressed as a linear function of wind speed:
+
+\[Z_i \sim GEV(\mu(x_i), \sigma, \xi)\] where \(Z_i\) represents the
+annual maximum storm surge in year \(i\), and \(x_i\) is the
+corresponding wind speed. Note that the scale (\(\sigma\)) and shape
+(\(\xi\)) parameters are assumed to be constant and independent of the
+covariates, and the location (\(\mu\)) parameter is modeled as follows,
+
+\[\mu(x) = \beta_0 + \beta_1 x\] Although this covariate-based modeling
+was attempted using the \texttt{gev.fit()} function's covariate argument
+(as will be further discussed in the Analysis section), there are
+concerns that the implementation may have been incorrect or incomplete.
+Accurately incorporating covariates appears to require a more advanced
+treatment, which lies beyond the scope of this project.
+
+\section{4. Analysis}\label{analysis}
+
+The Halifax location is used as the example in all the code chunks
+illustrated in this section, which are replicated for the Yarmouth
+location data.
+
+\subsection{4.1 Time Series Analysis and Covariates Interaction
+Exploration}\label{time-series-analysis-and-covariates-interaction-exploration}
+
+\textbf{Auto-correlation functions} of each time series of climatic
+factors including storm surge, wind speed, temperature and rain in
+\texttt{R} are performed below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Storm surge}
+\NormalTok{hf\_acf\_surge }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }
+                   \AttributeTok{main=}\StringTok{"Halifax{-}ACF{-}Storm Surge"}\NormalTok{)}
+
+\CommentTok{\# Wind speed}
+\NormalTok{hf\_acf\_wind }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_wind\_speed, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }
+                  \AttributeTok{main=}\StringTok{"Halifax{-}ACF{-}Wind Speed"}\NormalTok{)}
+
+\CommentTok{\# Temperature}
+\NormalTok{hf\_acf\_temp }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_temperature, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }
+                  \AttributeTok{main=}\StringTok{"Halifax{-}ACF{-}Temperature"}\NormalTok{)}
+
+\CommentTok{\# Rain}
+\NormalTok{hf\_acf\_rain }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{rain, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }
+                  \AttributeTok{main=}\StringTok{"Halifax{-}ACF{-}Rain"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Cross-correlation functions} of storm surge level and other
+climatic factors are given in the \texttt{R} code below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Storm surge and Wind speed}
+\NormalTok{hf\_ccf\_surge\_wind }\OtherTok{=} \FunctionTok{ccf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, halifax}\SpecialCharTok{$}\NormalTok{avg\_wind\_speed, }
+                        \AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }\AttributeTok{plot=}\NormalTok{F)}
+
+\CommentTok{\# Storm surge and Temperature}
+\NormalTok{hf\_ccf\_surge\_temp }\OtherTok{=} \FunctionTok{ccf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, halifax}\SpecialCharTok{$}\NormalTok{avg\_temperature, }
+                        \AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }\AttributeTok{plot=}\NormalTok{F)}
+
+\CommentTok{\# Storm surge and Rain }
+\NormalTok{hf\_ccf\_surge\_rain }\OtherTok{=} \FunctionTok{ccf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, halifax}\SpecialCharTok{$}\NormalTok{rain, }
+                        \AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }\AttributeTok{plot=}\NormalTok{F)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{GAMMs} incorporate smooth terms for temperature, wind speed,
+rainfall, and date, allowing for the capture of seasonal patterns and
+nonlinear trends in water surge dynamics. The model aims to investigate
+the relationship between water surge and climatic predictors, accounting
+for location as a random effect, which can be expressed by the following
+formula:
+
+\begin{align*}
+\text{storm\_surge}_i=&\beta_0+\beta_1\text{temp}_i+\beta_2\text{wind\_speed}_i+\beta_3\text{rain}_i+f_1(\text{temp}_i)\\&+f_2(\text{wind\_speed}_i)+f_3(\text{rain}_i)+f_4(t_i)+w_{g,i}+\epsilon_i
+\end{align*}
+
+where \(w_{g,i}\sim N(0, \sigma^2_g)\) is a random effect covariate
+accounting for variations in storm surge across different locations.
+
+In \texttt{R}, the \texttt{gamm()} function is used as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(nlme)}
+\FunctionTok{library}\NormalTok{(mgcv)}
+
+\CommentTok{\# Load data}
+\NormalTok{new\_df\_linear\_interpolation }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\StringTok{"data/linear\_interpolation\_df.csv"}\NormalTok{)}
+\NormalTok{new\_df\_linear\_interpolation}\SpecialCharTok{$}\NormalTok{date\_num }\OtherTok{=} \FunctionTok{as.numeric}\NormalTok{(}\FunctionTok{as.Date}\NormalTok{(new\_df\_linear\_interpolation}\SpecialCharTok{$}\NormalTok{date))}
+
+\NormalTok{location\_gamm }\OtherTok{\textless{}{-}} \FunctionTok{gamm}\NormalTok{(}
+\NormalTok{  avg\_water\_surge }\SpecialCharTok{\textasciitilde{}}
+    \FunctionTok{s}\NormalTok{(avg\_temperature) }\SpecialCharTok{+}
+    \FunctionTok{s}\NormalTok{(avg\_wind\_speed) }\SpecialCharTok{+}
+    \FunctionTok{s}\NormalTok{(rain) }\SpecialCharTok{+}
+\NormalTok{    date\_num,}
+  \AttributeTok{random =} \FunctionTok{list}\NormalTok{(}\AttributeTok{location =} \SpecialCharTok{\textasciitilde{}} \DecValTok{1}\NormalTok{),}
+  \CommentTok{\# Random effect for location}
+  \AttributeTok{data =}\NormalTok{ new\_df\_linear\_interpolation}
+\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Then the residuals of the smooth terms and random effects are check as
+follows:
+
+\begin{itemize}
+\tightlist
+\item
+  First, we check for auto-correlation of the residuals since the errors
+  are assumed to be independent.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Random Effect}
+\FunctionTok{acf}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{lme), }\AttributeTok{main=}\StringTok{"ACF of residuals of Random Effect part in GAMM"}\NormalTok{)}
+
+\CommentTok{\# Smooth part}
+\FunctionTok{acf}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{gam), }\AttributeTok{main=}\StringTok{"ACF of residuals of Smooth part in GAMM"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{itemize}
+\tightlist
+\item
+  Secondly, a residual analysis was performed for both smooth and random
+  effects, including a Residuals vs.~Fitted plot and a Q-Q plot of the
+  residuals.
+\end{itemize}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# {-}{-}{-}{-} Extract residuals of Random Effect {-}{-}{-}{-}}
+\NormalTok{residuals\_gamm\_location\_lme }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{lme)}
+\NormalTok{residuals\_pearson\_location\_lme }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{lme, }\AttributeTok{type =} \StringTok{"pearson"}\NormalTok{)}
+\CommentTok{\# Seem to scatter around 0}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{fitted}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{lme), residuals\_gamm\_location\_lme,}
+     \AttributeTok{xlab =} \StringTok{"Fitted Values"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Residuals vs Fitted"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\CommentTok{\# QQ plot: not normal}
+\FunctionTok{qqnorm}\NormalTok{(residuals\_gamm\_location\_lme, }\AttributeTok{main =} \StringTok{"QQ Plot of Residuals"}\NormalTok{)}
+\FunctionTok{qqline}\NormalTok{(residuals\_gamm\_location\_lme, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+
+\CommentTok{\# {-}{-}{-}{-} Extract residuals of Smooth {-}{-}{-}{-}}
+\NormalTok{residuals\_gamm\_location\_gam }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{gam)}
+\NormalTok{residuals\_pearson\_location\_gam }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{gam, }\AttributeTok{type =} \StringTok{"pearson"}\NormalTok{)}
+\CommentTok{\# Seem to scatter around 0}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{fitted}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{gam), residuals\_gamm\_location\_gam,}
+     \AttributeTok{xlab =} \StringTok{"Fitted Values"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{,}
+     \AttributeTok{main =} \StringTok{"Residuals vs Fitted"}\NormalTok{)}
+\FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\CommentTok{\# QQ plot: not normal}
+\FunctionTok{qqnorm}\NormalTok{(residuals\_gamm\_location\_gam, }\AttributeTok{main =} \StringTok{"QQ Plot of Residuals"}\NormalTok{)}
+\FunctionTok{qqline}\NormalTok{(residuals\_gamm\_location\_gam, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Since the residual analysis indicates a dependence structure and
+violations of model assumptions, this motivates the use of alternative
+approaches, such as Vector Autoregression (VAR) models.
+
+\textbf{Vector Autoregression (VAR)}: The following model represents
+storm surge as a function of its own past values and the lagged values
+of three covariates including temperature, wind speed, and rainfall over
+7 previous time steps:
+
+\[
+\text{storm\_surge}_t=\sum_{i=1}^7(\beta_{1, i}\text{storm\_surge}_{t-i}+\beta_{2, i}\text{temp}_{t-i}+\beta_{3, i}\text{wind\_speed}_{t-i}+\beta_{4, i}\text{rain}_{t-i})+\epsilon_t
+\]
+
+where \(\epsilon\sim N(0, \sigma^2)\).
+
+Before fitting the VAR model, the Augmented Dickey-Fuller (ADF) test was
+performed to check the stationarity of the time series data.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(vars)}
+\FunctionTok{library}\NormalTok{(tseries)}
+\FunctionTok{library}\NormalTok{(forecast)}
+
+\NormalTok{halifax\_var }\OtherTok{\textless{}{-}}\NormalTok{ new\_halifax\_df\_interpolation[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }
+                                                \StringTok{"avg\_temperature"}\NormalTok{, }
+                                                \StringTok{"avg\_wind\_speed"}\NormalTok{, }
+                                                \StringTok{"rain"}\NormalTok{)]}
+
+\CommentTok{\# ADF test for each time series}
+\NormalTok{adf\_test }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(halifax\_var, }\DecValTok{2}\NormalTok{, adf.test)}
+\NormalTok{adf\_test}
+\end{Highlighting}
+\end{Shaded}
+
+Then, the \texttt{VAR()} model can be applied as follows:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{halifax\_var\_model }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var, }\AttributeTok{p =} \DecValTok{7}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
+
+\CommentTok{\# Model evaluation}
+\FunctionTok{summary}\NormalTok{(halifax\_var\_model}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{avg\_water\_surge)}
+\FunctionTok{AIC}\NormalTok{(halifax\_var\_model}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{avg\_water\_surge)}
+
+\CommentTok{\# Residual ACF plot}
+\FunctionTok{acf}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(halifax\_var\_model)[,}\DecValTok{1}\NormalTok{], }
+    \AttributeTok{main=}\StringTok{"VAR ACF Residuals Model 1 {-} Halifax"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+No significant autocorrelation was observed in the residuals, suggesting
+that the model adequately captures the temporal dependence. However, to
+address potential overfitting, time series cross-validation was applied.
+The model's performance was evaluated using the Root Mean Square Error
+(RMSE) from both the overall model fit and the average RMSE across
+expanding training windows. This was implemented using a custom function
+specifically written for this purpose.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Model RMSE}
+\NormalTok{rmse\_model }\OtherTok{=} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(halifax\_var\_model}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{avg\_water\_surge}\SpecialCharTok{$}\NormalTok{residuals}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
+
+\CommentTok{\# Cross{-}validation RMSE}
+\NormalTok{cv\_res\_1 }\OtherTok{=} \FunctionTok{tsCV\_VAR}\NormalTok{(halifax\_var, }\AttributeTok{start=}\DecValTok{18000}\NormalTok{, }\AttributeTok{h=}\DecValTok{1}\NormalTok{, }\AttributeTok{p=}\DecValTok{7}\NormalTok{, }\AttributeTok{target\_var=}\StringTok{"avg\_water\_surge"}\NormalTok{)}
+\NormalTok{cv\_res\_1}\SpecialCharTok{$}\NormalTok{rmse}
+\end{Highlighting}
+\end{Shaded}
+
+To simplify the model and focus on the most influential predictors, we
+narrowed the variables to storm surge and wind speed at lag 1. The
+reduced model is given by:
+
+\[
+\text{storm\_surge}_t=\beta_0+\beta_1\text{storm\_surge}_{t-1}+\beta_2\text{wind\_speed}_{t-1}+\epsilon_t
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{halifax\_var2 }\OtherTok{\textless{}{-}}\NormalTok{ halifax\_var[}\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"avg\_wind\_speed"}\NormalTok{)]}
+\NormalTok{halifax\_var\_model2 }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var2, }\AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
+
+\CommentTok{\# Model evaluation}
+\FunctionTok{summary}\NormalTok{(halifax\_var\_model2}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{avg\_water\_surge)}
+\FunctionTok{AIC}\NormalTok{(halifax\_var\_model2}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{avg\_water\_surge)}
+
+\CommentTok{\# Residual ACF plot}
+\FunctionTok{acf}\NormalTok{(halifax\_var\_model2}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{avg\_water\_surge}\SpecialCharTok{$}\NormalTok{residuals, }
+    \AttributeTok{main=}\StringTok{"VAR ACF Residuals Model 2 {-} Halifax"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Finally, to evaluate whether the storm surge level can be effectively
+modeled by its own previous value alone, we fitted an AR(1) model:
+
+\[
+\text{storm\_surge}_t=\beta_0+\beta_1\text{storm\_surge}_{t-1}+\epsilon_t
+\]
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{halifax\_var\_model3 }\OtherTok{=} \FunctionTok{arima}\NormalTok{(halifax\_var}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, }\AttributeTok{order=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{))}
+\FunctionTok{summary}\NormalTok{(halifax\_var\_model3)}
+
+\CommentTok{\# {-}{-}{-} Model Evaluation {-}{-}{-}}
+\CommentTok{\# Get fitted values}
+\NormalTok{fitted\_values }\OtherTok{\textless{}{-}}\NormalTok{ halifax\_var}\SpecialCharTok{$}\NormalTok{avg\_water\_surge }\SpecialCharTok{{-}} \FunctionTok{residuals}\NormalTok{(halifax\_var\_model3)}
+
+\CommentTok{\# R{-}squared}
+\NormalTok{SSE }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(halifax\_var\_model3)}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{SST }\OtherTok{\textless{}{-}} \FunctionTok{sum}\NormalTok{((halifax\_var}\SpecialCharTok{$}\NormalTok{avg\_water\_surge }\SpecialCharTok{{-}} \FunctionTok{mean}\NormalTok{(halifax\_var}\SpecialCharTok{$}\NormalTok{avg\_water\_surge))}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{)}
+\NormalTok{r\_squared }\OtherTok{\textless{}{-}} \DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ SSE}\SpecialCharTok{/}\NormalTok{SST}
+
+\CommentTok{\# AIC}
+\FunctionTok{AIC}\NormalTok{(halifax\_var\_model3)}
+
+\CommentTok{\# {-}{-}{-} ACF of Residuals {-}{-}{-}}
+\FunctionTok{acf}\NormalTok{(}\FunctionTok{na.omit}\NormalTok{(halifax\_var\_model3}\SpecialCharTok{$}\NormalTok{resid), }\AttributeTok{main=}\StringTok{"VAR ACF Residuals Model 3 {-} Halifax"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\textbf{Granger Causality} is employed to examine whether wind speed,
+temperature, and rainfall at lag one Granger-cause storm surge levels.
+The following \texttt{R} code demonstrates how to compute the test
+statistics for Granger causality using a VAR(1) model that includes wind
+speed, temperature, and rainfall as potential predictors of storm surge.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Wind speed, temperature and rain cause storm surge?}
+\NormalTok{halifax\_var\_model }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var, }\AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model, }\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}avg\_wind\_speed\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}avg\_temperature\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}rain\textquotesingle{}}\NormalTok{))}
+
+\CommentTok{\# Wind speed causes storm surge?}
+\NormalTok{halifax\_var\_model\_wind }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"avg\_wind\_speed"}\NormalTok{)], }
+                              \AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_wind, }\StringTok{\textquotesingle{}avg\_wind\_speed\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# Temperature causes storm surge?}
+\NormalTok{halifax\_var\_model\_temp }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"avg\_temperature"}\NormalTok{)], }
+                              \AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_temp, }\StringTok{\textquotesingle{}avg\_temperature\textquotesingle{}}\NormalTok{)}
+
+\CommentTok{\# Rain causes storm surge?}
+\NormalTok{halifax\_var\_model\_rain }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"rain"}\NormalTok{)], }
+                              \AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_rain, }\StringTok{\textquotesingle{}rain\textquotesingle{}}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Additionally, to assess the predictive relationship between storm surge
+and climatic factors, bivariate Granger causality tests were performed
+using \texttt{lmtest::grangertest()} with a lag of 1. Each test
+evaluates whether a covariate provides additional information about
+future storm surge beyond its past values.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Wind speed}
+\FunctionTok{grangertest}\NormalTok{(avg\_water\_surge }\SpecialCharTok{\textasciitilde{}}\NormalTok{ avg\_wind\_speed, }\AttributeTok{order =} \DecValTok{1}\NormalTok{, }\AttributeTok{data =} \FunctionTok{na.omit}\NormalTok{(halifax\_var))}
+
+\CommentTok{\# Temperature}
+\FunctionTok{grangertest}\NormalTok{(avg\_water\_surge }\SpecialCharTok{\textasciitilde{}}\NormalTok{ avg\_temperature, }\AttributeTok{order =} \DecValTok{1}\NormalTok{, }\AttributeTok{data =} \FunctionTok{na.omit}\NormalTok{(halifax\_var))}
+
+\CommentTok{\# Rain}
+\FunctionTok{grangertest}\NormalTok{(avg\_water\_surge }\SpecialCharTok{\textasciitilde{}}\NormalTok{ rain, }\AttributeTok{order =} \DecValTok{1}\NormalTok{, }\AttributeTok{data =} \FunctionTok{na.omit}\NormalTok{(halifax\_var))}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{4.2 Extreme Value Analysis}\label{extreme-value-analysis}
+
+The Extreme Value Analysis (EVA) methodology previously described in the
+Methods section is applied to address the second research question,
+which aims to predict future flooding events through the estimation of
+return levels. These return levels are the way of quantifying the risk
+through EVA. The original goal was to enhance these predictions by
+incorporating covariates identified as most strongly correlated with
+storm surge levels in the analysis of the first research question.
+
+To support this comparison, return levels were first estimated without
+the inclusion of covariates. These baseline results serve as a reference
+against which the covariate-based estimates can be evaluated.The
+following code example, based on the Halifax dataset, illustrates the
+process: extracting the annual maximas, fitting them to the GEV
+distribution, and computing the return levels along with their
+confidence intervals.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Annual max storm surges extracted from the data. }
+\NormalTok{annual.maximas.hx }\OtherTok{=}\NormalTok{ full.max.data.halifax }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(date)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max\_storm\_surge =} \FunctionTok{max}\NormalTok{(avg\_water\_surge, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{)}
+
+\CommentTok{\# Required libraries.}
+\FunctionTok{library}\NormalTok{(ismev)}
+\FunctionTok{library}\NormalTok{(evd)}
+
+\CommentTok{\# Fitting the annual maximas using the GEV distribution.}
+\NormalTok{gev.surge }\OtherTok{=} \FunctionTok{gev.fit}\NormalTok{(annual.maximas.hx}\SpecialCharTok{$}\NormalTok{max\_storm\_surge)}
+\FunctionTok{gev.diag}\NormalTok{(gev.surge)}
+
+\CommentTok{\# Extract the GEV parameters from the fitted model}
+\NormalTok{mu }\OtherTok{=}\NormalTok{ gev.surge}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{1}\NormalTok{]    }\CommentTok{\# Location parameter (mu)}
+\NormalTok{sigma }\OtherTok{=}\NormalTok{ gev.surge}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{2}\NormalTok{] }\CommentTok{\# Scale parameter (sigma)}
+\NormalTok{xi }\OtherTok{=}\NormalTok{ gev.surge}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{3}\NormalTok{]    }\CommentTok{\# Shape parameter (xi)}
+\CommentTok{\#The variance covariance matrix. }
+\NormalTok{V }\OtherTok{=}\NormalTok{ gev.surge}\SpecialCharTok{$}\NormalTok{cov}
+
+\CommentTok{\# Define the return periods  representing years.}
+\NormalTok{T\_values }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{100}\NormalTok{)}
+\NormalTok{p }\OtherTok{=} \DecValTok{1}\SpecialCharTok{/}\NormalTok{T\_values}
+\CommentTok{\#yp will be used in the return levels confidence interval calculations. }
+\NormalTok{yp }\OtherTok{=} \SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ p)}
+
+\CommentTok{\# Calculate return levels for each return period}
+\NormalTok{return\_levels }\OtherTok{=} \FunctionTok{sapply}\NormalTok{(T\_values, }\ControlFlowTok{function}\NormalTok{(T) \{}
+\CommentTok{\# The return levels are essentially the quantiles of the GEV at the MLE }
+\CommentTok{\# from the GEV fit with probabilities calculated for the different return periods.}
+\NormalTok{  return\_level }\OtherTok{=} \FunctionTok{qgev}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{T, }\AttributeTok{loc =}\NormalTok{ mu, }\AttributeTok{scale =}\NormalTok{ sigma ,}\AttributeTok{shape =}\NormalTok{ xi, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{\})}
+\NormalTok{grad }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,}\AttributeTok{nrow =} \FunctionTok{length}\NormalTok{(p), }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\NormalTok{var\_return\_levels }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FunctionTok{length}\NormalTok{(p))}
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(p)) \{}
+  \CommentTok{\# Compute Gradient Vector (∇zp) of Return Levels}
+\NormalTok{  grad[i,] }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)), }
+\NormalTok{               sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)) }\SpecialCharTok{{-}}\NormalTok{ sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi) }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(yp[i]))}
+  \CommentTok{\# Compute Variance of Return Levels}
+\NormalTok{  var\_return\_levels[i] }\OtherTok{=} \FunctionTok{t}\NormalTok{(grad[i,]) }\SpecialCharTok{\%*\%}\NormalTok{ V }\SpecialCharTok{\%*\%}\NormalTok{ grad[i,]}
+\NormalTok{\}}
+
+\CommentTok{\# Compute Standard Errors of Return Levels}
+\NormalTok{se\_return\_levels }\OtherTok{=}\FunctionTok{sqrt}\NormalTok{(var\_return\_levels)}
+
+\CommentTok{\# 95\% Confidence Interval}
+\NormalTok{alpha }\OtherTok{=} \FloatTok{0.05}
+\NormalTok{z\_value }\OtherTok{=} \FunctionTok{qnorm}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha }\SpecialCharTok{/} \DecValTok{2}\NormalTok{)}
+\NormalTok{lower.bounds }\OtherTok{=}\NormalTok{ return\_levels }\SpecialCharTok{{-}}\NormalTok{ z\_value }\SpecialCharTok{*}\NormalTok{ se\_return\_levels}
+\NormalTok{upper.bounds }\OtherTok{=}\NormalTok{ return\_levels }\SpecialCharTok{+}\NormalTok{ z\_value }\SpecialCharTok{*}\NormalTok{ se\_return\_levels}
+\end{Highlighting}
+\end{Shaded}
+
+Following the initial analysis without covariates, an attempt was made
+to incorporate wind speed as a covariate, as it was identified in the
+first research question as having a significant relationship with storm
+surge. The code example below demonstrates how this was implemented
+using the Halifax dataset.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Annual max wind speed extracted from the data. }
+\NormalTok{annual.maximas.Halifax\_ws }\OtherTok{\textless{}{-}}\NormalTok{ full.max.data.Halifax }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(date)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max\_wind\_speed =} \FunctionTok{max}\NormalTok{(avg\_wind\_speed, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{)}
+
+\CommentTok{\# Load required libraries}
+\FunctionTok{library}\NormalTok{(ismev)}
+\FunctionTok{library}\NormalTok{(evd)}
+
+\CommentTok{\# Transform wind speed as data frame}
+\NormalTok{max\_wind\_speed }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{max\_wind\_speed =}\NormalTok{ annual.maximas.Halifax\_ws}\SpecialCharTok{$}\NormalTok{max\_wind\_speed)}
+
+\CommentTok{\# Fitting the GEV model with a covariate.}
+\NormalTok{gev.surge\_wind }\OtherTok{=} \FunctionTok{gev.fit}\NormalTok{(}\AttributeTok{xdat =}\NormalTok{ annual.maximas.Halifax\_ss}\SpecialCharTok{$}\NormalTok{max\_storm\_surge,}
+                          \AttributeTok{ydat =}\NormalTok{ max\_wind\_speed,}
+                          \AttributeTok{mul =} \DecValTok{1}\NormalTok{)}
+\FunctionTok{gev.diag}\NormalTok{(gev.surge\_wind)}
+
+\CommentTok{\# Extract the parameters from the fitted model:}
+\NormalTok{mu\_intercept }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{1}\NormalTok{]      }\CommentTok{\# Intercept for mu}
+\NormalTok{mu\_slope     }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{2}\NormalTok{]      }\CommentTok{\# Effect of wind speed on mu}
+\NormalTok{sigma        }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{3}\NormalTok{]      }\CommentTok{\# Scale parameter (must be \textgreater{} 0)}
+\NormalTok{xi           }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{4}\NormalTok{]      }\CommentTok{\# Shape parameter}
+\NormalTok{V            }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{cov         }\CommentTok{\# Covariance matrix for parameters}
+
+\CommentTok{\# Choose a reference value for the covariate (e.g., mean wind speed)}
+\NormalTok{mean\_wind }\OtherTok{=} \FunctionTok{mean}\NormalTok{(annual.maximas.Halifax\_ws}\SpecialCharTok{$}\NormalTok{max\_wind\_speed, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\# Compute the location parameter mu for the reference wind speed}
+\NormalTok{mu }\OtherTok{=}\NormalTok{ mu\_intercept }\SpecialCharTok{+}\NormalTok{ mu\_slope }\SpecialCharTok{*}\NormalTok{ mean\_wind}
+
+\CommentTok{\# Define the return periods (in years)}
+\NormalTok{T\_values }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{100}\NormalTok{)}
+\NormalTok{p }\OtherTok{=} \DecValTok{1} \SpecialCharTok{/}\NormalTok{ T\_values}
+\NormalTok{yp }\OtherTok{=} \SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ p)}
+
+\CommentTok{\# Calculate return levels for each return period using the qgev function.}
+\NormalTok{return\_levels }\OtherTok{=} \FunctionTok{sapply}\NormalTok{(T\_values, }\ControlFlowTok{function}\NormalTok{(T) \{}
+  \FunctionTok{qgev}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{T, }\AttributeTok{loc =}\NormalTok{ mu, }\AttributeTok{scale =}\NormalTok{ sigma, }\AttributeTok{shape =}\NormalTok{ xi, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+\NormalTok{\})}
+
+\CommentTok{\# Calculate the variance of the return levels via the delta method.}
+\CommentTok{\# Since we now have 4 parameters, we define a gradient vector of length 4.}
+\NormalTok{grad }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, }\AttributeTok{nrow =} \FunctionTok{length}\NormalTok{(p), }\AttributeTok{ncol =} \DecValTok{4}\NormalTok{)}
+\NormalTok{var\_return\_levels }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{length}\NormalTok{(p))}
+
+\ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(p)) \{}
+\CommentTok{\# Here, we assume the derivative with respect to mu\_slope is equal to the }
+\CommentTok{\# reference covariate value (mean\_wind).}
+\NormalTok{  grad[i, ] }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, mean\_wind,}
+                 \SpecialCharTok{{-}}\NormalTok{xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)),}
+\NormalTok{                 sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)) }\SpecialCharTok{{-}}\NormalTok{ sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi) }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(yp[i]))}
+  \CommentTok{\# Compute variance using the delta method}
+\NormalTok{  var\_return\_levels[i] }\OtherTok{=} \FunctionTok{t}\NormalTok{(grad[i, ]) }\SpecialCharTok{\%*\%}\NormalTok{ V }\SpecialCharTok{\%*\%}\NormalTok{ grad[i, ]}
+\NormalTok{\}}
+
+\CommentTok{\# Compute Standard Errors for the return levels}
+\NormalTok{se\_return\_levels }\OtherTok{=} \FunctionTok{sqrt}\NormalTok{(var\_return\_levels)}
+
+\CommentTok{\# 95\% Confidence Intervals for return levels}
+\NormalTok{alpha }\OtherTok{=} \FloatTok{0.05}
+\NormalTok{z\_value }\OtherTok{=} \FunctionTok{qnorm}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha }\SpecialCharTok{/} \DecValTok{2}\NormalTok{)}
+\NormalTok{lower\_bounds }\OtherTok{=}\NormalTok{ return\_levels }\SpecialCharTok{{-}}\NormalTok{ z\_value }\SpecialCharTok{*}\NormalTok{ se\_return\_levels}
+\NormalTok{upper\_bounds }\OtherTok{=}\NormalTok{ return\_levels }\SpecialCharTok{+}\NormalTok{ z\_value }\SpecialCharTok{*}\NormalTok{ se\_return\_levels}
+\end{Highlighting}
+\end{Shaded}
+
+\section{5. Results}\label{results}
+
+\subsection{5.1 ACF and CCF}\label{acf-and-ccf}
+
+The ACF plots for Halifax and Yarmouth (Figure~\ref{fig-acf_halifax} and
+Figure~\ref{fig-acf_yarmouth}) provide insight into how each variable
+correlates with itself over time. For both locations, storm surge, wind
+speed, temperature, and rainfall time series are examined. As expected,
+the plots display similar general patterns across locations, indicating
+that these variables behave in comparable ways.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{../visualization/acf_halifax.png}
+
+}
+
+\caption{\label{fig-acf_halifax}ACF plots of storm surge (top left),
+wind speed (top right), temperature (bottom left) and Rain (bottom
+right) in Halifax.}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{../visualization/acf_yarmouth.png}
+
+}
+
+\caption{\label{fig-acf_yarmouth}ACF plots of storm surge (top left),
+wind speed (top right), temperature (bottom left) and Rain (bottom
+right) in Yarmourth.}
+
+\end{figure}%
+
+To be more specific:
+
+\begin{itemize}
+\item
+  For storm surge (top-left plot), the ACF shows a strong temporal
+  autocorrelation that gradually decreases but remains significant
+  (above the blue confidence lines) even at 50 lags. This suggests that
+  storm surge events exhibit persistent memory effects and follow
+  cyclical patterns.
+\item
+  For wind speed (top-right plot), the ACF reveals significant
+  autocorrelation at lags 0 and 1, but the correlation rapidly declines
+  thereafter. This suggests that wind events are relatively short-lived,
+  with little long-term persistence.
+\item
+  For temperature (bottom-left plot), the ACF exhibits the strongest and
+  most persistent autocorrelation among all variables. The very gradual
+  decline in correlation highlights a strong temporal persistence in
+  temperature patterns, likely reflecting seasonal cycles and day-to-day
+  stability.
+\item
+  For rainfall (bottom-right plot), the ACF shows little to no
+  significant autocorrelation beyond lag 0. This suggests that rainfall
+  events are largely independent from one time period to the next, with
+  minimal influence from past occurrences.
+\end{itemize}
+
+In summary, the ACF analysis highlights distinct temporal behaviors of
+covariates. Storm surges exhibit long-term dependencies and cyclical
+patterns, wind speed fluctuations are short-lived, temperature is highly
+persistent due to seasonal effects, and rainfall events occur
+independently with no significant memory. These differences reflect the
+underlying physical and meteorological drivers governing each variable.
+
+The CCF plots reveal relationships between water surge and other
+variables, as shown in Figure~\ref{fig-ccf_halifax} for Halifax and
+Figure~\ref{fig-ccf_yarmouth} for Yarmouth Since the results for both
+locations are similar, only the analysis for Halifax is presented below:
+
+\begin{itemize}
+\item
+  Storm Surge vs.~Wind Speed (Top Plot): The CCF shows a positive
+  correlation at lag 0, with a value of approximately 0.2, followed by a
+  rapid decline in subsequent lags. This suggests wind events
+  immediately impact water surge, with effects persisting through
+  multiple time periods. The pattern indicates wind speed is a driver of
+  water surge events.
+\item
+  Storm Surge vs.~Temperature (Middle Plot): A strong negative
+  correlation is observed, peaking at lag 3 with a CCF value around
+  -0.2. This suggests that increases in temperature are followed by
+  decreases in storm surge levels after a few days. This inverse
+  relationship is particularly pronounced for Halifax. That suggests
+  lower temperatures are associated with higher storm surge events
+  (possibly related to winter storm patterns).
+\item
+  Storm Surge vs.~Rainfall (Bottom Plot): The CCF reveals a short-term
+  positive correlation, with the highest value (about 0.18) occurring at
+  lag 0. The relationship weakens quickly over time, indicating that
+  rainfall has a short-term impact on water surges but little long-term
+  influence.
+\end{itemize}
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.6\textwidth,height=\textheight]{../visualization/ccf_halifax.png}
+
+}
+
+\caption{\label{fig-ccf_halifax}CCF plots of storm surge vs wind speed
+(top), storm surge vs temperature (middle), storm surge vs rain (bottom)
+in Halifax.}
+
+\end{figure}%
+
+The patterns are generally similar between Halifax and Yarmouth,
+suggesting regional consistency in meteorological relationships. The
+temperature-surge negative correlation appears particularly strong in
+Halifax. Moreover, Halifax shows some interesting phase shifts in the
+wind-surge relationship that might indicate more complex coastal
+geography effects. The inverse relationship with temperature likely
+reflects seasonal storm dynamics. Overall, the findings suggest that
+storm surge events in Nova Scotia are primarily driven by wind
+conditions, with secondary influences from temperature variations and
+short-term rainfall.
+
+\subsection{5.2 GAMMs}\label{gamms}
+
+The model outputs for the LME and GAM components are provided in
+Figure~\ref{fig-gamms_lme} and Figure~\ref{fig-gamms_gam}, respectively.
+The LME results indicate a significant effect of location on storm
+surge, with wind speed and rainfall also having a statistically
+significant impact. Additionally, the GAM output suggests that the
+smooth functions of all three explanatory variables are significant in
+explaining the variability in storm surge.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=1\textwidth,height=\textheight]{../visualization/gamms_lme.JPG}
+
+}
+
+\caption{\label{fig-gamms_lme}GAMMs output of LME}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=1\textwidth,height=\textheight]{../visualization/gamms_gam.jpeg}
+
+}
+
+\caption{\label{fig-gamms_gam}GAMMs output of GAM}
+
+\end{figure}%
+
+Figure~\ref{fig-location_gamm_acf_res} shows the ACF of residuals,
+revealing a strong temporal structure in the data. The random effect
+component exhibits high autocorrelation at lag 1 (around 0.7), which
+gradually decreases but remains above the significance threshold beyond
+45 lags. This indicates temporal dependencies in the data, violating the
+assumption of residual independence. Similarly, the smooth component
+shows a comparable autocorrelation at lag 1 with a more persistent
+decline, further suggesting that the independence assumption is not
+fully satisfied.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{../visualization/location_gamm_acf_res.png}
+
+}
+
+\caption{\label{fig-location_gamm_acf_res}ACF plots of residuals in both
+Smooth and Random Effects in GAMMs}
+
+\end{figure}%
+
+Residual diagnostic plots provide further insight into the model's
+performance:
+
+\begin{itemize}
+\tightlist
+\item
+  The residuals versus fitted values plot for the GAM component
+  (Figure~\ref{fig-location_gamm_res_gam}) shows a fairly uniform spread
+  around zero, while the quantile-quantile (QQ) plot indicates
+  deviations from normality.
+\end{itemize}
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{../visualization/location_gamm_res_gam.png}
+
+}
+
+\caption{\label{fig-location_gamm_res_gam}Residual diagnostic plots of
+GAM in GAMMs}
+
+\end{figure}%
+
+\begin{itemize}
+\tightlist
+\item
+  The residuals from the linear mixed effects (LME) component
+  (Figure~\ref{fig-location_gamm_res_lme}) exhibit a similar pattern,
+  suggesting that the model does not fully capture the underlying
+  structure of the data.
+\end{itemize}
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{../visualization/location_gamm_res_lme.png}
+
+}
+
+\caption{\label{fig-location_gamm_res_lme}Residual diagnostic plots of
+LME in GAMMs}
+
+\end{figure}%
+
+The model offers a strong foundation for understanding water surge
+dynamics, but adjustments to better account for temporal dependencies
+could further enhance its predictive performance and overall robustness.
+The inclusion of an explicit autocorrelation structure, such as a
+first-order autoregressive (AR(1)) correlation term, could help in
+capturing the remaining dependencies. Additionally, incorporating more
+time-related predictors or interactions may enhance explanatory power
+which leads us to VAR model.
+
+\subsection{5.3 VAR and Granger
+Causality}\label{var-and-granger-causality}
+
+The VAR models were applied to both locations, and since the results are
+similar, only the results for Halifax are presented. Before model
+estimation, the stationarity of all time series variables---average
+water surge, average temperature, average wind speed, and rainfall-was
+tested using the Augmented Dickey-Fuller (ADF) test. The results below
+indicated that all variables were stationary (p-value = 0.01 for each),
+permitting the use of VAR modeling without the need for differencing.
+
+\begin{verbatim}
+$avg_water_surge
+
+    Augmented Dickey-Fuller Test
+
+data:  newX[, i]
+Dickey-Fuller = -17.295, Lag order = 26, p-value = 0.01
+alternative hypothesis: stationary
+
+
+$avg_temperature
+
+    Augmented Dickey-Fuller Test
+
+data:  newX[, i]
+Dickey-Fuller = -7.8782, Lag order = 26, p-value = 0.01
+alternative hypothesis: stationary
+
+
+$avg_wind_speed
+
+    Augmented Dickey-Fuller Test
+
+data:  newX[, i]
+Dickey-Fuller = -15.026, Lag order = 26, p-value = 0.01
+alternative hypothesis: stationary
+
+
+$rain
+
+    Augmented Dickey-Fuller Test
+
+data:  newX[, i]
+Dickey-Fuller = -24.35, Lag order = 26, p-value = 0.01
+alternative hypothesis: stationary
+\end{verbatim}
+
+The initial model used a VAR(7) specification, incorporating all
+climatic factors---average water surge, temperature, wind speed, and
+rainfall---using seven lags. This choice was based on the observation
+that increasing the number of lags beyond seven did not significantly
+affect the AIC value, leading to a more complicated model that would be
+harder to interpret. The output of the VAR(7) model for Halifax, with
+coefficients ordered by increasing p-value, is presented below. All
+listed variables are statistically significant at the 1\% level,
+indicating a strong influence of their respective lagged values on the
+current storm surge level.
+
+\begin{verbatim}
+                        Estimate   Std. Error    t value     Pr(>|t|)
+avg_water_surge.l1  0.6152109145 7.921935e-03  77.659175 0.000000e+00
+avg_wind_speed.l1  -0.0017477502 9.811705e-05 -17.812911 2.167159e-70
+rain.l2            -0.0011377409 7.633787e-05 -14.904017 6.042093e-50
+rain.l1             0.0009455424 7.581813e-05  12.471190 1.489265e-35
+avg_temperature.l2 -0.0027492896 2.582686e-04 -10.645080 2.191011e-26
+avg_temperature.l1  0.0018600344 1.977047e-04   9.408144 5.624041e-21
+avg_wind_speed.l2   0.0009737867 1.062547e-04   9.164646 5.477979e-20
+avg_water_surge.l7  0.0517848817 7.950486e-03   6.513423 7.534469e-11
+avg_water_surge.l2  0.0589565765 9.611218e-03   6.134142 8.735622e-10
+avg_wind_speed.l6   0.0005108945 1.061634e-04   4.812343 1.503458e-06
+\end{verbatim}
+
+\begin{itemize}
+\item
+  This model explained approximately 63.1\% of the variation in storm
+  surge (\texttt{R-squared\ =\ 0.631}) and exhibited the AIC of
+  -39,456.38, suggesting the moderate well fit.
+\item
+  Among the most significant predictors, the strongest influence is
+  observed for the storm surge level at lag 1, with an estimated
+  coefficient of 0.6152. This indicates a strong positive relationship,
+  suggesting that current storm surge levels are influenced by their
+  previous past values.
+\item
+  Wind speed has a negative effect at lag 1 (−0.00175) and a positive
+  effect at lag 2 (0.000974) on storm surge. These smaller coefficients
+  are due to wind speed being measured in km/h, which tends to have
+  larger numerical values.
+\item
+  Rainfall displays a negative effect at lag 2 (-1.14e-03), and a
+  positive effect for lag 1 (9.46e-04). As with wind speed, the smaller
+  coefficients are a result of rainfall being measured in mm, which also
+  involves relatively high magnitudes.
+\item
+  Temperature also shows a negative effect at lag 2 (-2.75e-03), and a
+  positive effect for lag 1 (1.86-03). These coefficients are smaller
+  than that of water surge at lag 1, likely due to temperature being
+  measured in degrees Celsius, which has a larger numerical scale.
+\item
+  Additionally, residual analysis using the autocorrelation function
+  (ACF) plot (Figure~\ref{fig-hf_VAR_acf_res}) indicates no significant
+  autocorrelation, confirming that the model effectively captured
+  temporal dependencies.
+\end{itemize}
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.5\textwidth,height=\textheight]{../visualization/hf_VAR_acf_res.png}
+
+}
+
+\caption{\label{fig-hf_VAR_acf_res}ACF plot of residuals of VAR(7) model
+for Halifax.}
+
+\end{figure}%
+
+\begin{itemize}
+\tightlist
+\item
+  Furthermore, time series cross-validation was used to assess potential
+  overfitting. The model RMSE was 0.0839, and the average RMSE across
+  expanding training windows was 0.0916, indicating no signs of
+  overfitting.
+\end{itemize}
+
+A simplified model using VAR(1) incorporates only water surge and wind
+speed with a single lag is fitted to evaluate whether wind speed, as a
+significant covariate, can be used to forecast water surge one step
+ahead. The model having AIC of -37,594.7 with the output shown as
+follows:
+
+\begin{verbatim}
+
+Call:
+lm(formula = y ~ -1 + ., data = datamat)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.62769 -0.04120  0.00193  0.05088  0.61280 
+
+Coefficients:
+                    Estimate Std. Error t value Pr(>|t|)    
+avg_water_surge.l1 7.101e-01  5.539e-03  128.19   <2e-16 ***
+avg_wind_speed.l1  7.290e-04  3.994e-05   18.25   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.08791 on 18566 degrees of freedom
+Multiple R-squared:  0.5906,    Adjusted R-squared:  0.5906 
+F-statistic: 1.339e+04 on 2 and 18566 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+The VAR(1) model accounts for 59\% of the variance in storm surge
+(\texttt{R-squared\ =\ 0.59}) and has a higher AIC value of -37,666.21,
+indicating a relatively poorer fit compared to the more complex VAR(7)
+model. Despite this, both included predictors---storm surge and wind
+speed---remain highly significant (\texttt{p\ \textless{}\ 2e-16}), with
+wind speed showing a consistent positive effect (with the estimated
+coefficient of 7.290e-04) on storm surge levels. The residual
+autocorrelation, as shown in Figure~\ref{fig-hf_VAR_model2_acf_res},
+appears acceptable, suggesting that the simplified model still captures
+key temporal dynamics.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.5\textwidth,height=\textheight]{../visualization/hf_VAR_model2_acf_res.png}
+
+}
+
+\caption{\label{fig-hf_VAR_model2_acf_res}ACF plot of residuals of
+VAR(1) model of water surge and wind speed in Halifax.}
+
+\end{figure}%
+
+To further isolate the influence of past water surge levels, the first
+order autoregressive (AR) model was estimated - AR(1). The result is
+shown as follows:
+
+\begin{verbatim}
+
+Call:
+arima(x = halifax_var$avg_water_surge, order = c(1, 0, 0))
+
+Coefficients:
+         ar1  intercept
+      0.6860     0.0684
+s.e.  0.0053     0.0020
+
+sigma^2 estimated as 0.00752:  log likelihood = 19054.9,  aic = -38103.81
+
+Training set error measures:
+                       ME       RMSE        MAE      MPE     MAPE      MASE
+Training set 4.669154e-07 0.08671545 0.06300452 173.0141 424.5072 0.9329517
+                    ACF1
+Training set -0.04108029
+\end{verbatim}
+
+\begin{verbatim}
+[1] "R-squared: 0.4706"
+\end{verbatim}
+
+The AR(1) model, focusing exclusively on the temporal dependence of
+water surge, has an R-squared of 0.4706, explaining 47\% of the
+variance. The AIC value was -38,103.81, positioning it between the
+simplified VAR(1) model and the full VAR(7) model. The autoregressive
+coefficient (0.6860) indicates a strong temporal dependence, reinforcing
+the role of past water surge levels as the primary determinant of future
+surges. Moreover, the residual autocorrelation drops off quickly,
+suggesting the model adequately captures the underlying temporal
+structure.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.5\textwidth,height=\textheight]{../visualization/hf_acf_res_surgel1.png}
+
+}
+
+\caption{\label{fig-hf_acf_res_surgel1}ACF plot of residuals of AR(1)
+model of storm surge level in Halifax.}
+
+\end{figure}%
+
+The results highlight key insights into the dynamics of water surge
+variation. Water surge exhibits strong autocorrelation, with previous
+surge levels serving as the most influential predictor. The inclusion of
+climatic factors significantly improves predictive power, increasing
+explained variance from 47\% (AR model) to 62\% (full VAR model). Wind
+speed exerts both immediate and delayed effects, displaying an initial
+negative influence followed by positive effects at later lags,
+suggesting a complex interaction with water dynamics. Rainfall and
+temperature show a negative impact on storm surge at lag 2 and a
+positive impact at lag 1. Both effects are statistically significant at
+the 1\% significance level, indicating that these climatic factors
+influence storm surge both in the short term (lag 1) and with a delayed
+effect (lag 2).
+
+Overall, while the full VAR(7) model provides the best fit for
+accurately capturing storm surge dynamics, the VAR(1) model with wind
+speed represents a viable alternative for operational use, balancing
+predictive capability with model simplicity. These findings underscore
+the complex interplay between past water surge levels and climatic
+factors in shaping surge dynamics in Halifax, emphasizing the importance
+of multivariate approaches for improved forecasting.
+
+\textbf{Granger Causality:}
+
+Granger causality tests were conducted to examine the predictive power
+of individual climatic variables on storm surge. Each test compared a
+restricted model (including only lagged storm surge) against a full
+model that also included a lagged climatic predictor. To be specific:
+
+\begin{itemize}
+\item
+  All three covariates at lag 1 combined: When all three climatic
+  variables are jointly tested at lag 1, the null hypothesis that they
+  do not Granger-cause storm surge is strongly rejected
+  (\texttt{F\ =\ 118.31,\ p\ \textless{}\ 2.2e-16}). This result
+  indicates that the lagged climatic factors provide significant
+  predictive information for storm surge dynamics.
+\item
+  Wind Speed at lag 1 significantly improves model performance, showing
+  the strongest Granger causality effect
+  (\texttt{F-Test\ =\ 333.05,\ p\ \textless{}\ 2.2e-16}). This suggests
+  wind speed at lag 1 is the most dominant short-term predictor of storm
+  surge variation.
+\item
+  Rainfall at lag 1 also significantly contributes to the predictive
+  model for storm surge dynamics
+  (\texttt{F-Test\ =\ 89.911,\ p\ \textless{}\ 2.2e-16}), suggesting a
+  causal relationship.
+\item
+  Temperature although weaker than the other variables, still shows a
+  significant effect at lag 1
+  (\texttt{F-Test\ =\ 41.206,\ p\ =\ 1.387e-10}), supporting its
+  short-term predictive relevance.
+\end{itemize}
+
+\begin{verbatim}
+[1] "All covariates"
+\end{verbatim}
+
+\begin{verbatim}
+
+    Granger causality H0: avg_temperature avg_wind_speed rain do not
+    Granger-cause avg_water_surge
+
+data:  VAR object halifax_var_model
+F-Test = 118.31, df1 = 3, df2 = 74256, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{verbatim}
+[1] "Wind speed"
+\end{verbatim}
+
+\begin{verbatim}
+
+    Granger causality H0: avg_wind_speed do not Granger-cause
+    avg_water_surge
+
+data:  VAR object halifax_var_model_wind
+F-Test = 333.05, df1 = 1, df2 = 37132, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{verbatim}
+[1] "Temperature"
+\end{verbatim}
+
+\begin{verbatim}
+
+    Granger causality H0: avg_temperature do not Granger-cause
+    avg_water_surge
+
+data:  VAR object halifax_var_model_temp
+F-Test = 41.206, df1 = 1, df2 = 37132, p-value = 1.387e-10
+\end{verbatim}
+
+\begin{verbatim}
+[1] "Rain"
+\end{verbatim}
+
+\begin{verbatim}
+
+    Granger causality H0: rain do not Granger-cause avg_water_surge
+
+data:  VAR object halifax_var_model_rain
+F-Test = 89.911, df1 = 1, df2 = 37132, p-value < 2.2e-16
+\end{verbatim}
+
+\subsection{5.4 EVA}\label{eva}
+
+Looking at the overall pattern, both locations show storm surge return
+levels increasing with longer return periods, following a logarithmic
+curve that flattens at higher return periods. This is typical in extreme
+value analysis with the difference between a 50-year and 100-year event
+is less dramatic than between a 2-year and 10-year event. Comparing both
+location, Halifax consistently shows higher return levels (approximately
+0.08-0.10m higher) compared to Yarmouth across all return periods.
+Halifax's 100-year return level reaches about 0.71m while Yarmouth's
+reaches about 0.62m. The Figure X and X represent the case with wind as
+covariates. The covariate analysis produced remarkably similar results
+to the initial analysis. For Halifax, differences between initial and
+covariate models are extremely small (0.0001-0.0003m), for Yarmouth,
+differences are slightly larger but still minor (0.0049-0.0116m). Both
+graphs show upper and lower confidence bounds (red dotted lines). The
+confidence interval widens as the return period increases, reflecting
+greater uncertainty in predicting more extreme events. The minimal
+difference between the initial and covariate models suggests that wind
+speed doesn't significantly improve storm surge prediction beyond what
+the initial EVA model already captures. This could mean that wind speed
+is already implicitly represented in your storm surge data; the
+relationship between wind speed and storm surge in these locations isn't
+strong enough to substantially improve predictions or, that other
+factors might be more important in determining extreme storm surge
+events
+
+\section{6. Conclusion and Discussion}\label{conclusion-and-discussion}
+
+\subsection{6.1 Conclusion}\label{conclusion}
+
+In conclusion, across various analytical approaches---including basic
+time series techniques like cross-correlation functions (CCF),
+generalized additive mixed models (GAMMs), vector autoregressive (VAR)
+modeling, and Granger causality tests---the findings consistently
+indicate that, in addition to the storm surge's own past values, wind
+speed plays a statistically significant role in explaining variations in
+storm surge. This alignment across models strengthens the evidence that
+wind is a key driver of storm surge dynamics.
+
+The analysis of water surge in Nova Scotia, particularly in Halifax and
+Yarmouth, highlights strong temporal dependencies and key climatic
+influences. Wind speed emerges as a primary driver, with immediate and
+delayed effects, though its impact is complex. Temperature shows a
+notable negative correlation with surge levels, aligning with seasonal
+storm patterns, while rainfall has only a short-term influence. Surge
+events exhibit strong autocorrelation, with past water levels being the
+most reliable predictors.
+
+Different modeling approaches provide complementary insights. Vector
+autoregression captures multivariate influences, while generalized
+additive mixed models account for geographic differences but leave
+residual autocorrelation. Extreme value analysis indicates that Halifax
+experiences higher surge extremes than Yarmouth, though adding wind as a
+covariate yields little improvement, suggesting its effect is already
+embedded in surge data. This implies that simpler models may be
+sufficient for extreme event forecasting, while more complex approaches
+help understand broader surge dynamics.
+
+\subsection{6.2 Discussion}\label{discussion}
+
+Linear interpolation does not account for the uncertainty.
+
+Missingness The presence of missing values in our variable of interest
+could pose a challenge in this project. Many of the time series methods
+used in this report typically do not support missing data. However, our
+dataset contains some time gaps. For the first question, we only
+included covariate data when the response variable was available, which
+led to the removal of some information from our dataset. Missingness can
+be problematic as it results in the loss of valuable data. To address
+this, we used a time interval without gaps, which is shorter than the
+initial interval but still assumed to be sufficiently long to provide a
+realistic representation of the dataset. Then for the second question,
+we considered methods for predicting missing values to mitigate this
+issue.
+
+Covariates For the second question, we aimed to predict storm surges,
+initially using only water surge data and then incorporating additional
+correlated covariates. We expected different results, potentially
+leading to more accurate predictions. However, adding covariates did not
+significantly improve the predictions, suggesting that storm surge is
+primarily influenced by storm surge itself. This raises several
+discussion points regarding the model: - A flawed implementation can
+yield unsatisfactory results. Even if we apply the formula as suggested
+in R, the literature indicates that incorporating covariates requires a
+more complex approach than initially assumed. - We selected only highly
+correlated covariates for the model. However, adding a strongly
+correlated variable may not provide additional useful information. The
+literature suggests that experimenting with less correlated variables
+could lead to more meaningful improvements.
+
+For future analysis, we might consider testing different covariates
+(atmospheric pressure, tide levels, storm track). We can also examining
+if the covariate relationship changes seasonally. An other option would
+be to investigate if there are specific storm types where wind speed
+becomes more significant. As an alternative if none of this proposition
+is satisfying, predicting water surge levels could be approached using a
+simpler model. Instead of employing Extreme Value Analysis (EVA) for
+long-term predictions with covariates (a complex procedure), we propose
+using Long Short-Term Memory (LSTM) methods to make short-term
+predictions, leveraging the results obtained in the first question.
+
+Non stationarity A critical aspect of the model that needs to be
+highlighted is its non-stationarity in the context of EVA. Our response
+variable, storm surge, is influenced by sea level, which has been shown
+to be increasing over time (as documented in the literature).
+Consequently, storm surge is also expected to rise over time. Despite
+this, we assumed that non-stationarity does not affect our results, even
+though this assumption might not hold. Further investigation may be
+required to assess the impact of this assumption on our findings.
+
+\section{Appendix}\label{appendix}
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{../visualization/ts_yarmouth.png}
+
+}
+
+\caption{\label{fig-ts_yarmouth}Time series of climatic factors in
+Yarmouth (storm surge, wind speed, rain, and temperature.)}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.8\textwidth,height=\textheight]{../visualization/ccf_yarmouth.png}
+
+}
+
+\caption{\label{fig-ccf_yarmouth}CCF plots of storm surge vs wind speed
+(top), storm surge vs temperature (middle), storm surge vs rain (bottom)
+in Yarmouth.}
+
+\end{figure}%
+
+\textbf{ADF test for each time series for Yarmouth location}
+
+\begin{verbatim}
+$avg_water_surge
+
+    Augmented Dickey-Fuller Test
+
+data:  newX[, i]
+Dickey-Fuller = -17.551, Lag order = 26, p-value = 0.01
+alternative hypothesis: stationary
+
+
+$avg_temperature
+
+    Augmented Dickey-Fuller Test
+
+data:  newX[, i]
+Dickey-Fuller = -8.4732, Lag order = 26, p-value = 0.01
+alternative hypothesis: stationary
+
+
+$avg_wind_speed
+
+    Augmented Dickey-Fuller Test
+
+data:  newX[, i]
+Dickey-Fuller = -13.361, Lag order = 26, p-value = 0.01
+alternative hypothesis: stationary
+
+
+$rain
+
+    Augmented Dickey-Fuller Test
+
+data:  newX[, i]
+Dickey-Fuller = -24.346, Lag order = 26, p-value = 0.01
+alternative hypothesis: stationary
+\end{verbatim}
+
+\textbf{VAR(7) model output for Yarmouth}
+
+\begin{verbatim}
+                       Estimate   Std. Error    t value      Pr(>|t|)
+avg_water_surge.l1  0.607038522 7.762422e-03  78.202209  0.000000e+00
+avg_wind_speed.l1  -0.003132637 9.346235e-05 -33.517636 1.552570e-239
+avg_wind_speed.l2   0.001797234 1.043837e-04  17.217584  6.008492e-66
+rain.l1             0.001322609 8.298232e-05  15.938447  7.819339e-57
+avg_temperature.l2 -0.004856328 3.086295e-04 -15.735139  1.902118e-55
+rain.l2            -0.001226668 8.376249e-05 -14.644596  2.629918e-48
+avg_temperature.l1  0.003328524 2.401642e-04  13.859366  1.793093e-43
+avg_water_surge.l7  0.080255923 7.735126e-03  10.375516  3.724910e-25
+avg_temperature.l3  0.001809273 3.126276e-04   5.787312  7.261540e-09
+avg_water_surge.l2  0.045438692 9.465355e-03   4.800527  1.594187e-06
+\end{verbatim}
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.5\textwidth,height=\textheight]{../visualization/ym_VAR_acf_res.png}
+
+}
+
+\caption{\label{fig-ym_VAR_acf_res}ACF plot of residuals of VAR(7) model
+for Yarmouth.}
+
+\end{figure}%
+
+\textbf{VAR(1) model output of water surge and wind speed for Yarmouth}
+
+\begin{verbatim}
+
+Call:
+lm(formula = y ~ -1 + ., data = datamat)
+
+Residuals:
+     Min       1Q   Median       3Q      Max 
+-0.66804 -0.04307  0.00409  0.05518  0.60593 
+
+Coefficients:
+                     Estimate Std. Error t value Pr(>|t|)    
+avg_water_surge.l1  7.088e-01  5.063e-03   140.0   <2e-16 ***
+avg_wind_speed.l1  -3.652e-04  3.381e-05   -10.8   <2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.09148 on 19579 degrees of freedom
+Multiple R-squared:  0.5003,    Adjusted R-squared:  0.5002 
+F-statistic:  9800 on 2 and 19579 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.5\textwidth,height=\textheight]{../visualization/ym_VAR_model2_acf_res.png}
+
+}
+
+\caption{\label{fig-ym_VAR_model2_acf_res}ACF plot of residuals of
+VAR(1) model of water surge and wind speed in Yarmouth.}
+
+\end{figure}%
+
+\textbf{AR(1) model output of water surge level in Yarmouth}
+
+\begin{verbatim}
+
+Call:
+arima(x = yarmouth_var$avg_water_surge, order = c(1, 0, 0))
+
+Coefficients:
+         ar1  intercept
+      0.7053     0.0006
+s.e.  0.0051     0.0022
+
+sigma^2 estimated as 0.00842:  log likelihood = 18986.65,  aic = -37967.3
+
+Training set error measures:
+                       ME       RMSE        MAE      MPE     MAPE      MASE
+Training set 1.327234e-05 0.09176235 0.06674873 316.2879 537.3723 0.9440958
+                    ACF1
+Training set -0.04610327
+\end{verbatim}
+
+\begin{verbatim}
+[1] "R-squared: 0.4973"
+\end{verbatim}
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.5\textwidth,height=\textheight]{../visualization/ym_acf_res_surgel1.png}
+
+}
+
+\caption{\label{fig-ym_acf_res_surgel1}ACF plot of residuals of AR(1)
+model of storm surge level in Yarmouth.}
+
+\end{figure}%
+
+\textbf{Granger causality test for Yarmouth location:}
+
+\begin{verbatim}
+[1] "All covariates"
+\end{verbatim}
+
+\begin{verbatim}
+
+    Granger causality H0: avg_temperature avg_wind_speed rain do not
+    Granger-cause avg_water_surge
+
+data:  VAR object yarmouth_var_model
+F-Test = 70.238, df1 = 3, df2 = 78308, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{verbatim}
+[1] "Wind speed"
+\end{verbatim}
+
+\begin{verbatim}
+
+    Granger causality H0: avg_wind_speed do not Granger-cause
+    avg_water_surge
+
+data:  VAR object yarmouth_var_model_wind
+F-Test = 116.71, df1 = 1, df2 = 39158, p-value < 2.2e-16
+\end{verbatim}
+
+\begin{verbatim}
+[1] "Temperature"
+\end{verbatim}
+
+\begin{verbatim}
+
+    Granger causality H0: avg_temperature do not Granger-cause
+    avg_water_surge
+
+data:  VAR object yarmouth_var_model_temp
+F-Test = 8.3674, df1 = 1, df2 = 39158, p-value = 0.003822
+\end{verbatim}
+
+\begin{verbatim}
+[1] "Rain"
+\end{verbatim}
+
+\begin{verbatim}
+
+    Granger causality H0: rain do not Granger-cause avg_water_surge
+
+data:  VAR object yarmouth_var_model_rain
+F-Test = 20.206, df1 = 1, df2 = 39158, p-value = 6.972e-06
+\end{verbatim}
+
+\section*{References}\label{references}
+\addcontentsline{toc}{section}{References}
+
+\phantomsection\label{refs}
+\begin{CSLReferences}{1}{0}
+\bibitem[\citeproctext]{ref-R-Childs2017}
+Childs, Mackenzie. 2017. {``Urban Flooding in Halifax, Nova Scotia : The
+Extent of the Issue and the Approach Through Policy.''} In.
+\url{https://api.semanticscholar.org/CorpusID:204270737}.
+
+\bibitem[\citeproctext]{ref-R-ColesExtreme}
+Coles, Stuart. 2001. {``{A}n {I}ntroduction to {S}tatistical {M}odelling
+of {E}xtreme {V}alues.''}
+\url{https://doi.org/10.1007/978-1-4471-3675-0}.
+
+\bibitem[\citeproctext]{ref-R-Fang2021}
+Fang, J., T. Wahl, J. Fang, X. Sun, F. Kong, and M. Liu. 2021.
+{``Compound Flood Potential from Storm Surge and Heavy Precipitation in
+Coastal China: Dependence, Drivers, and Impacts.''} \emph{Hydrology and
+Earth System Sciences} 25 (8): 4403--16.
+\url{https://doi.org/10.5194/hess-25-4403-2021}.
+
+\bibitem[\citeproctext]{ref-R-dfo_station_inventory}
+Fisheries and Oceans Canada. 2024. {``Canadian Station Inventory and
+Data Download.''}
+\url{https://www.isdm-gdsi.gc.ca/isdm-gdsi/twl-mne/maps-cartes/inventory-inventaire-eng.asp}.
+
+\bibitem[\citeproctext]{ref-R-Helderop2019}
+Helderop, Edward, and Tony H. Grubesic. 2019. {``Social, Geomorphic, and
+Climatic Factors Driving u.s. Coastal City Vulnerability to Storm Surge
+Flooding.''} \emph{Ocean and Coastal Management} 181 (November).
+\url{https://doi.org/10.1016/j.ocecoaman.2019.104902}.
+
+\bibitem[\citeproctext]{ref-R-Needham2015}
+Needham, Hal F., Barry D. Keim, and Devika Sathiaraj. 2015. {``A Review
+of Tropical Cyclone‐generated Storm Surges: Global Data Sources,
+Observations, and Impacts.''} \emph{Reviews of Geophysics} 53 (2):
+545--91. \url{https://doi.org/10.1002/2014RG000477}.
+
+\bibitem[\citeproctext]{ref-R-Resio2008}
+Resio, Donald T., and Joannes J. Westerink. 2008. {``Modeling the
+Physics of Storm Surges.''} \emph{Physics Today} 61 (9): 33--38.
+\url{https://doi.org/10.1063/1.2982120}.
+
+\bibitem[\citeproctext]{ref-R-Simonovic2012}
+Simonović, Slobodan P. 2012. \emph{Floods in a Changing Climate: Risk
+Management}. Vol. 4. Cambridge, UK: Cambridge University Press.
+
+\bibitem[\citeproctext]{ref-R-StephensonTideHarmonics}
+Stephenson, Alec. 2017. {``{H}armonic {A}nalysis of {T}ides {U}sing
+{T}ide{H}armonics.''}
+\url{https://CRAN.R-project.org/package=TideHarmonics}.
+
+\bibitem[\citeproctext]{ref-R-Vonstorch2008}
+Von Storch, H., and K. Woth. 2008. {``\href{}{Storm Surges: Perspectives
+and Options}.''} \emph{Nature Geoscience} 1 (9): 488--89.
+
+\bibitem[\citeproctext]{ref-R-weatherstats2024}
+weatherstats.ca. 2024. {``Weather Statistics for Canadian Locations.''}
+\url{https://www.weatherstats.ca}.
+
+\end{CSLReferences}
+
+
+
+
+\end{document}

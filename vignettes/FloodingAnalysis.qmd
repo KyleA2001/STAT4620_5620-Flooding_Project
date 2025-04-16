@@ -1,22 +1,36 @@
 ---
 title: "Climate Conditions and Flooding Disasters in Nova Scotia"
 subtitle: "Data Analysis STAT 4620/5620 Winter 24-25"
-author: "Kyle Allie, Thu Nguyen, Margo Paris, Fatma Sarhan"
-date: today
-date-format: "YYYY-MM-DD"
+author: 
+  Fatma Sarhan,
+  Margo Paris,
+  Thu Nguyen,
+  Kyle Allie
 format: 
   pdf:
     toc: false  
-    latex_engine: xelatex 
+    latex-engine: xelatex
+    number-sections: false
+    keep-tex: true
+    include-in-header: 
+      - text: |
+          \usepackage{graphicx}
+          \usepackage{hyperref}
+          \hypersetup{
+            colorlinks=true,
+            linkcolor=blue,
+            urlcolor=blue,
+            pdftitle={Climate Conditions and Flooding Disasters in Nova Scotia},
+            pdfauthor={Kyle Allie, Thu Nguyen, Margo Paris, Fatma Sarhan}
+          }
+bibliography: ../References/citations.bib
 editor: source
-header-includes:
-  - \usepackage{hyperref}
-  - \usepackage{graphicx}  
-bibliography: ../References/citations.bib 
 ---
+
 \begin{center}
-  \vspace{-5mm}
-    \href{https://github.com/KyleA2001/STAT4620\_5620-Flooding\_Project.git}{ https://github.com/KyleA2001/STAT4620\_5620-Flooding\_Project.git}
+  \vspace{2mm}
+  \textbf{Project's Github Repository} \\
+  \texttt{\href{https://github.com/KyleA2001/STAT4620_5620-Flooding_Project.git}{github.com/KyleA2001/STAT4620\_5620-Flooding\_Project.git}}
 \end{center}
 
 \newpage
@@ -37,18 +51,19 @@ Summary in 150 words (Best done last, summarizes the whole project)
 
 # 1. Introduction
 
-Storm surges are one of the most significant geophysical risks affecting coastal regions, often leading to substantial loss of life and property.^[@R-Vonstorch2008] They occur when strong winds and low atmospheric pressure cause an abnormal rise in sea level, pushing water onto the shore. As coastal populations and infrastructure expand, vulnerability to storm surges is increasing, contributing to a growing crisis in urbanized coastal areas where natural hazards are causing unprecedented damage.^[@R-Helderop2019]
+Storm surges are one of the most significant geophysical risks affecting coastal regions, often leading to substantial loss of life and property^[@R-Vonstorch2008]. They occur when strong winds and low atmospheric pressure cause an abnormal rise in sea level, pushing water onto the shore. As coastal populations and infrastructure expand, vulnerability to storm surges is increasing, contributing to a growing crisis in urbanized coastal areas where natural hazards are causing unprecedented damage^[@R-Helderop2019].
 
-Nova Scotia, with its extensive coastline along the Atlantic Ocean, is particularly susceptible to storm surges, which frequently exacerbate flooding events. Over the past decade, the province has experienced an increase in extreme weather conditions, including heavy rainfall and strong winds, resulting in catastrophic floods that have damaged infrastructure, displaced communities, and disrupted ecosystems .^[@R-Childs2017] As climate change intensifies these weather patterns, understanding the climatic drive.^[@R-Simonovic2012]
+Nova Scotia, with its extensive coastline along the Atlantic Ocean, is particularly susceptible to storm surges, which frequently exacerbate flooding events. Over the past decade, the province has experienced an increase in extreme weather conditions, including heavy rainfall and strong winds, resulting in catastrophic floods that have damaged infrastructure, displaced communities, and disrupted ecosystems^[@R-Childs2017]. As climate change intensifies these weather patterns, understanding the climatic drive^[@R-Simonovic2012].
 
-Storm surge is influenced by multiple meteorological and oceanographic factors, the main factor is wind speed but others have been identified like atmospheric pressure, temperature, and rainfall playing key roles.^[@R-Resio2008] Prior studies have shown that wind speed is a main driver of storm surge height. Rising sea surface temperatures have also been linked to stronger storm systems, leading to more intense surges.^[@R-Needham2015] While heavy rainfall contributes to overall flood risk, its direct correlation with storm surge is less pronounced compared to wind and pressure effects.^[@R-Fang2021]
+Storm surge is influenced by multiple meteorological and oceanographic factors, the main factor is wind speed but others have been identified like atmospheric pressure, temperature, and rainfall playing key roles^[@R-Resio2008]. Prior studies have shown that wind speed is a main driver of storm surge height. Rising sea surface temperatures have also been linked to stronger storm systems, leading to more intense surges^[@R-Needham2015]. While heavy rainfall contributes to overall flood risk, its direct correlation with storm surge is less pronounced compared to wind and pressure effects^[@R-Fang2021].
 
 Modeling these extreme weather events can be challenging due to their rarity and the complex way multiple climatic factors may interact.  Although flooding events are relatively infrequent, their impact can cause significant societal and economic damage, highlighting the need for improved analysis and forecast tools. This research seeks to understand the relationship between various climatic factors and storm surge levels at selected locations in Nova Scotia including Halifax and Yarmouth. Then these findings are used to forecast the likelihood of future flooding events based on the most significant contributing climatic factor.
 
-This study aims to model storm surge levels in Nova Scotia by using wind speed, temperature, and rainfall as covariates. Our objectives are:
+This study aims to model storm surge levels in Nova Scotia using wind speed, temperature, and rainfall as climatic covariates. It seeks to address the following research questions:
 
-1.	To analyze the relationship between various climatic factors and storm surge levels across Nova Scotia.
-2.	To predict future flooding events by using the most significant correlated factor.
+1. What is the relationship between various climatic factors and water surge levels across Nova Scotia?
+
+2. How can the most significant correlated factors predict future flooding catastrophes in Nova Scotia?
 
 By identifying key predictors of storm surge, this research enhances our understanding of how climatic factors contribute to flooding disasters and supports the development of improved forecasting models, helping communities mitigate the risks associated with extreme coastal flooding.
 
@@ -56,15 +71,15 @@ By identifying key predictors of storm surge, this research enhances our underst
 
 ## 2.1 Description
 
-The data used in this study were compiled from multiple sources, including Environment and Climate Change Canada, the Citizen Weather Observer Program (CWOP), and the Government of Canada. Specifically, water level data were retrieved from the Government of Canada, while the other variables were obtained from the other two sources.
+The data used in this study were compiled from multiple sources, including Environment and Climate Change Canada^[@R-weatherstats2024], and the Government of Canada^[@R-dfo_station_inventory]. Specifically, water level data were retrieved from the Government of Canada, while wind speed, temperature, and rainfall data were sourced from Environment and Climate Change Canada.
 
 Using the collected water level measurements, storm surge levels were derived through a pre-processing step, which is detailed in a later section.
 
 Data were collected for two coastal locations:
 
-- Halifax: From January 1961 to August 2014
+- Halifax: From January 1961 to August 2014.
 
-- Yarmouth: From May 1956 to December 2023
+- Yarmouth: From May 1956 to December 2023.
 
 Due to limitations in the available data within the examined time frame and insights from other researchers, three covariates were selected for analysis: air temperature, wind speed, and rainfall. A description of these covariates is provided below:
 
@@ -78,8 +93,8 @@ Due to limitations in the available data within the examined time frame and insi
 \hline
 Date & days & Date when data was recorded & Daily \\
 Location & & Halifax and Yarmouth &  \\
-Water Level & m (meters) & Height above datum or reference system & Hourly \\
-Storm Surge & m (meters) & Water level - R calculate tidal component  & Hourly \\
+Water Level & m & Height above datum or reference system & Hourly \\
+Storm Surge & m & Water level - R calculate tidal component  & Hourly \\
 Air Temperature & °C & Air temperature & Daily min/max/avg \\
 Wind Speed & km/h & Wind speed & Daily min/max/avg \\
 Rainfall & mm & Precipitation (not including snow) & Real daily value \\
@@ -106,11 +121,11 @@ To estimate the fitted tide component, the `ftide()` function from the TideHarmo
 
 - `x`: A numeric vector object containing water level measurements, where missing values are allowed
 
-- `dto`: A date-time vector (of class `POSIXct`) of the same length as x, where missing values are not permitted.
+- `dto`: A date-time vector (of class `POSIXct`) of the same length as `x`, where missing values are not permitted.
 
 - `hcn`: A vector of harmonic constituent names. In this analysis, we use the four major constituents, `hc4`.
 
-By applying this `ftide()` using the observed water level data, we generate fitted tide values, which are then subtracted from the observed levels to compute the storm surge. This approach enables accurate estimation of storm surge at both locations, based on tidal patterns and observed water level data. It is important to note that this stage of the pre-processing was completed as part of a pre-existing project, and the corresponding code has not been included in this project.
+By applying this `ftide()` using the observed water level data, we generate fitted tide values, which are then subtracted from the observed levels to compute the storm surge. This approach enables accurate estimation of storm surge at both locations, based on tidal patterns and observed water level data. It is important to note that this stage of the pre-processing was completed as part of a pre-existing project, and the corresponding code has not been included in this project. Also, there are some references to water surge level in the analysis displaying later, that is equal to storm surge.
 
 **Missingness Interpolation**
 
@@ -121,7 +136,7 @@ $$y(t)=y_1+\frac{y_2-y_1}{t_2-t_1}\times (t-t_1)$$
 
 A cutoff of 15 days was applied, meaning that gaps of 15 days or fewer were interpolated using this method, while longer gaps were left untreated. However, linear interpolation assumes a constant rate of change between data points, which may oversimplify real-world variability, potentially smoothing over short-term fluctuations and underestimating uncertainty in the data.
 
-In this analysis, daily average values of storm surge levels are computed and used alongside the corresponding daily average values of wind speed, rain, and temperature. The daily storm surge level and its associated covariates for Halifax are presented in @fig-ts_halifax below. From the plots, it appears that storm surge level and wind speed exhibit a similar pattern, especially when compared to the other two variables. The corresponding visualization for Yarmouth is provided in @fig-ts_yarmouth in the appendix. 
+In this analysis, daily average values of storm surge levels are computed and used alongside the corresponding daily average values of wind speed, rain, and temperature. After preprocessing, the final dataset includes 18,569 observations for Halifax and 19,582 for Yarmouth. The daily storm surge level and its associated covariates for Halifax are presented in @fig-ts_halifax below. From the plots, it appears that storm surge level and wind speed exhibit a similar pattern, especially when compared to the other two variables. The corresponding visualization for Yarmouth is provided in @fig-ts_yarmouth in the appendix. 
 
 ![Daily time series of climatic factors in Halifax (storm surge, wind speed, rain, and temperature.)](../visualization/ts_halifax.png){width=80% #fig-ts_halifax fig-pos="H"}
 
@@ -141,7 +156,7 @@ $$\rho_{XY}(h)=\frac{\text{Cov}(X_{t+h}, Y_t)}{\sqrt{\text{Var}(X_{t})\text{Var}
 
 where $\gamma_{XY}(h)$ is the cross-covariance function of two time series at lag $h$.
 
-In `R`, functions `acf()`, and `ccf()` in package `stats` can be use to compute and visualize the autocorrelation of a single time series and cross-correlation between two time series, respectively. 
+In `R`, functions `acf()`, and `ccf()` in package `stats` are used to compute and visualize the autocorrelation of a single time series and cross-correlation between two time series, respectively. 
 
 ## 3.2 Generalized Additive Mixed Models (GAMMs)
 
@@ -213,7 +228,7 @@ $$y \in [ \mu_j - \frac{\sigma_j}{\xi_j}, \infty] \text{ if } \xi_j > 0,$$
 $$y \in (-\infty,\infty)  \text{ if } \xi_j = 0,$$
 $$y \in [\infty,  \mu_j + \frac{\sigma_j}{\xi_j}] \text{ if } \xi_j < 0.$$
 
-These annual maximas are fitted to the GEV distribution using the `gev.fit()` function in R, which takes the vector of annual maximas as input. To assess the quality of the fit, the `gev.diag()` function can be used to produce diagnostic plots, helping to identify any notable deviations from the assumptions of the model, particularly normality.
+These annual maximas are fitted to the GEV distribution using the `gev.fit()` function in `R`, which takes the vector of annual maximas as input. To assess the quality of the fit, the `gev.diag()` function can be used to produce diagnostic plots, helping to identify any notable deviations from the assumptions of the model, particularly normality.
 
 Once the GEV model is fitted, maximum likelihood estimates (MLEs) for the three parameters—location ($\mu$), scale ($\sigma$), and shape ($\xi$)—are obtained. These estimates are then used to calculate return levels corresponding to various return periods. A return level, denoted $z_p$, quantifies risk by representing the value expected to be exceeded on average once every $\frac{1}{p}$ years. For $0 < p < 1$, the MLE of the return level $z_p$ is calculated as follows:
 
@@ -243,47 +258,53 @@ where $Z_i$ represents the annual maximum storm surge in year $i$, and $x_i$ is 
 $$\mu(x) = \beta_0 + \beta_1 x$$
 Although this covariate-based modeling was attempted using the `gev.fit()` function’s covariate argument (as will be further discussed in the Analysis section), there are concerns that the implementation may have been incorrect or incomplete. Accurately incorporating covariates appears to require a more advanced treatment, which lies beyond the scope of this project.
  
-
 # 4. Analysis
 
-The Halifax location is used as the example in all the code chunks illustrated in this section, which was replicated for the Yarmouth location data.
+The Halifax location is used as the example in all the code chunks illustrated in this section, which are replicated for the Yarmouth location data.
 
-## 4.1 Question 1
+## 4.1 Time Series Analysis and Covariates Interaction Exploration
 
-**Auto-correlation functions** of each time series of climatic factors including storm surge, wind speed, temperature and rain are given below.
+**Auto-correlation functions** of each time series of climatic factors including storm surge, wind speed, temperature and rain in `R` are performed below.
 
 ```{r eval=FALSE, tidy=TRUE}
 # Storm surge
-hf_acf_surge = acf(halifax$avg_water_surge, lag.max = 50, main="Halifax-ACF-Storm Surge")
+hf_acf_surge = acf(halifax$avg_water_surge, lag.max = 50, 
+                   main="Halifax-ACF-Storm Surge")
 
 # Wind speed
-hf_acf_wind = acf(halifax$avg_wind_speed, lag.max = 50, main="Halifax-ACF-Wind Speed")
+hf_acf_wind = acf(halifax$avg_wind_speed, lag.max = 50, 
+                  main="Halifax-ACF-Wind Speed")
 
 # Temperature
-hf_acf_temp = acf(halifax$avg_temperature, lag.max = 50, main="Halifax-ACF-Temperature")
+hf_acf_temp = acf(halifax$avg_temperature, lag.max = 50, 
+                  main="Halifax-ACF-Temperature")
 
 # Rain
-hf_acf_rain = acf(halifax$rain, lag.max = 50, main="Halifax-ACF-Rain")
+hf_acf_rain = acf(halifax$rain, lag.max = 50, 
+                  main="Halifax-ACF-Rain")
 ```
 
-**Cross-correlation functions** of storm surge level and other climatic factors are 
+**Cross-correlation functions** of storm surge level and other climatic factors are given in the `R` code below.
 
 ```{r eval=FALSE, tidy=TRUE}
 # Storm surge and Wind speed
-hf_ccf_surge_wind = ccf(halifax$avg_water_surge, halifax$avg_wind_speed, lag.max = 50, plot=F)
+hf_ccf_surge_wind = ccf(halifax$avg_water_surge, halifax$avg_wind_speed, 
+                        lag.max = 50, plot=F)
 
 # Storm surge and Temperature
-hf_ccf_surge_temp = ccf(halifax$avg_water_surge, halifax$avg_temperature, lag.max = 50, plot=F)
+hf_ccf_surge_temp = ccf(halifax$avg_water_surge, halifax$avg_temperature, 
+                        lag.max = 50, plot=F)
 
 # Storm surge and Rain 
-hf_ccf_surge_rain = ccf(halifax$avg_water_surge, halifax$rain, lag.max = 50, plot=F)
+hf_ccf_surge_rain = ccf(halifax$avg_water_surge, halifax$rain, 
+                        lag.max = 50, plot=F)
 ```
 
-**Generalized Additive Mixed Models** incorporate smooth terms for temperature, wind speed, rainfall, and date, allowing for the capture of seasonal patterns and nonlinear trends in water surge dynamics. The model aims to investigate the relationship between water surge and climatic predictors, accounting for location as a random effect, which can be expressed by the following formula:
+**GAMMs** incorporate smooth terms for temperature, wind speed, rainfall, and date, allowing for the capture of seasonal patterns and nonlinear trends in water surge dynamics. The model aims to investigate the relationship between water surge and climatic predictors, accounting for location as a random effect, which can be expressed by the following formula:
 
-$$
-\text{storm\_surge}_i=\beta_0+\beta_1\text{temp}_i+\beta_2\text{wind\_speed}_i+\beta_3\text{rain}_i+f_1(\text{temp}_i)+f_2(\text{wind\_speed}_i)+f_3(\text{rain}_i)+f_4(t_i)+w_{g,i}+\epsilon_i
-$$
+\begin{align*}
+\text{storm\_surge}_i=&\beta_0+\beta_1\text{temp}_i+\beta_2\text{wind\_speed}_i+\beta_3\text{rain}_i+f_1(\text{temp}_i)\\&+f_2(\text{wind\_speed}_i)+f_3(\text{rain}_i)+f_4(t_i)+w_{g,i}+\epsilon_i
+\end{align*}
 
 where $w_{g,i}\sim N(0, \sigma^2_g)$ is a random effect covariate accounting for variations in storm surge across different locations.
 
@@ -351,7 +372,7 @@ qqline(residuals_gamm_location_gam, col = "red")
 
 Since the residual analysis indicates a dependence structure and violations of model assumptions, this motivates the use of alternative approaches, such as Vector Autoregression (VAR) models.
 
-**Vector Autoregression:** The following model represents storm surge as a function of its own past values and the lagged values of three covariates including temperature, wind speed, and rainfall over 7 previous time steps: 
+**Vector Autoregression (VAR)**: The following model represents storm surge as a function of its own past values and the lagged values of three covariates including temperature, wind speed, and rainfall over 7 previous time steps: 
 
 $$
 \text{storm\_surge}_t=\sum_{i=1}^7(\beta_{1, i}\text{storm\_surge}_{t-i}+\beta_{2, i}\text{temp}_{t-i}+\beta_{3, i}\text{wind\_speed}_{t-i}+\beta_{4, i}\text{rain}_{t-i})+\epsilon_t
@@ -366,7 +387,10 @@ library(vars)
 library(tseries)
 library(forecast)
 
-halifax_var <- new_halifax_df_interpolation[, c("avg_water_surge", "avg_temperature", "avg_wind_speed", "rain")]
+halifax_var <- new_halifax_df_interpolation[, c("avg_water_surge", 
+                                                "avg_temperature", 
+                                                "avg_wind_speed", 
+                                                "rain")]
 
 # ADF test for each time series
 adf_test <- apply(halifax_var, 2, adf.test)
@@ -383,10 +407,11 @@ summary(halifax_var_model$varresult$avg_water_surge)
 AIC(halifax_var_model$varresult$avg_water_surge)
 
 # Residual ACF plot
-acf(residuals(halifax_var_model)[,1], main="VAR ACF Residuals Model 1 - Halifax")
+acf(residuals(halifax_var_model)[,1], 
+    main="VAR ACF Residuals Model 1 - Halifax")
 ```
 
-No significant autocorrelation was observed in the residuals, suggesting that the model adequately captures the temporal dependence. However, to address the potential issue of overfitting, we applied time series cross-validation. This was implemented using a custom function specifically written for this purpose. 
+No significant autocorrelation was observed in the residuals, suggesting that the model adequately captures the temporal dependence. However, to address potential overfitting, time series cross-validation was applied. The model’s performance was evaluated using the Root Mean Square Error (RMSE) from both the overall model fit and the average RMSE across expanding training windows. This was implemented using a custom function specifically written for this purpose. 
 
 ```{r eval=FALSE, tidy=TRUE}
 # Model RMSE
@@ -412,7 +437,8 @@ summary(halifax_var_model2$varresult$avg_water_surge)
 AIC(halifax_var_model2$varresult$avg_water_surge)
 
 # Residual ACF plot
-acf(halifax_var_model2$varresult$avg_water_surge$residuals, main="VAR ACF Residuals Model 2 - Halifax")
+acf(halifax_var_model2$varresult$avg_water_surge$residuals, 
+    main="VAR ACF Residuals Model 2 - Halifax")
 ```
 
 Finally, to evaluate whether the storm surge level can be effectively modeled by its own previous value alone, we fitted an AR(1) model:
@@ -477,58 +503,60 @@ grangertest(avg_water_surge ~ avg_temperature, order = 1, data = na.omit(halifax
 grangertest(avg_water_surge ~ rain, order = 1, data = na.omit(halifax_var))
 ```
 
-## 4.2 Question 2
+## 4.2 Extreme Value Analysis
 
 The Extreme Value Analysis (EVA) methodology previously described in the Methods section is applied to address the second research question, which aims to predict future flooding events through the estimation of return levels. These return levels are the way of quantifying the risk through EVA. The original goal was to enhance these predictions by incorporating covariates identified as most strongly correlated with storm surge levels in the analysis of the first research question.
 
 To support this comparison, return levels were first estimated without the inclusion of covariates. These baseline results serve as a reference against which the covariate-based estimates can be evaluated.The following code example, based on the Halifax dataset, illustrates the process: extracting the annual maximas, fitting them to the GEV distribution, and computing the return levels along with their confidence intervals.
 
 ```{r eval=FALSE, tidy=TRUE}
-#Annual max storm surges extracted from the data. 
+# Annual max storm surges extracted from the data. 
 annual.maximas.hx = full.max.data.halifax %>%
   mutate(year = year(date)) %>%
   group_by(year) %>%
   summarise(max_storm_surge = max(avg_water_surge, na.rm = TRUE), .groups = "drop")
 
-#Required libraries.
+# Required libraries.
 library(ismev)
 library(evd)
 
-#Fitting the annual maximas using the GEV distribution.
+# Fitting the annual maximas using the GEV distribution.
 gev.surge = gev.fit(annual.maximas.hx$max_storm_surge)
 gev.diag(gev.surge)
 
-#Extract the GEV parameters from the fitted model
+# Extract the GEV parameters from the fitted model
 mu = gev.surge$mle[1]    # Location parameter (mu)
 sigma = gev.surge$mle[2] # Scale parameter (sigma)
 xi = gev.surge$mle[3]    # Shape parameter (xi)
 #The variance covariance matrix. 
 V = gev.surge$cov
 
-#Define the return periods  representing years.
+# Define the return periods  representing years.
 T_values = c(2, 5, 10, 20, 50, 100)
 p = 1/T_values
 #yp will be used in the return levels confidence interval calculations. 
 yp = -log(1 - p)
 
-#Calculate return levels for each return period
+# Calculate return levels for each return period
 return_levels = sapply(T_values, function(T) {
-#The return levels are essentially the quantiles of the GEV at the MLE from the GEV fit with probabilities calculated for the different return periods.
+# The return levels are essentially the quantiles of the GEV at the MLE 
+# from the GEV fit with probabilities calculated for the different return periods.
   return_level = qgev(1/T, loc = mu, scale = sigma ,shape = xi, lower.tail = FALSE)
 })
 grad = matrix(0,nrow = length(p), ncol = 3)
 var_return_levels = rep(0,length(p))
 for (i in 1:length(p)) {
   # Compute Gradient Vector (∇zp) of Return Levels
-  grad[i,] = c(1, -xi^(-1) * (1 - yp[i]^(-xi)), sigma * xi^(-2) * (1 - yp[i]^(-xi)) - sigma * xi^(-1) * yp[i]^(-xi) * log(yp[i]))
+  grad[i,] = c(1, -xi^(-1) * (1 - yp[i]^(-xi)), 
+               sigma * xi^(-2) * (1 - yp[i]^(-xi)) - sigma * xi^(-1) * yp[i]^(-xi) * log(yp[i]))
   # Compute Variance of Return Levels
   var_return_levels[i] = t(grad[i,]) %*% V %*% grad[i,]
 }
 
-#Compute Standard Errors of Return Levels
+# Compute Standard Errors of Return Levels
 se_return_levels =sqrt(var_return_levels)
 
-#95% Confidence Interval
+# 95% Confidence Interval
 alpha = 0.05
 z_value = qnorm(1 - alpha / 2)
 lower.bounds = return_levels - z_value * se_return_levels
@@ -538,7 +566,7 @@ upper.bounds = return_levels + z_value * se_return_levels
 Following the initial analysis without covariates, an attempt was made to incorporate wind speed as a covariate, as it was identified in the first research question as having a significant relationship with storm surge. The code example below demonstrates how this was implemented using the Halifax dataset.
 
 ```{r eval=FALSE, tidy=TRUE}
-#Annual max wind speed extracted from the data. 
+# Annual max wind speed extracted from the data. 
 annual.maximas.Halifax_ws <- full.max.data.Halifax %>%
   mutate(year = year(date)) %>%
   group_by(year) %>%
@@ -548,7 +576,7 @@ annual.maximas.Halifax_ws <- full.max.data.Halifax %>%
 library(ismev)
 library(evd)
 
-#Transform wind speed as data frame
+# Transform wind speed as data frame
 max_wind_speed = data.frame(max_wind_speed = annual.maximas.Halifax_ws$max_wind_speed)
 
 # Fitting the GEV model with a covariate.
@@ -558,35 +586,36 @@ gev.surge_wind = gev.fit(xdat = annual.maximas.Halifax_ss$max_storm_surge,
 gev.diag(gev.surge_wind)
 
 # Extract the parameters from the fitted model:
-mu_intercept = gev.surge_wind$mle[1]    # Intercept for mu
+mu_intercept = gev.surge_wind$mle[1]      # Intercept for mu
 mu_slope     = gev.surge_wind$mle[2]      # Effect of wind speed on mu
 sigma        = gev.surge_wind$mle[3]      # Scale parameter (must be > 0)
 xi           = gev.surge_wind$mle[4]      # Shape parameter
 V            = gev.surge_wind$cov         # Covariance matrix for parameters
 
-#Choose a reference value for the covariate (e.g., mean wind speed)
+# Choose a reference value for the covariate (e.g., mean wind speed)
 mean_wind = mean(annual.maximas.Halifax_ws$max_wind_speed, na.rm = TRUE)
 
-#Compute the location parameter mu for the reference wind speed
+# Compute the location parameter mu for the reference wind speed
 mu = mu_intercept + mu_slope * mean_wind
 
-#Define the return periods (in years)
+# Define the return periods (in years)
 T_values = c(2, 5, 10, 20, 50, 100)
 p = 1 / T_values
 yp = -log(1 - p)
 
-#Calculate return levels for each return period using the qgev function.
+# Calculate return levels for each return period using the qgev function.
 return_levels = sapply(T_values, function(T) {
   qgev(1/T, loc = mu, scale = sigma, shape = xi, lower.tail = FALSE)
 })
 
-#Calculate the variance of the return levels via the delta method.
-#Since we now have 4 parameters, we define a gradient vector of length 4.
+# Calculate the variance of the return levels via the delta method.
+# Since we now have 4 parameters, we define a gradient vector of length 4.
 grad = matrix(0, nrow = length(p), ncol = 4)
 var_return_levels = rep(0, length(p))
 
 for (i in 1:length(p)) {
-#Here, we assume the derivative with respect to mu_slope is equal to the reference covariate value (mean_wind).
+# Here, we assume the derivative with respect to mu_slope is equal to the 
+# reference covariate value (mean_wind).
   grad[i, ] = c(1, mean_wind,
                  -xi^(-1) * (1 - yp[i]^(-xi)),
                  sigma * xi^(-2) * (1 - yp[i]^(-xi)) - sigma * xi^(-1) * yp[i]^(-xi) * log(yp[i]))
@@ -594,10 +623,10 @@ for (i in 1:length(p)) {
   var_return_levels[i] = t(grad[i, ]) %*% V %*% grad[i, ]
 }
 
-#Compute Standard Errors for the return levels
+# Compute Standard Errors for the return levels
 se_return_levels = sqrt(var_return_levels)
 
-#95% Confidence Intervals for return levels
+# 95% Confidence Intervals for return levels
 alpha = 0.05
 z_value = qnorm(1 - alpha / 2)
 lower_bounds = return_levels - z_value * se_return_levels
@@ -614,9 +643,7 @@ library(forecast)
 source("../R/tsCV_VAR_fn.R")
 ```
 
-## 5.1 Question 1
-
-**ACF:**
+## 5.1 ACF and CCF
 
 The ACF plots for Halifax and Yarmouth (@fig-acf_halifax and @fig-acf_yarmouth) provide insight into how each variable correlates with itself over time. For both locations, storm surge, wind speed, temperature, and rainfall time series are examined. As expected, the plots display similar general patterns across locations, indicating that these variables behave in comparable ways. 
 
@@ -636,8 +663,6 @@ To be more specific:
 
 In summary, the ACF analysis highlights distinct temporal behaviors of covariates. Storm surges exhibit long-term dependencies and cyclical patterns, wind speed fluctuations are short-lived, temperature is highly persistent due to seasonal effects, and rainfall events occur independently with no significant memory. These differences reflect the underlying physical and meteorological drivers governing each variable.
 
-**CCF:**
-
 The CCF plots reveal relationships between water surge and other variables, as shown in @fig-ccf_halifax for Halifax and @fig-ccf_yarmouth for Yarmouth Since the results for both locations are similar, only the analysis for Halifax is presented below:
 
 - Storm Surge vs. Wind Speed (Top Plot): The CCF shows a positive correlation at lag 0, with a value of approximately 0.2, followed by a rapid decline in subsequent lags. This suggests wind events immediately impact water surge, with effects persisting through multiple time periods. The pattern indicates wind speed is a driver of water surge events.
@@ -646,17 +671,17 @@ The CCF plots reveal relationships between water surge and other variables, as s
 
 - Storm Surge vs. Rainfall (Bottom Plot): The CCF reveals a short-term positive correlation, with the highest value (about 0.18) occurring at lag 0. The relationship weakens quickly over time, indicating that rainfall has a short-term impact on water surges but little long-term influence.
 
-![CCF plots of storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom) in Halifax.](../visualization/ccf_halifax.png){width=80% #fig-ccf_halifax fig-pos="H"}
+![CCF plots of storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom) in Halifax.](../visualization/ccf_halifax.png){width=60% #fig-ccf_halifax fig-pos="H"}
  
 The patterns are generally similar between Halifax and Yarmouth, suggesting regional consistency in meteorological relationships. The temperature-surge negative correlation appears particularly strong in Halifax. Moreover, Halifax shows some interesting phase shifts in the wind-surge relationship that might indicate more complex coastal geography effects. The inverse relationship with temperature likely reflects seasonal storm dynamics. Overall, the findings suggest that storm surge events in Nova Scotia are primarily driven by wind conditions, with secondary influences from temperature variations and short-term rainfall. 
 
-**GAMMs**
+## 5.2 GAMMs
 
 The model outputs for the LME and GAM components are provided in @fig-gamms_lme and @fig-gamms_gam, respectively. The LME results indicate a significant effect of location on storm surge, with wind speed and rainfall also having a statistically significant impact. Additionally, the GAM output suggests that the smooth functions of all three explanatory variables are significant in explaining the variability in storm surge.
 
-![GAMMs output of LME](../visualization/gamms_lme.jpeg){width=80% #fig-gamms_lme fig-pos="H"}
+![GAMMs output of LME](../visualization/gamms_lme.JPG){width=100% #fig-gamms_lme fig-pos="H"}
 
-![GAMMs output of GAM](../visualization/gamms_gam.jpeg){width=80% #fig-gamms_gam fig-pos="H"}
+![GAMMs output of GAM](../visualization/gamms_gam.jpeg){width=100% #fig-gamms_gam fig-pos="H"}
 
 @fig-location_gamm_acf_res shows the ACF of residuals, revealing a strong temporal structure in the data. The random effect component exhibits high autocorrelation at lag 1 (around 0.7), which gradually decreases but remains above the significance threshold beyond 45 lags. This indicates temporal dependencies in the data, violating the assumption of residual independence. Similarly, the smooth component shows a comparable autocorrelation at lag 1 with a more persistent decline, further suggesting that the independence assumption is not fully satisfied.
 
@@ -674,9 +699,9 @@ Residual diagnostic plots provide further insight into the model’s performance
 
 The model offers a strong foundation for understanding water surge dynamics, but adjustments to better account for temporal dependencies could further enhance its predictive performance and overall robustness. The inclusion of an explicit autocorrelation structure, such as a first-order autoregressive (AR(1)) correlation term, could help in capturing the remaining dependencies. Additionally, incorporating more time-related predictors or interactions may enhance explanatory power which leads us to VAR model.
 
-**VAR:** 
+## 5.3 VAR and Granger Causality
 
-Before model estimation, the stationarity of all time series variables—average water surge, average temperature, average wind speed, and rainfall-was tested using the Augmented Dickey-Fuller (ADF) test. The results below indicated that all variables were stationary (p-value = 0.01 for each), permitting the use of VAR modeling without the need for differencing.
+The VAR models were applied to both locations, and since the results are similar, only the results for Halifax are presented. Before model estimation, the stationarity of all time series variables—average water surge, average temperature, average wind speed, and rainfall-was tested using the Augmented Dickey-Fuller (ADF) test. The results below indicated that all variables were stationary (p-value = 0.01 for each), permitting the use of VAR modeling without the need for differencing.
 
 ```{r, echo=FALSE, warning=FALSE}
 linear_interpolation_df = read.csv("../data/linear_interpolation_df.csv")
@@ -689,9 +714,7 @@ adf_test <- apply(halifax_var, 2, adf.test)
 adf_test
 ```
 
-The models were applied to both locations, and since the results are similar, only the results for Halifax are presented.
-
-- The initial model used a VAR(7) specification, incorporating all climatic factors—average water surge, temperature, wind speed, and rainfall—using seven lags. This choice was based on the observation that increasing the number of lags beyond seven did not significantly affect the AIC value, leading to a more complicated model that would be harder to interpret. The output of the VAR(7) model, with coefficients ordered by increasing p-value for Halifax, is as follows:
+The initial model used a VAR(7) specification, incorporating all climatic factors—average water surge, temperature, wind speed, and rainfall—using seven lags. This choice was based on the observation that increasing the number of lags beyond seven did not significantly affect the AIC value, leading to a more complicated model that would be harder to interpret. The output of the VAR(7) model for Halifax, with coefficients ordered by increasing p-value, is presented below. All listed variables are statistically significant at the 1% level, indicating a strong influence of their respective lagged values on the current storm surge level.
 
 ```{r, echo=FALSE, warning=FALSE}
 # Fit for all climatic factors
@@ -703,23 +726,105 @@ halifax_var_surge <- coef(halifax_var_model)$avg_water_surge
 # Order the coefficients by p-value in descending order (lowest p-value first)
 halifax_ordered_surge <- halifax_var_surge[order(halifax_var_surge[, "Pr(>|t|)"], decreasing = FALSE), , drop = FALSE]
 
-# View the ordered coefficients and p-values
-halifax_ordered_surge
+# View the ordered p-values, first 10 covariates with lowest p-values
+head(halifax_ordered_surge, 10)
 ```
 
-This model explained approximately 63.1% of the variation in water surge (R-squared = 0.631) and exhibited the lowest AIC (-39,456.38), suggesting the overall well fit. Among the most significant predictors, the strongest influence was the previous water surge at lag 1 (coefficient = 0.6152). Wind speed showed a negative relationship at lag 1 (-1.748e-03) but a positive effect at lag 2 (9.737867e-04). Rainfall displayed a delayed negative effect at lag 2 ( -1.137741e-03). Additionally,  Residual analysis using the autocorrelation function (ACF) plot indicated no significant autocorrelation, confirming that the model effectively captured temporal dependencies.
++ This model explained approximately 63.1% of the variation in storm surge (`R-squared = 0.631`) and exhibited the AIC of -39,456.38, suggesting the moderate well fit. 
 
-A simplified model was then considered, incorporating only water surge and wind speed with a single lag (VAR(1)). This model explained 59% of the variance (R-squared = 0.5908) and had a higher AIC (-37666.21), suggesting a comparatively poorer fit. However, both included variables remained highly significant (p < 2e-16), with wind speed showing a consistent positive effect (0.000702) on water surge. Although residual autocorrelation was minimal, it was slightly higher than in the full VAR(7) model.
++ Among the most significant predictors, the strongest influence is observed for the storm surge level at lag 1, with an estimated coefficient of 0.6152. This indicates a strong positive relationship, suggesting that current storm surge levels are influenced by their previous past values.
 
-To further isolate the influence of past water surge levels, an autoregressive (AR) model was estimated. This model, focusing exclusively on the temporal dependence of water surge, had an R-squared of 0.4713, explaining 47% of the variance. The AIC value was -38196.53, positioning it between the simplified VAR(1) model and the full VAR(7) model. The autoregressive coefficient (0.6865) indicated a strong temporal dependence, reinforcing the role of past water surge levels as the primary determinant of future surges.
++ Wind speed has a negative effect at lag 1 (−0.00175) and a positive effect at lag 2 (0.000974) on storm surge. These smaller coefficients are due to wind speed being measured in km/h, which tends to have larger numerical values.
 
-The results highlight key insights into the dynamics of water surge variation. Water surge exhibits strong autocorrelation, with previous surge levels serving as the most influential predictor. The inclusion of climatic factors significantly improves predictive power, increasing explained variance from 47% (AR model) to 62% (full VAR model). Wind speed exerts both immediate and delayed effects, displaying an initial negative influence followed by positive effects at later lags, suggesting a complex interaction with water dynamics. Rainfall primarily exerts a delayed negative impact, with significant effects observed at lags 2, 3, and 7, whereas temperature influences are less consistent across time lags.
++ Rainfall displays a negative effect at lag 2 (-1.14e-03), and a positive effect for lag 1 (9.46e-04). As with wind speed, the smaller coefficients are a result of rainfall being measured in mm, which also involves relatively high magnitudes.
 
-Overall, while the full VAR(7) model provides the best fit for accurately capturing storm surge dynamics, the VAR(1) model with wind speed represents a viable alternative for operational use, balancing predictive capability with model simplicity. The absence of significant overfitting, as confirmed by time series cross-validation, further supports the robustness of these models. These findings underscore the complex interplay between past water surge levels and climatic factors in shaping surge dynamics in Halifax, emphasizing the importance of multivariate approaches for improved forecasting.
++ Temperature also shows a negative effect at lag 2 (-2.75e-03), and a positive effect for lag 1 (1.86-03). These coefficients are smaller than that of water surge at lag 1, likely due to temperature being measured in degrees Celsius, which has a larger numerical scale.
 
-## 5.2 Question 2
++ Additionally, residual analysis using the autocorrelation function (ACF) plot (@fig-hf_VAR_acf_res) indicates no significant autocorrelation, confirming that the model effectively captured temporal dependencies.
 
-**EVA**
+![ACF plot of residuals of VAR(7) model for Halifax.](../visualization/hf_VAR_acf_res.png){width=50% #fig-hf_VAR_acf_res fig-pos="H"}
+
++ Furthermore, time series cross-validation was used to assess potential overfitting. The model RMSE was 0.0839, and the average RMSE across expanding training windows was 0.0916, indicating no signs of overfitting.
+
+A simplified model using VAR(1) incorporates only water surge and wind speed with a single lag is fitted to evaluate whether wind speed, as a significant covariate, can be used to forecast water surge one step ahead. The model having AIC of -37,594.7 with the output shown as follows:
+
+```{r, echo=FALSE}
+# ---- Fit storm surge and wind speed ----
+halifax_var2 <- halifax_var[c("avg_water_surge", "avg_wind_speed")]
+halifax_var_model2 <- VAR(halifax_var2, p = 1, type = "none")
+
+# R square = 0.59, AIC = -37,594.7
+summary(halifax_var_model2$varresult$avg_water_surge)
+```
+
+The VAR(1) model accounts for 59% of the variance in storm surge (`R-squared = 0.59`) and has a higher AIC value of -37,666.21, indicating a relatively poorer fit compared to the more complex VAR(7) model. Despite this, both included predictors—storm surge and wind speed—remain highly significant (`p < 2e-16`), with wind speed showing a consistent positive effect (with the estimated coefficient of 7.290e-04) on storm surge levels. The residual autocorrelation, as shown in @fig-hf_VAR_model2_acf_res, appears acceptable, suggesting that the simplified model still captures key temporal dynamics.
+
+![ACF plot of residuals of VAR(1) model of water surge and wind speed in Halifax.](../visualization/hf_VAR_model2_acf_res.png){width=50% #fig-hf_VAR_model2_acf_res fig-pos="H"}
+
+To further isolate the influence of past water surge levels, the first order autoregressive (AR) model was estimated - AR(1). The result is shown as follows:
+
+```{r, echo=FALSE}
+halifax_var_model3 = arima(halifax_var$avg_water_surge, order=c(1,0,0))
+summary(halifax_var_model3)
+
+# Get fitted values
+fitted_values <- halifax_var$avg_water_surge - residuals(halifax_var_model3)
+
+# Calculate R-squared
+SSE <- sum(residuals(halifax_var_model3)^2)
+SST <- sum((halifax_var$avg_water_surge - mean(halifax_var$avg_water_surge))^2)
+r_squared <- 1 - SSE/SST
+paste("R-squared:", round(r_squared, 4))
+```
+
+The AR(1) model, focusing exclusively on the temporal dependence of water surge, has an R-squared of 0.4706, explaining 47% of the variance. The AIC value was -38,103.81, positioning it between the simplified VAR(1) model and the full VAR(7) model. The autoregressive coefficient (0.6860) indicates a strong temporal dependence, reinforcing the role of past water surge levels as the primary determinant of future surges. Moreover, the residual autocorrelation drops off quickly, suggesting the model adequately captures the underlying temporal structure.
+
+![ACF plot of residuals of AR(1) model of storm surge level in Halifax.](../visualization/hf_acf_res_surgel1.png){width=50% #fig-hf_acf_res_surgel1 fig-pos="H"} 
+
+The results highlight key insights into the dynamics of water surge variation. Water surge exhibits strong autocorrelation, with previous surge levels serving as the most influential predictor. The inclusion of climatic factors significantly improves predictive power, increasing explained variance from 47% (AR model) to 62% (full VAR model). Wind speed exerts both immediate and delayed effects, displaying an initial negative influence followed by positive effects at later lags, suggesting a complex interaction with water dynamics. Rainfall and temperature show a negative impact on storm surge at lag 2 and a positive impact at lag 1. Both effects are statistically significant at the 1% significance level, indicating that these climatic factors influence storm surge both in the short term (lag 1) and with a delayed effect (lag 2).
+
+Overall, while the full VAR(7) model provides the best fit for accurately capturing storm surge dynamics, the VAR(1) model with wind speed represents a viable alternative for operational use, balancing predictive capability with model simplicity. These findings underscore the complex interplay between past water surge levels and climatic factors in shaping surge dynamics in Halifax, emphasizing the importance of multivariate approaches for improved forecasting.
+
+**Granger Causality:** 
+
+Granger causality tests were conducted to examine the predictive power of individual climatic variables on storm surge. Each test compared a restricted model (including only lagged storm surge) against a full model that also included a lagged climatic predictor. To be specific:
+
+- All three covariates at lag 1 combined: When all three climatic variables are jointly tested at lag 1, the null hypothesis that they do not Granger-cause storm surge is strongly rejected (`F = 118.31, p < 2.2e-16`). This result indicates that the lagged climatic factors provide significant predictive information for storm surge dynamics.
+
+- Wind Speed at lag 1 significantly improves model performance, showing the strongest Granger causality effect (`F-Test = 333.05, p < 2.2e-16`). This suggests wind speed at lag 1 is the most dominant short-term predictor of storm surge variation.
+
+- Rainfall at lag 1 also significantly contributes to the predictive model for storm surge dynamics (`F-Test = 89.911, p < 2.2e-16`), suggesting a causal relationship. 
+
+- Temperature although weaker than the other variables, still shows a significant effect at lag 1 (`F-Test = 41.206, p = 1.387e-10`), supporting its short-term predictive relevance.
+
+```{r, echo=FALSE}
+print("All covariates")
+halifax_var_model <- VAR(halifax_var, p = 1, type = "none")
+# Granger causality H0: avg_temperature avg_wind_speed rain do not Granger-cause avg_water_surge
+# p-value < 2.2e-16 => Reject H0
+causality(halifax_var_model, c('avg_wind_speed', 'avg_temperature', 'rain'))$Granger
+
+print("Wind speed")
+halifax_var_model_wind <- VAR(halifax_var[, c("avg_water_surge", "avg_wind_speed")], p = 1, type = "none")
+# Granger causality H0: avg_wind_speed do not Granger-cause avg_water_surge
+# p-value < 2.2e-16 => Reject H0
+causality(halifax_var_model_wind, 'avg_wind_speed')$Granger
+
+print("Temperature")
+halifax_var_model_temp <- VAR(halifax_var[, c("avg_water_surge", "avg_temperature")], p = 1, type = "none")
+# Granger causality H0: avg_temperature do not Granger-cause avg_water_surge
+# p-value = 4.144e-06 => Reject H0
+causality(halifax_var_model_temp, 'avg_temperature')$Granger
+
+print("Rain")
+halifax_var_model_rain <- VAR(halifax_var[, c("avg_water_surge", "rain")], p = 1, type = "none")
+# Granger causality H0: rain do not Granger-cause avg_water_surge
+# p-value = 0.1648 => Do not reject H0
+causality(halifax_var_model_rain, 'rain')$Granger
+```
+
+## 5.4 EVA
+
 Looking at the overall pattern, both locations show storm surge return levels increasing with longer return periods, following a logarithmic curve that flattens at higher return periods. This is typical in extreme value analysis with the difference between a 50-year and 100-year event is less dramatic than between a 2-year and 10-year event.  Comparing both location, Halifax consistently shows higher return levels (approximately 0.08-0.10m higher) compared to Yarmouth across all return periods. Halifax's 100-year return level reaches about 0.71m while Yarmouth's reaches about 0.62m. The Figure X and X represent the case with wind as covariates. The covariate analysis produced remarkably similar results to the initial analysis. For Halifax, differences between initial and covariate models are extremely small (0.0001-0.0003m), for Yarmouth, differences are slightly larger but still minor (0.0049-0.0116m). Both graphs show upper and lower confidence bounds (red dotted lines). The confidence interval widens as the return period increases, reflecting greater uncertainty in predicting more extreme events. 
 The minimal difference between the initial and covariate models suggests that wind speed doesn't significantly improve storm surge prediction beyond what the initial EVA model already captures. This could mean that wind speed is already implicitly represented in your storm surge data; the relationship between wind speed and storm surge in these locations isn't strong enough to substantially improve predictions or, that other factors might be more important in determining extreme storm surge events
 
@@ -728,14 +833,16 @@ The minimal difference between the initial and covariate models suggests that wi
 
 ## 6.1 Conclusion
 
-– Discuss the results of the previous section in the context of the research question. – Give an answer to your research question and discuss any uncertainty in your results. – If appropriate, discuss why the research question cannot be fully answered using the data and techniques available.
+In conclusion, across various analytical approaches—including basic time series techniques like cross-correlation functions (CCF), generalized additive mixed models (GAMMs), vector autoregressive (VAR) modeling, and Granger causality tests—the findings consistently indicate that, in addition to the storm surge's own past values, wind speed plays a statistically significant role in explaining variations in storm surge. This alignment across models strengthens the evidence that wind is a key driver of storm surge dynamics.
 
-Conclusion
 The analysis of water surge in Nova Scotia, particularly in Halifax and Yarmouth, highlights strong temporal dependencies and key climatic influences. Wind speed emerges as a primary driver, with immediate and delayed effects, though its impact is complex. Temperature shows a notable negative correlation with surge levels, aligning with seasonal storm patterns, while rainfall has only a short-term influence. Surge events exhibit strong autocorrelation, with past water levels being the most reliable predictors.
 
 Different modeling approaches provide complementary insights. Vector autoregression captures multivariate influences, while generalized additive mixed models account for geographic differences but leave residual autocorrelation. Extreme value analysis indicates that Halifax experiences higher surge extremes than Yarmouth, though adding wind as a covariate yields little improvement, suggesting its effect is already embedded in surge data. This implies that simpler models may be sufficient for extreme event forecasting, while more complex approaches help understand broader surge dynamics.
 
 ## 6.2 Discussion
+
+Linear interpolation does not account for the uncertainty.
+
 Missingness
 The presence of missing values in our variable of interest could pose a challenge in this project. Many of the time series methods used in this report typically do not support missing data. However, our dataset contains some time gaps. 
 For the first question, we only included covariate data when the response variable was available, which led to the removal of some information from our dataset. Missingness can be problematic as it results in the loss of valuable data. To address this, we used a time interval without gaps, which is shorter than the initial interval but still assumed to be sufficiently long to provide a realistic representation of the dataset.
@@ -752,15 +859,89 @@ As an alternative if none of this proposition is satisfying, predicting water su
 Non stationarity
 A critical aspect of the model that needs to be highlighted is its non-stationarity in the context of EVA. Our response variable, storm surge, is influenced by sea level, which has been shown to be increasing over time (as documented in the literature). Consequently, storm surge is also expected to rise over time. Despite this, we assumed that non-stationarity does not affect our results, even though this assumption might not hold. Further investigation may be required to assess the impact of this assumption on our findings.
 
-
-# References
-
-– Cite data sources. –
-
-Cite literature and other sources useful for explaining the background information, research question, and analytical tools.
-
 # Appendix
 
 ![Time series of climatic factors in Yarmouth (storm surge, wind speed, rain, and temperature.)](../visualization/ts_yarmouth.png){width=80% #fig-ts_yarmouth fig-pos="H"}
 
 ![CCF plots of storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom) in Yarmouth.](../visualization/ccf_yarmouth.png){width=80% #fig-ccf_yarmouth fig-pos="H"}
+
+**ADF test for each time series for Yarmouth location**
+
+```{r, echo=FALSE, warning=FALSE}
+new_yarmouth_df_interpolation = subset(linear_interpolation_df, linear_interpolation_df$location == "Yarmouth")
+
+yarmouth_var <- new_yarmouth_df_interpolation[, c("avg_water_surge", "avg_temperature", "avg_wind_speed", "rain")]
+
+adf_test_ym <- apply(yarmouth_var, 2, adf.test)
+adf_test_ym
+```
+
+**VAR(7) model output for Yarmouth**
+
+```{r, echo=FALSE, warning=FALSE}
+# Fit for all climatic factors
+yarmouth_var_model <- VAR(yarmouth_var, p = 7, type = "none")
+
+# Extract the coefficients for avg_water_surge
+yarmouth_var_surge <- coef(yarmouth_var_model)$avg_water_surge
+
+# Order the coefficients by p-value in descending order (lowest p-value first)
+yarmouth_ordered_surge <- yarmouth_var_surge[order(yarmouth_var_surge[, "Pr(>|t|)"], decreasing = FALSE), , drop = FALSE]
+
+# View the ordered p-values, first 10 covariates with lowest p-values
+head(yarmouth_ordered_surge, 10)
+```
+
+![ACF plot of residuals of VAR(7) model for Yarmouth.](../visualization/ym_VAR_acf_res.png){width=50% #fig-ym_VAR_acf_res fig-pos="H"}
+
+**VAR(1) model output of water surge and wind speed for Yarmouth**
+
+```{r, echo=FALSE}
+# ---- Fit storm surge and wind speed ----
+yarmouth_var2 <- yarmouth_var[c("avg_water_surge", "avg_wind_speed")]
+yarmouth_var_model2 <- VAR(yarmouth_var2, p = 1, type = "none")
+
+summary(yarmouth_var_model2$varresult$avg_water_surge)
+```
+
+![ACF plot of residuals of VAR(1) model of water surge and wind speed in Yarmouth.](../visualization/ym_VAR_model2_acf_res.png){width=50% #fig-ym_VAR_model2_acf_res fig-pos="H"}
+
+**AR(1) model output of water surge level in Yarmouth**
+
+```{r, echo=FALSE}
+yarmouth_var_model3 = arima(yarmouth_var$avg_water_surge, order=c(1,0,0))
+summary(yarmouth_var_model3)
+
+# Get fitted values
+fitted_values <- yarmouth_var$avg_water_surge - residuals(yarmouth_var_model3)
+
+# Calculate R-squared
+SSE <- sum(residuals(yarmouth_var_model3)^2)
+SST <- sum((yarmouth_var$avg_water_surge - mean(yarmouth_var$avg_water_surge))^2)
+r_squared <- 1 - SSE/SST
+paste("R-squared:", round(r_squared, 4))
+```
+
+![ACF plot of residuals of AR(1) model of storm surge level in Yarmouth.](../visualization/ym_acf_res_surgel1.png){width=50% #fig-ym_acf_res_surgel1 fig-pos="H"} 
+
+**Granger causality test for Yarmouth location:**
+
+```{r, echo=FALSE}
+print("All covariates")
+yarmouth_var_model <- VAR(yarmouth_var, p = 1, type = "none")
+causality(yarmouth_var_model, c('avg_wind_speed', 'avg_temperature', 'rain'))$Granger
+
+print("Wind speed")
+yarmouth_var_model_wind <- VAR(yarmouth_var[, c("avg_water_surge", "avg_wind_speed")], p = 1, type = "none")
+causality(yarmouth_var_model_wind, 'avg_wind_speed')$Granger
+
+print("Temperature")
+yarmouth_var_model_temp <- VAR(yarmouth_var[, c("avg_water_surge", "avg_temperature")], p = 1, type = "none")
+causality(yarmouth_var_model_temp, 'avg_temperature')$Granger
+
+print("Rain")
+yarmouth_var_model_rain <- VAR(yarmouth_var[, c("avg_water_surge", "rain")], p = 1, type = "none")
+causality(yarmouth_var_model_rain, 'rain')$Granger
+```
+
+# References
