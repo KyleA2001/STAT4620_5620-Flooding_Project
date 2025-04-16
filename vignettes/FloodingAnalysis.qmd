@@ -183,20 +183,54 @@ $$H_0: \beta_{j1}=\beta_{j2}=\dots =\beta_{jk}=0$$
 The rejection of the null hypothesis suggest that past values of $x_j$ contain predictive information about $y_t$ beyond what can be explained by the past values of $y_t$ alone or we can say $x_j$ Granger-causes $y_t$. In `R`, the function `vars::causality()` is commonly used to compute test statistics for Granger causality within the context of VAR($k$). Additionally, `the lmtest::grangertest()` function can be used to perform Granger causality tests in a more general (bivariate) setting.
 
 ## 3.5 Extreme Value Analysis (EVA)
-Since we are interested in flooding incidents in the coast of Nova Scotia, we want to identify and model the extreme storm surge levels that are associated with such events. Extreme Value Analysis (EVA) is a statistical method used to assess, model, and predict the behavior of extreme events or rare occurrences. It seeks to assess the probability of events that are more extreme than any previously observed. These extreme events are often characterized by their low probability of occurrence but high potential for severe consequences. The EVA method utilized in the second research question is known as the Block Maxima (BM) approach. Simply, the BM analysis divides the observation period into non-overlapping periods of equal size $n$, known as blocks. Attention is restricted to the maximum observation in the block, known as the block maxima. In many contexts, it is common to see the block being set to a year, where our block maximas are annual maximas. These block maximas can be fitted to what is known as the Generalized Extreme Value (GEV) distribution.  Given we are working with two locations, Halifax and Yarmouth, we let $y_j$ be the vector holding the annual maximas for the $j^{th}$ location and is of length $N_j$, which is the number of years observed for location $j$. This $y_j$ vector contains the $y_{ji}$ values which represent the $i^{th}$ years annual maxima in the $j^{th}$ location. These annual maximas are assumed to follow the GEV distribution, and have the following information: 
+\indent Given the focus on flooding incidents along the coast of Nova Scotia, it is important to identify and model the extreme storm surge levels associated with these events. Extreme Value Analysis (EVA) is a statistical framework designed to analyze, model, and predict the behavior of rare or extreme occurrences. Its goal is to estimate the probability of events that exceed all previously observed values. These extreme events are often characterized by their low probability of occurrence but high potential for severe consequences. 
+
+\indent The EVA method employed in the second research question is the Block Maxima (BM) approach. This technique involves dividing the full observation period into non-overlapping intervals of equal length $n$, referred to as blocks. From each block, only the maximum observation—called the block maxima—is retained for analysis. Often, these blocks correspond to calendar years, resulting in annual maxima. These maximas are then modeled using the Generalized Extreme Value (GEV) distribution.
+
+\indent In this study, data from two locations—Halifax and Yarmouth—are considered. For each location $j$, let $y_j$ denote the vector of annual maximas, which has length $N_j$, the number of years of data available at that site. Each entry $y_{ji}$ in this vector represents the annual maximum for year $i$ at location $j$. These annual maximas are assumed to follow the GEV distribution^[@R-ColesExtreme],
 
 $${y_{ji}} \sim GEV(\mu_j,\sigma_j,\xi_j), \text{for } i =1,2,\cdots, N_j, \mbox{ and } j = 1,2.$$
+
 The density function for $y_{ji}$ is: 
 
 $$g(y\mid \mu_j,\sigma_j,\xi_j) = \frac{1}{\sigma_j} \left\{1 + \xi_j \left(\frac{y - \mu_j}{\sigma_j}\right)\right\}\exp \left\{- \left[1 + \xi_j \left(\frac{y- \mu_j}{\sigma_j}\right)\right]^{-\frac{1}{\xi_j}}\right\}.$$
+
 where $\mu_j,\xi_j \in \mathbb{R}$, $\sigma_j >0$, and,
+
 $$y \in [ \mu_j - \frac{\sigma_j}{\xi_j}, \infty] \text{ if } \xi_j > 0,$$
 $$y \in (-\infty,\infty)  \text{ if } \xi_j = 0,$$
 $$y \in [\infty,  \mu_j + \frac{\sigma_j}{\xi_j}] \text{ if } \xi_j < 0.$$
-Fitting the obtained annual maximas to the GEV is completed using the `gev.fit()` function in R, which takes in the vector of annual maximas to be fitted. Checking the fit of the GEV can be done by taking a look at using the `gev.diag()` function and ensuring that there are no alarming diversion from normality. Once the annual maximas are fitted using the GEV, we obtain maximum likelihood estimates (MLE) for the three parameters $\mu, \sigma, \xi$. These MLE estimates will be used to calculate corresponding return levels for different return periods. Return levels are quantification of risk and represent the level that is expected to be exceeded once on average in a given period, $\frac{1}{p}$. Return levels are notated as $z_p$ and are calculated as follows:
 
-$$\hat z_p = \hat\mu - \frac{\hat\sigma}{\hat\xi} [1-y_p^{-\hat\xi}], \text{ } y_p = - \log(1-p) $$
-There are ways of obtaining these return levels while incorporating covariates such as wind speed, for better estimation values. However, although it has been attempted to incorporate this using the covariate component of the `gev.fit()` function, as will be discussed in the Analysis section, it is suspected that the implementation is inaccurate or incorrect. Incorporating covariates does require a higher scope of study beyond this project. 
+These annual maximas are fitted to the GEV distribution using the `gev.fit()` function in R, which takes the vector of annual maximas as input. To assess the quality of the fit, the `gev.diag()` function can be used to produce diagnostic plots, helping to identify any notable deviations from the assumptions of the model, particularly normality.
+
+Once the GEV model is fitted, maximum likelihood estimates (MLEs) for the three parameters—location ($\mu$), scale ($\sigma$), and shape ($\xi$)—are obtained. These estimates are then used to calculate return levels corresponding to various return periods. A return level, denoted $z_p$, quantifies risk by representing the value expected to be exceeded on average once every $\frac{1}{p}$ years. For $0 < p < 1$, the MLE of the return level $z_p$ is calculated as follows:
+
+$$\hat z_p = \hat\mu - \frac{\hat\sigma}{\hat\xi} [1-y_p^{-\hat\xi}], \text{ } y_p = - \log(1-p)$$.
+
+For confidence interval calculations of these return levels, by the delta method we have,
+
+$$\operatorname{Var}(\hat{z}_{p}) \approx \nabla z_{p}^{T} V \nabla z_{p},$$
+
+where $V$ is the variance-covariance matrix of $(\hat{\mu}, \hat{\sigma}, \hat{\xi})$ and
+```{=latex}
+\begin{align*}
+\nabla z_{p}^{T} 
+&= \left[\frac{\partial z_{p}}{\partial \mu}, \frac{\partial z_{p}}{\partial \sigma}, \frac{\partial z_{p}}{\partial \xi}\right] \\
+&= \left[1, -\xi^{-1}(1 - y_{p}^{-\xi}), \sigma \xi^{-2}(1 - y_{p}^{-\xi}) - \sigma \xi^{-1} y_{p}^{-\xi} \log y_{p}\right]
+\end{align*}
+```
+
+With that, we have $(1-\alpha)*100%$ confidence intervals constructed using,
+
+$$CI(\hat z_p)=\hat z_p\pm z_{\alpha/2}\cdot\mathrm{SE}(\hat z_p), \text{where } \mathrm{SE}(\hat z_p) = \sqrt{\operatorname{Var}(\hat{z}_{p})}$$
+Return levels can also be estimated while incorporating covariates—such as wind speed—to potentially improve accuracy. In this approach, the model is modified so that the location parameter $\mu$ is expressed as a linear function of wind speed:
+
+$$Z_i \sim GEV(\mu(x_i), \sigma, \xi)$$
+where $Z_i$ represents the annual maximum storm surge in year $i$, and $x_i$ is the corresponding wind speed. Note that the scale ($\sigma$) and shape ($\xi$) parameters are assumed to be constant and independent of the covariates, and the location ($\mu$) parameter is modeled as follows,
+
+$$\mu(x) = \beta_0 + \beta_1 x$$
+Although this covariate-based modeling was attempted using the `gev.fit()` function’s covariate argument (as will be further discussed in the Analysis section), there are concerns that the implementation may have been incorrect or incomplete. Accurately incorporating covariates appears to require a more advanced treatment, which lies beyond the scope of this project.
+ 
 
 # 4. Analysis
 
