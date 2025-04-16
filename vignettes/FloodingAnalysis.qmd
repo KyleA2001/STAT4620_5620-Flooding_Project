@@ -182,6 +182,20 @@ $$H_0: \beta_{j1}=\beta_{j2}=\dots =\beta_{jk}=0$$
 The rejection of the null hypothesis suggest that past values of $x_j$ contain predictive information about $y_t$ beyond what can be explained by the past values of $y_t$ alone or we can say $x_j$ Granger-causes $y_t$. 
 
 ## 3.5 Extreme value analysis
+Since we are interested in flooding incidents in the coast of Nova Scotia, we want to identify and model the extreme storm surge levels that are associated with such events. Extreme Value Analysis (EVA) is a statistical method used to assess, model, and predict the behavior of extreme events or rare occurrences. It seeks to assess the probability of events that are more extreme than any previously observed. These extreme events are often characterized by their low probability of occurrence but high potential for severe consequences. The EVA method utilized in the second research question is known as the Block Maxima (BM) approach. Simply, the BM analysis divides the observation period into non-overlapping periods of equal size $n$, known as blocks. Attention is restricted to the maximum observation in the block, known as the block maxima. In many contexts, it is common to see the block being set to a year, where our block maximas are annual maximas. These block maximas can be fitted to what is known as the Generalized Extreme Value (GEV) distribution.  Given we are working with two locations, Halifax and Yarmouth, we let $y_j$ be the vector holding the annual maximas for the $j^{th}$ location and is of length $N_j$, which is the number of years observed for location $j$. This $y_j$ vector contains the $y_{ji}$ values which represent the $i^{th}$ years annual maxima in the $j^{th}$ location. These annual maximas are assumed to follow the GEV distribution, and have the following information: 
+
+$${y_{ji}} \sim GEV(\mu_j,\sigma_j,\xi_j), \text{for } i =1,2,\cdots, N_j, \mbox{ and } j = 1,2.$$
+The density function for $y_{ji}$ is: 
+
+$$g(y\mid \mu_j,\sigma_j,\xi_j) = \frac{1}{\sigma_j} \left\{1 + \xi_j \left(\frac{y - \mu_j}{\sigma_j}\right)\right\}\exp \left\{- \left[1 + \xi_j \left(\frac{y- \mu_j}{\sigma_j}\right)\right]^{-\frac{1}{\xi_j}}\right\}.$$
+where $\mu_j,\xi_j \in \mathbb{R}$, $\sigma_j >0$, and,
+$$y \in [ \mu_j - \frac{\sigma_j}{\xi_j}, \infty] \text{ if } \xi_j > 0,$$
+$$y \in (-\infty,\infty)  \text{ if } \xi_j = 0,$$
+$$y \in [\infty,  \mu_j + \frac{\sigma_j}{\xi_j}] \text{ if } \xi_j < 0.$$
+Fitting the obtained annual maximas to the GEV is completed using the `gev.fit()` function in R, which takes in the vector of annual maximas to be fitted. Checking the fit of the GEV can be done by taking a look at using the `gev.diag()` function and ensuring that there are no alarming diversion from normality. Once the annual maximas are fitted using the GEV, we obtain maximum likelihood estimates (MLE) for the three parameters $\mu, \sigma, \xi$. These MLE estimates will be used to calculate corresponding return levels for different return periods. Return levels are quantification of risk and represent the level that is expected to be exceeded once on average in a given period, $\frac{1}{p}$. Return levels are notated as $z_p$ and are calculated as follows:
+
+$$\hat z_p = \hat\mu - \frac{\hat\sigma}{\hat\xi} [1-y_p^{-\hat\xi}], \text{ } y_p = - \log(1-p) $$
+There are ways of obtaining these return levels while incorporating covariates such as wind speed, for better estimation values. However, although it has been attempted to incorporate this using the covariate component of the `gev.fit()` function, as will be discussed in the Analysis section, it is suspected that the implementation is inaccurate or incorrect. Incorporating covariates does require a higher scope of study beyond this project. 
 
 ## Question 1
 
@@ -232,19 +246,47 @@ VAR(Vector Auto regression (not 100% about this model)
 
 Granger Causality (Not 100% sure)
 
-
-## Question 2
-
-\indent Since we are interested in flooding incidents in the coast of Nova Scotia, we want to identify and model the extreme storm surge levels that are associated with such events. Extreme value analysis (EVA) is a statistical method used to assess, model, and predict the behavior of extreme events or rare occurrences. It seeks to assess the probability of events that are more extreme than any previously observed. These extreme events are often characterized by their low probability of occurrence but high potential for severe consequences. One of the EVA methods utilized here is known as the Block Maxima (BM) approach. Simply, the BM analysis divides the observation period into non-overlapping periods of equal size $n$, known as blocks. Attention is restricted to the maximum observation in the block, known as the block maxima. In many contexts, it is common to see the block being set to a year, where our block maximas are annual maximas. These block maximas can be fitted to what is known as the Generalized Extreme Value (GEV) distribution.  Given we are working with two locations, Halifax and Yarmouth, we let $y_j$ be the vector holding the annual maximas for the $j^{th}$ location and is of length $N_j$, which is the number of years observed for location $j$. This $y_j$ vector contains the $y_{ji}$ values which represent the $i^{th}$ years annual maxima in the $j^{th}$ location. These annual maximas are assumed to follow the GEV distribution, and have the following information: 
-
-$${y_{ji}} \sim GEV(\mu_j,\sigma_j,\xi_j), \text{for } i =1,2,\cdots, N_j, \mbox{ and } j = 1,2.$$
-The density function for $y_{ji}$ is: 
-
-$$g(y\mid \mu_j,\sigma_j,\xi_j) = \frac{1}{\sigma_j} \left\{1 + \xi_j \left(\frac{y - \mu_j}{\sigma_j}\right)\right\}\exp \left\{- \left[1 + \xi_j \left(\frac{y- \mu_j}{\sigma_j}\right)\right]^{-\frac{1}{\xi_j}}\right\}.$$
-
 # 4. Analysis
 
-## 4.1 
+## 4.1 Question 1
+
+## 4.2 Question 2
+
+The above stated EVA methodology is utilized in answering the second research question where we try to predict future flooding catastrophes using return levels, which are quantification of risk. It was initially intended to acquire theses return level predictions using the most correlated factors found through the analysis of question one as covarites. In doing so, initial calculations of return levels without covariates was conducted to be used in comparison with the covariate return level estimates. The following code chunk example from analysis on the Halifax data extracts the annual maximas, fits them using the GEV distribution, calculates the return levels and their corresponding confidence intervals.
+
+```{r eval=FALSE, tidy=TRUE}
+#Annual max surges extracted from the data. 
+annual.maximas.hx = full.max.data.halifax[, .(max_storm_surge = max(avg_water_surge, na.rm = TRUE)), by = .(year = year(date))]
+
+#Required libraries.
+library(ismev)
+library(evd)
+
+#Fitting the annual maximas using the GEV distribution.
+gev.surge = gev.fit(annual.maximas.hx$max_storm_surge)
+gev.diag(gev.surge)
+
+#Extract the GEV parameters from the fitted model
+mu = gev.surge$mle[1]    # Location parameter (mu)
+sigma = gev.surge$mle[2] # Scale parameter (sigma)
+xi = gev.surge$mle[3]    # Shape parameter (xi)
+#This will be used in the return levels confidence interval calculations.
+V = gev.surge$cov
+
+#Define the return periods  representing years.
+T_values = c(2, 5, 10, 20, 50, 100)
+p = 1/T_values
+#yp will be used in the return levels confidence interval calculations. 
+yp = -log(1 - p)
+
+#Calculate return levels for each return period
+return_levels = sapply(T_values, function(T) {
+#the return levels are essentially the quantiles of the GEV at the MLE from the GEV fit with probabilities calculated for the different return periods.
+  return_level = qgev(1/T, loc = mu, scale = sigma ,shape = xi, lower.tail = FALSE)
+})
+```
+
+
 
 # 5. Results
 
