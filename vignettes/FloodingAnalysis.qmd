@@ -232,7 +232,7 @@ where $V$ is the variance-covariance matrix of $(\hat{\mu}, \hat{\sigma}, \hat{\
 \end{align*}
 ```
 
-With that, we have $(1-\alpha)*100%$ confidence intervals constructed using,
+With that, we have $(1-\alpha)*100\%$ confidence intervals constructed using,
 
 $$CI(\hat z_p)=\hat z_p\pm z_{\alpha/2}\cdot\mathrm{SE}(\hat z_p), \text{where } \mathrm{SE}(\hat z_p) = \sqrt{\operatorname{Var}(\hat{z}_{p})}$$
 Return levels can also be estimated while incorporating covariates—such as wind speed—to potentially improve accuracy. In this approach, the model is modified so that the location parameter $\mu$ is expressed as a linear function of wind speed:
@@ -246,7 +246,7 @@ Although this covariate-based modeling was attempted using the `gev.fit()` funct
 
 # 4. Analysis
 
-In the following code, the Halifax location is used as an example, and a similar approach is applied to Yarmouth.
+The Halifax location is used as the example in all the code chunks illustrated in this section, which was replicated for the Yarmouth location data.
 
 ## 4.1 Question 1
 
@@ -479,46 +479,129 @@ grangertest(avg_water_surge ~ rain, order = 1, data = na.omit(halifax_var))
 
 ## 4.2 Question 2
 
-The above stated EVA methodology is utilized in answering the second research question where we try to predict future flooding catastrophes using return levels, which are quantification of risk. It was initially intended to acquire theses return level predictions using the most correlated factors found through the analysis of question one as covarites. In doing so, initial calculations of return levels without covariates was conducted to be used in comparison with the covariate return level estimates. The following code chunk example from analysis on the Halifax data extracts the annual maximas, fits them using the GEV distribution, calculates the return levels and their corresponding confidence intervals.
+The Extreme Value Analysis (EVA) methodology previously described in the Methods section is applied to address the second research question, which aims to predict future flooding events through the estimation of return levels. These return levels are the way of quantifying the risk through EVA. The original goal was to enhance these predictions by incorporating covariates identified as most strongly correlated with storm surge levels in the analysis of the first research question.
+
+To support this comparison, return levels were first estimated without the inclusion of covariates. These baseline results serve as a reference against which the covariate-based estimates can be evaluated.The following code example, based on the Halifax dataset, illustrates the process: extracting the annual maximas, fitting them to the GEV distribution, and computing the return levels along with their confidence intervals.
 
 ```{r eval=FALSE, tidy=TRUE}
-# Required libraries.
-library(ismev)
-library(evd)
-library(dplyr)
-library(lubridate)
-
-# Annual max surges extracted from the data. 
-annual.maximas.hx <- full.max.data.halifax %>%
+#Annual max storm surges extracted from the data. 
+annual.maximas.hx = full.max.data.halifax %>%
   mutate(year = year(date)) %>%
   group_by(year) %>%
-  summarise(max_storm_surge = max(avg_water_surge, na.rm = TRUE), 
-            .groups = "drop")
+  summarise(max_storm_surge = max(avg_water_surge, na.rm = TRUE), .groups = "drop")
 
-# Fitting the annual maximas using the GEV distribution.
+#Required libraries.
+library(ismev)
+library(evd)
+
+#Fitting the annual maximas using the GEV distribution.
 gev.surge = gev.fit(annual.maximas.hx$max_storm_surge)
 gev.diag(gev.surge)
 
-# Extract the GEV parameters from the fitted model
+#Extract the GEV parameters from the fitted model
 mu = gev.surge$mle[1]    # Location parameter (mu)
 sigma = gev.surge$mle[2] # Scale parameter (sigma)
 xi = gev.surge$mle[3]    # Shape parameter (xi)
-# This will be used in the return levels confidence interval calculations.
+#The variance covariance matrix. 
 V = gev.surge$cov
 
-# Define the return periods  representing years.
+#Define the return periods  representing years.
 T_values = c(2, 5, 10, 20, 50, 100)
 p = 1/T_values
-# yp will be used in the return levels confidence interval calculations. 
+#yp will be used in the return levels confidence interval calculations. 
 yp = -log(1 - p)
 
-# Calculate return levels for each return period
+#Calculate return levels for each return period
 return_levels = sapply(T_values, function(T) {
-# The return levels are essentially the quantiles of the GEV at the MLE 
-# from the GEV fit with probabilities calculated for the different return 
-# periods.
+#The return levels are essentially the quantiles of the GEV at the MLE from the GEV fit with probabilities calculated for the different return periods.
   return_level = qgev(1/T, loc = mu, scale = sigma ,shape = xi, lower.tail = FALSE)
 })
+grad = matrix(0,nrow = length(p), ncol = 3)
+var_return_levels = rep(0,length(p))
+for (i in 1:length(p)) {
+  # Compute Gradient Vector (∇zp) of Return Levels
+  grad[i,] = c(1, -xi^(-1) * (1 - yp[i]^(-xi)), sigma * xi^(-2) * (1 - yp[i]^(-xi)) - sigma * xi^(-1) * yp[i]^(-xi) * log(yp[i]))
+  # Compute Variance of Return Levels
+  var_return_levels[i] = t(grad[i,]) %*% V %*% grad[i,]
+}
+
+#Compute Standard Errors of Return Levels
+se_return_levels =sqrt(var_return_levels)
+
+#95% Confidence Interval
+alpha = 0.05
+z_value = qnorm(1 - alpha / 2)
+lower.bounds = return_levels - z_value * se_return_levels
+upper.bounds = return_levels + z_value * se_return_levels
+```
+
+Following the initial analysis without covariates, an attempt was made to incorporate wind speed as a covariate, as it was identified in the first research question as having a significant relationship with storm surge. The code example below demonstrates how this was implemented using the Halifax dataset.
+
+```{r eval=FALSE, tidy=TRUE}
+#Annual max wind speed extracted from the data. 
+annual.maximas.Halifax_ws <- full.max.data.Halifax %>%
+  mutate(year = year(date)) %>%
+  group_by(year) %>%
+  summarise(max_wind_speed = max(avg_wind_speed, na.rm = TRUE), .groups = "drop")
+
+# Load required libraries
+library(ismev)
+library(evd)
+
+#Transform wind speed as data frame
+max_wind_speed = data.frame(max_wind_speed = annual.maximas.Halifax_ws$max_wind_speed)
+
+# Fitting the GEV model with a covariate.
+gev.surge_wind = gev.fit(xdat = annual.maximas.Halifax_ss$max_storm_surge,
+                          ydat = max_wind_speed,
+                          mul = 1)
+gev.diag(gev.surge_wind)
+
+# Extract the parameters from the fitted model:
+mu_intercept = gev.surge_wind$mle[1]    # Intercept for mu
+mu_slope     = gev.surge_wind$mle[2]      # Effect of wind speed on mu
+sigma        = gev.surge_wind$mle[3]      # Scale parameter (must be > 0)
+xi           = gev.surge_wind$mle[4]      # Shape parameter
+V            = gev.surge_wind$cov         # Covariance matrix for parameters
+
+#Choose a reference value for the covariate (e.g., mean wind speed)
+mean_wind = mean(annual.maximas.Halifax_ws$max_wind_speed, na.rm = TRUE)
+
+#Compute the location parameter mu for the reference wind speed
+mu = mu_intercept + mu_slope * mean_wind
+
+#Define the return periods (in years)
+T_values = c(2, 5, 10, 20, 50, 100)
+p = 1 / T_values
+yp = -log(1 - p)
+
+#Calculate return levels for each return period using the qgev function.
+return_levels = sapply(T_values, function(T) {
+  qgev(1/T, loc = mu, scale = sigma, shape = xi, lower.tail = FALSE)
+})
+
+#Calculate the variance of the return levels via the delta method.
+#Since we now have 4 parameters, we define a gradient vector of length 4.
+grad = matrix(0, nrow = length(p), ncol = 4)
+var_return_levels = rep(0, length(p))
+
+for (i in 1:length(p)) {
+#Here, we assume the derivative with respect to mu_slope is equal to the reference covariate value (mean_wind).
+  grad[i, ] = c(1, mean_wind,
+                 -xi^(-1) * (1 - yp[i]^(-xi)),
+                 sigma * xi^(-2) * (1 - yp[i]^(-xi)) - sigma * xi^(-1) * yp[i]^(-xi) * log(yp[i]))
+  # Compute variance using the delta method
+  var_return_levels[i] = t(grad[i, ]) %*% V %*% grad[i, ]
+}
+
+#Compute Standard Errors for the return levels
+se_return_levels = sqrt(var_return_levels)
+
+#95% Confidence Intervals for return levels
+alpha = 0.05
+z_value = qnorm(1 - alpha / 2)
+lower_bounds = return_levels - z_value * se_return_levels
+upper_bounds = return_levels + z_value * se_return_levels
 ```
 
 # 5. Results
