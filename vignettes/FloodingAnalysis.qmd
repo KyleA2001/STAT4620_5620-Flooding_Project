@@ -56,9 +56,17 @@ By identifying key predictors of storm surge, this research enhances our underst
 
 ## 2.1 Description
 
-The data were collected over time from Environment and Climate Change Canada, the Citizen Weather Observer Program (CWOP), and the Government of Canada. Specifically, water level data were obtained from the Government of Canada, while the other variables were sourced from the remaining two organizations. The storm surge level was then calculated using the collected water level data. 
+The data used in this study were compiled from multiple sources, including Environment and Climate Change Canada, the Citizen Weather Observer Program (CWOP), and the Government of Canada. Specifically, water level data were retrieved from the Government of Canada, while the other variables were obtained from the other two sources.
 
-Data were collected for two locations: from January 1961 to August 2014 for Halifax, and from May 1956 to December 2023 for Yarmouth. Due to limitations in the available data within the examined time frame and insights from other researchers, three covariates were selected for analysis: air temperature, wind speed, and rainfall. A description of these covariates is provided below:
+Using the collected water level measurements, storm surge levels were derived through a pre-processing step, which is detailed in a later section.
+
+Data were collected for two coastal locations:
+
+- Halifax: From January 1961 to August 2014
+
+- Yarmouth: From May 1956 to December 2023
+
+Due to limitations in the available data within the examined time frame and insights from other researchers, three covariates were selected for analysis: air temperature, wind speed, and rainfall. A description of these covariates is provided below:
 
 ```{=latex}
 \begin{table}[h]
@@ -71,7 +79,7 @@ Data were collected for two locations: from January 1961 to August 2014 for Hali
 Date & days & Date when data was recorded & Daily \\
 Location & & Halifax and Yarmouth &  \\
 Water Level & m (meters) & Height above datum or reference system & Hourly \\
-Storm Surge & m (meters) & Water rise due to water level and tide height & Hourly \\
+Storm Surge & m (meters) & Water level - R calculate tidal component  & Hourly \\
 Air Temperature & °C & Air temperature & Daily min/max/avg \\
 Wind Speed & km/h & Wind speed & Daily min/max/avg \\
 Rainfall & mm & Precipitation (not including snow) & Real daily value \\
@@ -84,22 +92,25 @@ Rainfall & mm & Precipitation (not including snow) & Real daily value \\
 
 ## 2.2 Data Pre-processing
 
-Storm surge is a critical value in flood and storm impact analysis, but it cannot be directly observed. Instead, it must be calculated using the following formula:
+**Storm Surge Calculation**
+
+Storm surge is a key variable in flood and storm impact analysis, but it cannot be directly measured. Instead, it is derived using the following formula^[@R-StephensonTideHarmonics]:
 
 $$
 \text{Storm Surge} = \text{Observed Water Level} - \text{Fitted Tide}
 $$
 
-The observed water level is obtained from archived data provided by the Government of Canada. This data was measured at two separate locations: Halifax and Yarmouth. The fitted tide uses the function `ftide`, where it fits the tidal data using any set of harmonic constituents. This function takes in three main components:
+As mentioned previously, the observed water levels data for Halifax and Yarmouth are obtained from archived records provided by the Government of Canada. 
 
-- `x`: A numeric vector object giving the water levels; it allows for missing values.
+To estimate the fitted tide component, the `ftide()` function from the TideHarmonics package in R is used. This function models tidal patterns based on harmonic constituents and requires three main inputs:
 
-- `dto`: A date vector of same length as `x` which should be a `POSIXct` object; it does
-not allow for missing values.
+- `x`: A numeric vector object containing water level measurements, where missing values are allowed
 
-- `hcn`: A vector of constituent names. Here, we specify only the 4 major harmonic constituents, `hc4`.
+- `dto`: A date-time vector (of class `POSIXct`) of the same length as x, where missing values are not permitted.
 
-By applying this function to the observed water levels, the predicted storm surge values can be calculated. This function allows for the accurate estimation of storm surge at the specified locations based on tide and observations water levels.
+- `hcn`: A vector of harmonic constituent names. In this analysis, we use the four major constituents, `hc4`.
+
+By applying this `ftide()` using the observed water level data, we generate fitted tide values, which are then subtracted from the observed levels to compute the storm surge. This approach enables accurate estimation of storm surge at both locations, based on tidal patterns and observed water level data. It is important to note that this stage of the pre-processing was completed as part of a pre-existing project, and the corresponding code has not been included in this project.
 
 **Missingness Interpolation**
 
@@ -110,7 +121,7 @@ $$y(t)=y_1+\frac{y_2-y_1}{t_2-t_1}\times (t-t_1)$$
 
 A cutoff of 15 days was applied, meaning that gaps of 15 days or fewer were interpolated using this method, while longer gaps were left untreated. However, linear interpolation assumes a constant rate of change between data points, which may oversimplify real-world variability, potentially smoothing over short-term fluctuations and underestimating uncertainty in the data.
 
-In this analysis, daily average values of storm surge levels are computed and used alongside the corresponding daily average values of wind speed and temperature. The daily storm surge level and its associated covariates for Halifax are presented in @fig-ts_halifax below. From the plots, it appears that storm surge level and wind speed exhibit a similar pattern, especially when compared to the other two variables. The corresponding visualization for Yarmouth is provided in @fig-ts_yarmouth in the appendix. 
+In this analysis, daily average values of storm surge levels are computed and used alongside the corresponding daily average values of wind speed, rain, and temperature. The daily storm surge level and its associated covariates for Halifax are presented in @fig-ts_halifax below. From the plots, it appears that storm surge level and wind speed exhibit a similar pattern, especially when compared to the other two variables. The corresponding visualization for Yarmouth is provided in @fig-ts_yarmouth in the appendix. 
 
 ![Daily time series of climatic factors in Halifax (storm surge, wind speed, rain, and temperature.)](../visualization/ts_halifax.png){width=80% #fig-ts_halifax fig-pos="H"}
 
