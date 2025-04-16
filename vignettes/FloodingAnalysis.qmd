@@ -109,9 +109,9 @@ $$y(t)=y_1+\frac{y_2-y_1}{t_2-t_1}\times (t-t_1)$$
 
 A cutoff of 15 days was applied, meaning that gaps of 15 days or fewer were interpolated using this method, while longer gaps were left untreated. However, linear interpolation assumes a constant rate of change between data points, which may oversimplify real-world variability, potentially smoothing over short-term fluctuations and underestimating uncertainty in the data.
 
-In this analysis, daily average values of storm surge levels are computed and used alongside the corresponding daily average values of wind speed and temperature. The daily storm surge level and its associated covariates for Halifax are presented in @tbl-ts_halifax below. From the plots, it appears that storm surge level and wind speed exhibit a similar pattern, especially when compared to the other two variables. The corresponding visualization for Yarmouth is provided in @fig-ts_yarmouth in the appendix. 
+In this analysis, daily average values of storm surge levels are computed and used alongside the corresponding daily average values of wind speed and temperature. The daily storm surge level and its associated covariates for Halifax are presented in @fig-ts_halifax below. From the plots, it appears that storm surge level and wind speed exhibit a similar pattern, especially when compared to the other two variables. The corresponding visualization for Yarmouth is provided in @fig-ts_yarmouth in the appendix. 
 
-![Daily time series of climatic factors in Halifax (storm surge, wind speed, rain, and temperature.)](../visualization/ts_halifax.png){width=80% #tbl-ts_halifax}
+![Daily time series of climatic factors in Halifax (storm surge, wind speed, rain, and temperature.)](../visualization/ts_halifax.png){width=80% #fig-ts_halifax fig-pos="H"}
 
 # 3. Methods
 
@@ -165,7 +165,7 @@ In `R`, the `VAR()` function from the vars package can be used to fit a VAR($k$)
 
 To assess overfitting, rolling-origin cross-validation can be applied to a multivariate time series using a VAR model which can be visualized as the image below. At each step, the VAR model is trained on an expanding window of the training data, and $h$-step ahead forecasts are produced, where $h=1$ in Figure @fig-ts_CV. The forecast accuracy is then evaluated by comparing these predictions to the actual values of the chosen target variable.
 
-![Visualization of the cross validation for time series with one step ahead forecast.](https://otexts.com/fpp3/fpp_files/figure-html/cv1-1.png){width=80% #fig-ts_CV}
+![Visualization of the cross validation for time series with one step ahead forecast.](https://otexts.com/fpp3/fpp_files/figure-html/cv1-1.png){width=80% #fig-ts_CV fig-pos="H"}
 
 ## 3.4 Granger Causality 
 
@@ -233,7 +233,7 @@ hf_ccf_surge_temp = ccf(halifax$avg_water_surge, halifax$avg_temperature, lag.ma
 hf_ccf_surge_rain = ccf(halifax$avg_water_surge, halifax$rain, lag.max = 50, plot=F)
 ```
 
-**Generalized Additive Mixed Model** can be expressed by the following formula, where location is included as a random intercept:
+**Generalized Additive Mixed Models** incorporate smooth terms for temperature, wind speed, rainfall, and date, allowing for the capture of seasonal patterns and nonlinear trends in water surge dynamics. The model aims to investigate the relationship between water surge and climatic predictors, accounting for location as a random effect, which can be expressed by the following formula:
 
 $$
 \text{storm\_surge}_i=\beta_0+\beta_1\text{temp}_i+\beta_2\text{wind\_speed}_i+\beta_3\text{rain}_i+f_1(\text{temp}_i)+f_2(\text{wind\_speed}_i)+f_3(\text{rain}_i)+f_4(t_i)+w_{g,i}+\epsilon_i
@@ -471,23 +471,11 @@ return_levels = sapply(T_values, function(T) {
 
 **ACF:**
 
-The ACF plots for Halifax and Yarmouth (Figures \ref{acf_halifax} and \ref{acf_yarmouth}) provide insight into how each variable correlates with itself over time. For both locations, storm surge, wind speed, temperature, and rainfall time series are examined. As expected, the plots display similar general patterns across locations, indicating that these variables behave in comparable ways. 
+The ACF plots for Halifax and Yarmouth (@fig-acf_halifax and @fig-acf_yarmouth) provide insight into how each variable correlates with itself over time. For both locations, storm surge, wind speed, temperature, and rainfall time series are examined. As expected, the plots display similar general patterns across locations, indicating that these variables behave in comparable ways. 
 
-```{=latex}
-\begin{figure}[ht!]
-  \includegraphics{../visualization/acf_halifax.png}
-  \caption{ACF plots of storm surge (top left), wind speed (top right), temperature (bottom left) and Rain (bottom right) in Halifax.}
-  \label{acf_halifax}
-\end{figure}
-```
+![ACF plots of storm surge (top left), wind speed (top right), temperature (bottom left) and Rain (bottom right) in Halifax.](../visualization/acf_halifax.png){width=80% #fig-acf_halifax fig-pos="H"}
 
-```{=latex}
-\begin{figure}[ht!]
-  \includegraphics{../visualization/acf_yarmouth.png}
-  \caption{ACF plots of storm surge (top left), wind speed (top right), temperature (bottom left) and Rain (bottom right) in Yarmourth.}
-  \label{acf_yarmouth}
-\end{figure}
-```
+![ACF plots of storm surge (top left), wind speed (top right), temperature (bottom left) and Rain (bottom right) in Yarmourth.](../visualization/acf_yarmouth.png){width=80% #fig-acf_yarmouth fig-pos="H"}
 
 To be more specific:
 
@@ -503,21 +491,43 @@ In summary, the ACF analysis highlights distinct temporal behaviors of covariate
 
 **CCF:**
 
-The CCF plots reveal relationships between water surge and other variables which are shown in @fig-ccf_halifax and @fig-ccf_yarmouth. To be more specific:
+The CCF plots reveal relationships between water surge and other variables, as shown in @fig-ccf_halifax for Halifax and @fig-ccf_yarmouth for Yarmouth Since the results for both locations are similar, only the analysis for Halifax is presented below:
 
-- The top plot discuss about water surge vs. wind speed, present a positive correlation at lag 0 and several subsequent lags. This suggests wind events immediately impact water surge, with effects persisting through multiple time periods. The pattern indicates wind speed is a driver of water surge events.
+- Storm Surge vs. Wind Speed (Top Plot): The CCF shows a positive correlation at lag 0, with a value of approximately 0.2, followed by a rapid decline in subsequent lags. This suggests wind events immediately impact water surge, with effects persisting through multiple time periods. The pattern indicates wind speed is a driver of water surge events.
 
-![CCF plots of storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom) in Halifax.](../visualization/ccf_halifax.png){width=80% #fig-ccf_halifax}
+- Storm Surge vs. Temperature (Middle Plot): A strong negative correlation is observed, peaking at lag 3 with a CCF value around -0.2. This suggests that increases in temperature are followed by decreases in storm surge levels after a few days. This inverse relationship is particularly pronounced for Halifax. That suggests lower temperatures are associated with higher storm surge events (possibly related to winter storm patterns). 
 
-![CCF plots of storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom) in Yarmouth.](../visualization/ccf_yarmouth.png){width=80% #fig-ccf_yarmouth}
+- Storm Surge vs. Rainfall (Bottom Plot): The CCF reveals a short-term positive correlation, with the highest value (about 0.18) occurring at lag 0. The relationship weakens quickly over time, indicating that rainfall has a short-term impact on water surges but little long-term influence.
 
-**Cross-Correlation Analysis** 
- In contrast storm surge vs. temperature shows a strong negative correlation that gradually diminishes over time. This inverse relationship is particularly pronounced for Halifax. That suggests lower temperatures are associated with higher water surge events (possibly related to winter storm patterns). The last plot on the bottom discuss about water surge vs. rain. A positive correlation at very short lags (0-1) is identifiable. The relationship weakens quickly over time, indicating that rainfall has a short-term impact on water surges but little long-term influence
-The patterns are generally similar between Halifax and Yarmouth, suggesting regional consistency in meteorological relationships. The temperature-surge negative correlation appears particularly strong in Halifax. Moreover, Halifax shows some interesting phase shifts in the wind-surge relationship that might indicate more complex coastal geography effects. These relationships suggest that water surge events in Nova Scotia are primarily driven by wind conditions, with secondary influences from temperature patterns and immediate rainfall. The negative correlation with temperature likely reflects seasonal storm patterns, with more significant surge events occurring during colder months
+![CCF plots of storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom) in Halifax.](../visualization/ccf_halifax.png){width=80% #fig-ccf_halifax fig-pos="H"}
+ 
+The patterns are generally similar between Halifax and Yarmouth, suggesting regional consistency in meteorological relationships. The temperature-surge negative correlation appears particularly strong in Halifax. Moreover, Halifax shows some interesting phase shifts in the wind-surge relationship that might indicate more complex coastal geography effects. The inverse relationship with temperature likely reflects seasonal storm dynamics. Overall, the findings suggest that storm surge events in Nova Scotia are primarily driven by wind conditions, with secondary influences from temperature variations and short-term rainfall. 
 
+**GAMMs**
 
+The model outputs for the LME and GAM components are provided in @fig-gamms_lme and @fig-gamms_gam, respectively. The LME results indicate a significant effect of location on storm surge, with wind speed and rainfall also having a statistically significant impact. Additionally, the GAM output suggests that the smooth functions of all three explanatory variables are significant in explaining the variability in storm surge.
 
-**Var** 
+![GAMMs output of LME](../visualization/gamms_lme.jpeg){width=80% #fig-gamms_lme fig-pos="H"}
+
+![GAMMs output of GAM](../visualization/gamms_gam.jpeg){width=80% #fig-gamms_gam fig-pos="H"}
+
+@fig-location_gamm_acf_res shows the ACF of residuals, revealing a strong temporal structure in the data. The random effect component exhibits high autocorrelation at lag 1 (around 0.7), which gradually decreases but remains above the significance threshold beyond 45 lags. This indicates temporal dependencies in the data, violating the assumption of residual independence. Similarly, the smooth component shows a comparable autocorrelation at lag 1 with a more persistent decline, further suggesting that the independence assumption is not fully satisfied.
+
+![ACF plots of residuals in both Smooth and Random Effects in GAMMs](../visualization/location_gamm_acf_res.png){width=80% #fig-location_gamm_acf_res fig-pos="H"}
+
+Residual diagnostic plots provide further insight into the model’s performance:  
+
+- The residuals versus fitted values plot for the GAM component (@fig-location_gamm_res_gam) shows a fairly uniform spread around zero, while the quantile-quantile (QQ) plot indicates deviations from normality.
+
+![Residual diagnostic plots of GAM in GAMMs](../visualization/location_gamm_res_gam.png){width=80% #fig-location_gamm_res_gam fig-pos="H"}
+
+- The residuals from the linear mixed effects (LME) component (@fig-location_gamm_res_lme) exhibit a similar pattern, suggesting that the model does not fully capture the underlying structure of the data.
+
+![Residual diagnostic plots of LME in GAMMs](../visualization/location_gamm_res_lme.png){width=80% #fig-location_gamm_res_lme fig-pos="H"}
+
+The model offers a strong foundation for understanding water surge dynamics, but adjustments to better account for temporal dependencies could further enhance its predictive performance and overall robustness. The inclusion of an explicit autocorrelation structure, such as a first-order autoregressive (AR(1)) correlation term, could help in capturing the remaining dependencies. Additionally, incorporating more time-related predictors or interactions may enhance explanatory power which leads us to VAR model.
+
+**VAR:** 
 The analysis employed a Vector Autoregression (VAR) model to examine the relationship between multiple climatic variables and water surge dynamics over time. Prior to model estimation, the stationarity of all time series variables—average water surge, average temperature, average wind speed, and rainfall—was assessed using the Augmented Dickey-Fuller (ADF) test. The results confirmed that all variables were stationary (p-value = 0.01 for each variable), allowing for VAR modeling without the need for differencing.
 Different lag orders were explored, with a maximum of 20 lags considered. The selection criteria provided varying recommendations: the Akaike Information Criterion (AIC) suggested 20 lags, the Hannan-Quinn Criterion (HQ) recommended 19, while the Schwarz Criterion (SC) indicated an optimal lag order of 11. The Final Prediction Error (FPE) aligned with AIC, selecting 20 lags. This variation aligns with the well-documented tendency of AIC to favor higher lag orders due to its relatively weaker penalty on model complexity.
 The primary model incorporated all climatic factors using a VAR(7) specification, including average water surge, temperature, wind speed, and rainfall with seven lags. This model explained approximately 62.6% of the variation in water surge (R-squared = 0.6262) and exhibited the lowest AIC (-39278.16), suggesting the best overall fit. Among the most significant predictors, the strongest influence was the previous water surge at lag 1 (coefficient = 0.635). Wind speed showed a negative relationship at lag 1 (-0.00168) but a positive effect at lag 2 (0.00109). Rainfall displayed a delayed negative effect at lag 2 (-0.00085). Residual analysis using the autocorrelation function (ACF) plot indicated no significant autocorrelation, confirming that the model effectively captured temporal dependencies.
@@ -527,12 +537,7 @@ The results highlight key insights into the dynamics of water surge variation. W
 Overall, while the full VAR(7) model provides the best fit for accurately capturing storm surge dynamics, the VAR(1) model with wind speed represents a viable alternative for operational use, balancing predictive capability with model simplicity. The absence of significant overfitting, as confirmed by time series cross-validation, further supports the robustness of these models. These findings underscore the complex interplay between past water surge levels and climatic factors in shaping surge dynamics in Halifax, emphasizing the importance of multivariate approaches for improved forecasting.
 
 
-**GAMM**
-The analysis employed a Generalized Additive Mixed Model (GAMM) to investigate the relationship between water surge and climatic predictors, accounting for location as a random effect. The model incorporated smooth terms for temperature, wind speed, rainfall, and date, allowing for the capture of seasonal patterns and nonlinear trends in water surge dynamics.
-The autocorrelation function (ACF) plots reveal a strong temporal structure in the data. The random effect component exhibits a high autocorrelation at lag 1, around 1, which gradually decreases but remains above the significance threshold after 45 lags. This pattern suggests that the random effect structure does not fully account for the temporal dependencies present in the data. Similarly, the smooth component demonstrates a comparable autocorrelation at lag 1 but with a more persistent decline. The fact that autocorrelation remains significant across all lags indicates that residual temporal dependencies remain unmodeled within the smooth terms.
-Residual diagnostic plots provide further insight into the model’s performance. The residuals versus fitted values plot for the GAM shows a fairly uniform spread around zero, though some deviation is observed, particularly at higher fitted values where extreme residuals become more prominent. The quantile-quantile (QQ) plot highlights moderate departures from normality, particularly in the upper tail, where observed values exceed theoretical expectations. The residuals from the linear mixed effects (LME) component display a similar pattern, albeit with slightly improved normality. Nevertheless, minor deviations from normality persist at both extremes, reinforcing the idea that some residual structure remains unaccounted for in the model.
-The findings underscore the presence of persistent temporal autocorrelation, indicating that the model may benefit from refinements. The inclusion of an explicit autocorrelation structure, such as a first-order autoregressive (AR(1)) correlation term, could help in capturing the remaining dependencies. Additionally, incorporating more time-related predictors or interactions may enhance explanatory power. Alternative smoothing parameter adjustments or different basis functions could refine the model’s ability to account for temporal trends.
-Despite these areas for improvement, the model effectively captures major patterns in the data. Residuals are generally well-behaved, displaying symmetry around zero and no clear signs of heteroscedasticity. While slight deviations from normality exist, they do not pose substantial issues for inference. The model offers a strong foundation for understanding water surge dynamics, but adjustments to better account for temporal dependencies could further enhance its predictive performance and overall robustness.
+
 
 ## 5.2 Question 2
 
@@ -578,5 +583,6 @@ Cite literature and other sources useful for explaining the background informati
 
 # Appendix
 
-![Time series of climatic factors in Yarmouth (storm surge, wind speed, rain, and temperature.)](../visualization/ts_yarmouth.png){width=80% #fig-ts_yarmouth}
+![Time series of climatic factors in Yarmouth (storm surge, wind speed, rain, and temperature.)](../visualization/ts_yarmouth.png){width=80% #fig-ts_yarmouth fig-pos="H"}
 
+![CCF plots of storm surge vs wind speed (top), storm surge vs temperature (middle), storm surge vs rain (bottom) in Yarmouth.](../visualization/ccf_yarmouth.png){width=80% #fig-ccf_yarmouth fig-pos="H"}
