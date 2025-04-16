@@ -28,10 +28,11 @@ Summary in 150 words (Best done last, summarizes the whole project)
 # Keywords
 
 - Storm Surge
-- Generalized Additive Mixed Models (GAMMs)
 - Autocorrelation Function (ACF)
 - Cross-Correlation Function (CCF)
+- Generalized Additive Mixed Models (GAMMs)
 - Vector Autoregression (VAR)
+- Granger-Causality
 - Extreme Value Analysis (EVA)
 
 # 1. Introduction
@@ -347,6 +348,8 @@ $$
 
 where $\epsilon\sim N(0, \sigma^2)$.
 
+Before fitting the VAR model, the Augmented Dickey-Fuller (ADF) test was performed to check the stationarity of the time series data.
+
 ```{r eval=FALSE, tidy=TRUE}
 library(vars)
 library(tseries)
@@ -354,6 +357,14 @@ library(forecast)
 
 halifax_var <- new_halifax_df_interpolation[, c("avg_water_surge", "avg_temperature", "avg_wind_speed", "rain")]
 
+# ADF test for each time series
+adf_test <- apply(halifax_var, 2, adf.test)
+adf_test
+```
+
+Then, the `VAR()` model can be applied as follows:
+
+```{r eval=FALSE, tidy=TRUE}
 halifax_var_model <- VAR(halifax_var, p = 7, type = "none")
 
 # Model evaluation
@@ -501,6 +512,14 @@ return_levels = sapply(T_values, function(T) {
 
 # 5. Results
 
+```{r, echo=FALSE, warning=FALSE, message=FALSE}
+library(vars)
+library(tseries)
+library(forecast)
+
+source("../R/tsCV_VAR_fn.R")
+```
+
 ## 5.1 Question 1
 
 **ACF:**
@@ -562,16 +581,47 @@ Residual diagnostic plots provide further insight into the model’s performance
 The model offers a strong foundation for understanding water surge dynamics, but adjustments to better account for temporal dependencies could further enhance its predictive performance and overall robustness. The inclusion of an explicit autocorrelation structure, such as a first-order autoregressive (AR(1)) correlation term, could help in capturing the remaining dependencies. Additionally, incorporating more time-related predictors or interactions may enhance explanatory power which leads us to VAR model.
 
 **VAR:** 
-The analysis employed a Vector Autoregression (VAR) model to examine the relationship between multiple climatic variables and water surge dynamics over time. Prior to model estimation, the stationarity of all time series variables—average water surge, average temperature, average wind speed, and rainfall—was assessed using the Augmented Dickey-Fuller (ADF) test. The results confirmed that all variables were stationary (p-value = 0.01 for each variable), allowing for VAR modeling without the need for differencing.
-Different lag orders were explored, with a maximum of 20 lags considered. The selection criteria provided varying recommendations: the Akaike Information Criterion (AIC) suggested 20 lags, the Hannan-Quinn Criterion (HQ) recommended 19, while the Schwarz Criterion (SC) indicated an optimal lag order of 11. The Final Prediction Error (FPE) aligned with AIC, selecting 20 lags. This variation aligns with the well-documented tendency of AIC to favor higher lag orders due to its relatively weaker penalty on model complexity.
-The primary model incorporated all climatic factors using a VAR(7) specification, including average water surge, temperature, wind speed, and rainfall with seven lags. This model explained approximately 62.6% of the variation in water surge (R-squared = 0.6262) and exhibited the lowest AIC (-39278.16), suggesting the best overall fit. Among the most significant predictors, the strongest influence was the previous water surge at lag 1 (coefficient = 0.635). Wind speed showed a negative relationship at lag 1 (-0.00168) but a positive effect at lag 2 (0.00109). Rainfall displayed a delayed negative effect at lag 2 (-0.00085). Residual analysis using the autocorrelation function (ACF) plot indicated no significant autocorrelation, confirming that the model effectively captured temporal dependencies.
+
+Before model estimation, the stationarity of all time series variables—average water surge, average temperature, average wind speed, and rainfall-was tested using the Augmented Dickey-Fuller (ADF) test. The results below indicated that all variables were stationary (p-value = 0.01 for each), permitting the use of VAR modeling without the need for differencing.
+
+```{r, echo=FALSE, warning=FALSE}
+linear_interpolation_df = read.csv("../data/linear_interpolation_df.csv")
+
+new_halifax_df_interpolation = subset(linear_interpolation_df, linear_interpolation_df$location == "Halifax")
+halifax_var <- new_halifax_df_interpolation[, c("avg_water_surge", "avg_temperature", "avg_wind_speed", "rain")]
+
+# ADF test for each time series
+adf_test <- apply(halifax_var, 2, adf.test)
+adf_test
+```
+
+The models were applied to both locations, and since the results are similar, only the results for Halifax are presented.
+
+- The initial model used a VAR(7) specification, incorporating all climatic factors—average water surge, temperature, wind speed, and rainfall—using seven lags. This choice was based on the observation that increasing the number of lags beyond seven did not significantly affect the AIC value, leading to a more complicated model that would be harder to interpret. The output of the VAR(7) model, with coefficients ordered by increasing p-value for Halifax, is as follows:
+
+```{r, echo=FALSE, warning=FALSE}
+# Fit for all climatic factors
+halifax_var_model <- VAR(halifax_var, p = 7, type = "none")
+
+# Extract the coefficients for avg_water_surge
+halifax_var_surge <- coef(halifax_var_model)$avg_water_surge
+
+# Order the coefficients by p-value in descending order (lowest p-value first)
+halifax_ordered_surge <- halifax_var_surge[order(halifax_var_surge[, "Pr(>|t|)"], decreasing = FALSE), , drop = FALSE]
+
+# View the ordered coefficients and p-values
+halifax_ordered_surge
+```
+
+This model explained approximately 63.1% of the variation in water surge (R-squared = 0.631) and exhibited the lowest AIC (-39,456.38), suggesting the overall well fit. Among the most significant predictors, the strongest influence was the previous water surge at lag 1 (coefficient = 0.6152). Wind speed showed a negative relationship at lag 1 (-1.748e-03) but a positive effect at lag 2 (9.737867e-04). Rainfall displayed a delayed negative effect at lag 2 ( -1.137741e-03). Additionally,  Residual analysis using the autocorrelation function (ACF) plot indicated no significant autocorrelation, confirming that the model effectively captured temporal dependencies.
+
 A simplified model was then considered, incorporating only water surge and wind speed with a single lag (VAR(1)). This model explained 59% of the variance (R-squared = 0.5908) and had a higher AIC (-37666.21), suggesting a comparatively poorer fit. However, both included variables remained highly significant (p < 2e-16), with wind speed showing a consistent positive effect (0.000702) on water surge. Although residual autocorrelation was minimal, it was slightly higher than in the full VAR(7) model.
+
 To further isolate the influence of past water surge levels, an autoregressive (AR) model was estimated. This model, focusing exclusively on the temporal dependence of water surge, had an R-squared of 0.4713, explaining 47% of the variance. The AIC value was -38196.53, positioning it between the simplified VAR(1) model and the full VAR(7) model. The autoregressive coefficient (0.6865) indicated a strong temporal dependence, reinforcing the role of past water surge levels as the primary determinant of future surges.
+
 The results highlight key insights into the dynamics of water surge variation. Water surge exhibits strong autocorrelation, with previous surge levels serving as the most influential predictor. The inclusion of climatic factors significantly improves predictive power, increasing explained variance from 47% (AR model) to 62% (full VAR model). Wind speed exerts both immediate and delayed effects, displaying an initial negative influence followed by positive effects at later lags, suggesting a complex interaction with water dynamics. Rainfall primarily exerts a delayed negative impact, with significant effects observed at lags 2, 3, and 7, whereas temperature influences are less consistent across time lags.
+
 Overall, while the full VAR(7) model provides the best fit for accurately capturing storm surge dynamics, the VAR(1) model with wind speed represents a viable alternative for operational use, balancing predictive capability with model simplicity. The absence of significant overfitting, as confirmed by time series cross-validation, further supports the robustness of these models. These findings underscore the complex interplay between past water surge levels and climatic factors in shaping surge dynamics in Halifax, emphasizing the importance of multivariate approaches for improved forecasting.
-
-
-
 
 ## 5.2 Question 2
 
