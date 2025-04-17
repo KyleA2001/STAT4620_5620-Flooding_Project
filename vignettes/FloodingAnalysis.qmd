@@ -734,13 +734,13 @@ head(halifax_ordered_surge, 10)
 
 + Among the most significant predictors, the strongest influence is observed for the storm surge level at lag 1, with an estimated coefficient of 0.6152. This indicates a strong positive relationship, suggesting that current storm surge levels are influenced by their previous past values.
 
-+ Wind speed has a negative effect at lag 1 (−0.00175) and a positive effect at lag 2 (0.000974) on storm surge. These smaller coefficients are due to wind speed being measured in km/h, which tends to have larger numerical values.
++ Wind speed has a negative effect at lag 1 (-0.00175) and a positive effect at lag 2 (0.000974) on storm surge. These smaller coefficients are due to wind speed being measured in km/h, which tends to have larger numerical values.
 
 + Rainfall displays a negative effect at lag 2 (-1.14e-03), and a positive effect for lag 1 (9.46e-04). As with wind speed, the smaller coefficients are a result of rainfall being measured in mm, which also involves relatively high magnitudes.
 
 + Temperature also shows a negative effect at lag 2 (-2.75e-03), and a positive effect for lag 1 (1.86-03). These coefficients are smaller than that of water surge at lag 1, likely due to temperature being measured in degrees Celsius, which has a larger numerical scale.
 
-+ Additionally, residual analysis using the autocorrelation function (ACF) plot (@fig-hf_VAR_acf_res) indicates no significant autocorrelation, confirming that the model effectively captured temporal dependencies.
++ Additionally, the autocorrelation function (ACF) in @fig-hf_VAR_acf_res indicates no significant autocorrelation, confirming that the model effectively captured temporal dependencies.
 
 ![ACF plot of residuals of VAR(7) model for Halifax.](../visualization/hf_VAR_acf_res.png){width=50% #fig-hf_VAR_acf_res fig-pos="H"}
 
