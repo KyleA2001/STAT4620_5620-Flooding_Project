@@ -3,3 +3,4 @@
 export(find_missing_index)
 export(linear_interpolation)
 export(linear_interpolation_df)
+export(tsCV_VAR)
