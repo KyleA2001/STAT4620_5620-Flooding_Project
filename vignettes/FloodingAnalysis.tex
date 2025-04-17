@@ -284,50 +284,44 @@ Summary in 150 words (Best done last, summarizes the whole project)
 
 \section{1. Introduction}\label{introduction}
 
-Storm surges are one of the most significant geophysical risks affecting
-coastal regions, often leading to substantial loss of life and
-property\footnote{Von Storch and Woth (2008)}. They occur when strong
-winds and low atmospheric pressure cause an abnormal rise in sea level,
-pushing water onto the shore. As coastal populations and infrastructure
-expand, vulnerability to storm surges is increasing, contributing to a
-growing crisis in urbanized coastal areas where natural hazards are
-causing unprecedented damage\footnote{Helderop and Grubesic (2019)}.
-
-Nova Scotia, with its extensive coastline along the Atlantic Ocean, is
-particularly susceptible to storm surges, which frequently exacerbate
-flooding events. Over the past decade, the province has experienced an
-increase in extreme weather conditions, including heavy rainfall and
-strong winds, resulting in catastrophic floods that have damaged
-infrastructure, displaced communities, and disrupted
-ecosystems\footnote{Childs (2017)}. As climate change intensifies these
-weather patterns, understanding the climatic drive\footnote{Simonović
+Coastal communities are increasingly vulnerable to the impacts of
+climate change, as rising sea levels and more frequent extreme weather
+events intensify the risks of flooding, infrastructure damage, and
+ecosystem disruption\footnote{Helderop and Grubesic (2019)}. In
+urbanized coastal areas, population density and development have reduced
+natural protections, increasing exposure to geophysical
+hazards\footnote{Von Storch and Woth (2008)}. Nova Scotia, with its
+extensive Atlantic coastline, is no exception-experiencing a notable
+increase in heavy rainfall, strong winds, and severe flooding over the
+past decade\footnote{Childs (2017)}. Therefore, recognizing the drivers
+of coastal flooding in the region is crucial, especially as climate
+change affects atmospheric and oceanic conditions\footnote{Simonović
   (2012)}.
 
-Storm surge is influenced by multiple meteorological and oceanographic
-factors, the main factor is wind speed but others have been identified
-like atmospheric pressure, temperature, and rainfall playing key
-roles\footnote{Resio and Westerink (2008)}. Prior studies have shown
-that wind speed is a main driver of storm surge height. Rising sea
-surface temperatures have also been linked to stronger storm systems,
-leading to more intense surges\footnote{Needham, Keim, and Sathiaraj
-  (2015)}. While heavy rainfall contributes to overall flood risk, its
-direct correlation with storm surge is less pronounced compared to wind
-and pressure effects\footnote{Fang et al. (2021)}.
+A key contributor to coastal flooding is storm surge which is an
+abnormal rise in sea level caused primarily by high winds and low
+atmospheric pressure during severe weather events\footnote{McInnes et
+  al. (2003)}. While wind speed is widely recognized as the dominant
+factor influencing surge height, other variables such as atmospheric
+pressure, sea surface temperature, and precipitation also play important
+roles\footnote{Resio and Westerink (2008)}. For instance, warming ocean
+temperatures have been linked to stronger storm systems and more intense
+surges\footnote{Needham, Keim, and Sathiaraj (2015)}, whereas rainfall,
+though critical to overall flood risk, tends to have a weaker direct
+relationship with surge dynamics\footnote{Fang et al. (2021)}.
+Understanding the combined influence of these factors is essential for
+improving flood prediction models and enhancing coastal resilience.
 
-Modeling these extreme weather events can be challenging due to their
-rarity and the complex way multiple climatic factors may interact.
-Although flooding events are relatively infrequent, their impact can
-cause significant societal and economic damage, highlighting the need
-for improved analysis and forecast tools. This research seeks to
-understand the relationship between various climatic factors and storm
-surge levels at selected locations in Nova Scotia including Halifax and
-Yarmouth. Then these findings are used to forecast the likelihood of
-future flooding events based on the most significant contributing
-climatic factor.
-
-This study aims to model storm surge levels in Nova Scotia using wind
-speed, temperature, and rainfall as climatic covariates. It seeks to
-address the following research questions:
+Modeling these extreme weather events is challenging due to their rarity
+and the complex interaction of multiple climatic factors. Although
+flooding events may occur infrequently, their impacts are severe-causing
+significant societal and economic damage. This highlights the importance
+of developing more accurate analytical and forecasting tools. The goal
+of this research is to investigate the relationship between various
+climatic variables---specifically wind speed, temperature, and
+rainfall---and storm surge levels at selected locations in Nova Scotia,
+specifically Halifax and Yarmouth. The study is guided by the following
+research questions:
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
@@ -339,10 +333,11 @@ address the following research questions:
   flooding catastrophes in Nova Scotia?
 \end{enumerate}
 
-By identifying key predictors of storm surge, this research enhances our
-understanding of how climatic factors contribute to flooding disasters
-and supports the development of improved forecasting models, helping
-communities mitigate the risks associated with extreme coastal flooding.
+By identifying key predictors of storm surge, this research aims to
+enhance our understanding of how climatic factors contribute to flooding
+disasters and supports the development of improved forecasting models,
+helping communities mitigate the risks associated with extreme coastal
+flooding.
 
 \section{2. Data}\label{data}
 
@@ -410,8 +405,9 @@ Yarmouth are obtained from archived records provided by the Government
 of Canada.
 
 To estimate the fitted tide component, the \texttt{ftide()} function
-from the TideHarmonics package in R is used. This function models tidal
-patterns based on harmonic constituents and requires three main inputs:
+from the \texttt{TideHarmonics} package in \texttt{R} is used. This
+function models tidal patterns based on harmonic constituents and
+requires three main inputs:
 
 \begin{itemize}
 \item
@@ -534,17 +530,15 @@ assumed to follow a normal distribution with constant variance, and the
 response variable is modeled as belonging to the exponential family. In
 \texttt{R}, the \texttt{mgcv} package provides the \texttt{gamm()}
 function, which fits GAMMs using the \texttt{nlme} package and allows
-for both non-linear predictor effects and random effects. Model
-diagnostics can be performed using the \texttt{mgcv::gam.check()}
-function.
+for both non-linear predictor effects and random effects.
 
 \subsection{3.3 Vector Autogressive
 (VAR)}\label{vector-autogressive-var}
 
 A VAR model is a more generalized version of the univariate
-autoregressive model. It comprises one equation per variable in the
-system including a constant and lags of all of the variables in the
-system.
+autoregressive model\footnote{Hyndman and Athanasopoulos (2018)}. It
+comprises one equation per variable in the system including a constant
+and lags of all of the variables in the system.
 
 Consider \(\mathbf{Y}_t\) be a \(p\times 1\) vector of time series
 variables at time \(t\). The VAR(\(k\)) model is determined by \[
@@ -574,12 +568,12 @@ does not change over time. Moreover, the number of lags chosen can
 significantly affect the model's performance, which may cause
 overfitting or underfitting issues. To assess overfitting,
 rolling-origin cross-validation can be applied to a multivariate time
-series using a VAR model which can be visualized as the image below. At
+series using a VAR model which can be visualized in
+Figure~\ref{fig-ts_CV}\footnote{Hyndman and Athanasopoulos (2018)}. At
 each step, the VAR model is trained on an expanding window of the
 training data, and \(h\)-step ahead forecasts are produced, where
-\(h=1\) in Figure Figure~\ref{fig-ts_CV}. The forecast accuracy is then
-evaluated by comparing these predictions to the actual values of the
-chosen target variable.
+\(h=1\) in the visualization. The forecast accuracy is calculated by
+averaging across test sets.
 
 \begin{figure}[H]
 
@@ -597,16 +591,17 @@ series with one step ahead forecast.}
 \subsection{3.4 Granger Causality}\label{granger-causality}
 
 Granger Causality is a statistical technique that determines whether one
-time series can predict another. In a VAR(\(k\)) model with \(p\)
-variables, variable \texttt{x} is said to Granger-cause variable
-\texttt{y} if the past values of \texttt{x} provide statistically
-significant information about the future values of \texttt{y} that
-cannot be explained by the past values of \texttt{y} itself. The test
-determines whether the coefficients for the lagged values of \texttt{x}
-are jointly significant in the equation for \texttt{y}. If they are, we
-reject the null hypothesis, which holds that \texttt{x} does not cause
-\texttt{y}. However, it is important to note that Granger causality
-identifies predictive relationships rather than direct causal links.
+time series can predict another\footnote{Seth (2007)}. In a VAR(\(k\))
+model with \(p\) variables, variable \texttt{x} is said to Granger-cause
+variable \texttt{y} if the past values of \texttt{x} provide
+statistically significant information about the future values of
+\texttt{y} that cannot be explained by the past values of \texttt{y}
+itself. The test determines whether the coefficients for the lagged
+values of \texttt{x} are jointly significant in the equation for
+\texttt{y}. If they are, we reject the null hypothesis, which holds that
+\texttt{x} does not cause \texttt{y}. However, it is important to note
+that Granger causality identifies predictive relationships rather than
+direct causal links.
 
 Consider the system with only one target variable \(y_t\) with \(p\)
 explanatory variables \(x_{1t}, x_{2t}, \dots, x_{pt}\) in VAR(\(k\))
@@ -667,9 +662,9 @@ The density function for \(y_{ji}\) is:
 
 where \(\mu_j,\xi_j \in \mathbb{R}\), \(\sigma_j >0\), and,
 
-\[y \in [ \mu_j - \frac{\sigma_j}{\xi_j}, \infty] \text{ if } \xi_j > 0,\]
+\[y \in \left[ \mu_j - \frac{\sigma_j}{\xi_j}, \infty\right] \text{ if } \xi_j > 0,\]
 \[y \in (-\infty,\infty)  \text{ if } \xi_j = 0,\]
-\[y \in [\infty,  \mu_j + \frac{\sigma_j}{\xi_j}] \text{ if } \xi_j < 0.\]
+\[y \in \left[\infty,  \mu_j + \frac{\sigma_j}{\xi_j}\right] \text{ if } \xi_j < 0.\]
 
 These annual maximas are fitted to the GEV distribution using the
 \texttt{gev.fit()} function in \texttt{R}, which takes the vector of
@@ -687,7 +682,7 @@ be exceeded on average once every \(\frac{1}{p}\) years. For
 \(0 < p < 1\), the MLE of the return level \(z_p\) is calculated as
 follows:
 
-\[\hat z_p = \hat\mu - \frac{\hat\sigma}{\hat\xi} [1-y_p^{-\hat\xi}], \text{ } y_p = - \log(1-p)\].
+\[\hat z_p = \hat\mu - \frac{\hat\sigma}{\hat\xi} \left[1-y_p^{-\hat\xi}\right], \text{ } y_p = - \log(1-p)\].
 
 For confidence interval calculations of these return levels, by the
 delta method we have,
@@ -785,11 +780,12 @@ for location as a random effect, which can be expressed by the following
 formula:
 
 \begin{align*}
-\text{storm\_surge}_i=&\beta_0+\beta_1\text{temp}_i+\beta_2\text{wind\_speed}_i+\beta_3\text{rain}_i+f_1(\text{temp}_i)\\&+f_2(\text{wind\_speed}_i)+f_3(\text{rain}_i)+f_4(t_i)+w_{g,i}+\epsilon_i
+\text{storm\_surge}_i=&\beta_0+\beta_1\text{temp}_i+\beta_2\text{wind\_speed}_i+\beta_3\text{rain}_i+f_1(\text{temp}_i)\\&+f_2(\text{wind\_speed}_i)+f_3(\text{rain}_i)+f_4(\text{time}_i)+w_{g,i}+\epsilon_i
 \end{align*}
 
-where \(w_{g,i}\sim N(0, \sigma^2_g)\) is a random effect covariate
-accounting for variations in storm surge across different locations.
+where \(\beta_k\) is a coefficient, \(f_j\) is a smooth function, and
+\(w_{g,i}\sim N(0, \sigma^2_g)\) is a random effect covariate accounting
+for variations in storm surge across different locations.
 
 In \texttt{R}, the \texttt{gamm()} function is used as follows:
 
@@ -815,14 +811,14 @@ In \texttt{R}, the \texttt{gamm()} function is used as follows:
 \end{Highlighting}
 \end{Shaded}
 
-Then the residuals of the smooth terms and random effects are check as
-follows:
+Then the residuals of the smooth terms and random effects were checked
+as follows:
 
 \begin{itemize}
 \tightlist
 \item
-  First, we check for auto-correlation of the residuals since the errors
-  are assumed to be independent.
+  First, we checked for auto-correlation of the residuals since the
+  errors are assumed to be independent.
 \end{itemize}
 
 \begin{Shaded}
@@ -873,7 +869,8 @@ follows:
 
 Since the residual analysis indicates a dependence structure and
 violations of model assumptions, this motivates the use of alternative
-approaches, such as Vector Autoregression (VAR) models.
+approaches, such as Vector Autoregression (VAR) models to account for
+the temporal structure.
 
 \textbf{Vector Autoregression (VAR)}: The following model represents
 storm surge as a function of its own past values and the lagged values
@@ -1001,24 +998,24 @@ speed, temperature, and rainfall as potential predictors of storm surge.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Wind speed, temperature and rain cause storm surge?}
+\CommentTok{\# Wind speed, temperature and rain at lag 1 Granger{-}cause storm surge?}
 \NormalTok{halifax\_var\_model }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var, }\AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
-\FunctionTok{causality}\NormalTok{(halifax\_var\_model, }\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}avg\_wind\_speed\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}avg\_temperature\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}rain\textquotesingle{}}\NormalTok{))}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model, }\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}avg\_wind\_speed\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}avg\_temperature\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}rain\textquotesingle{}}\NormalTok{))}\SpecialCharTok{$}\NormalTok{Granger}
 
-\CommentTok{\# Wind speed causes storm surge?}
+\CommentTok{\# Wind speed at lag 1 Granger{-}causes storm surge?}
 \NormalTok{halifax\_var\_model\_wind }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"avg\_wind\_speed"}\NormalTok{)], }
                               \AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
-\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_wind, }\StringTok{\textquotesingle{}avg\_wind\_speed\textquotesingle{}}\NormalTok{)}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_wind, }\StringTok{\textquotesingle{}avg\_wind\_speed\textquotesingle{}}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Granger}
 
-\CommentTok{\# Temperature causes storm surge?}
+\CommentTok{\# Temperature at lag 1 Granger{-}causes storm surge?}
 \NormalTok{halifax\_var\_model\_temp }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"avg\_temperature"}\NormalTok{)], }
                               \AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
-\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_temp, }\StringTok{\textquotesingle{}avg\_temperature\textquotesingle{}}\NormalTok{)}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_temp, }\StringTok{\textquotesingle{}avg\_temperature\textquotesingle{}}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Granger}
 
-\CommentTok{\# Rain causes storm surge?}
+\CommentTok{\# Rain at lag 1 Granger{-}causes storm surge?}
 \NormalTok{halifax\_var\_model\_rain }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"rain"}\NormalTok{)], }
                               \AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
-\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_rain, }\StringTok{\textquotesingle{}rain\textquotesingle{}}\NormalTok{)}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_rain, }\StringTok{\textquotesingle{}rain\textquotesingle{}}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Granger}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1085,7 +1082,7 @@ confidence intervals.
 \CommentTok{\# Define the return periods  representing years.}
 \NormalTok{T\_values }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{100}\NormalTok{)}
 \NormalTok{p }\OtherTok{=} \DecValTok{1}\SpecialCharTok{/}\NormalTok{T\_values}
-\CommentTok{\#yp will be used in the return levels confidence interval calculations. }
+\CommentTok{\# yp will be used in the return levels confidence interval calculations. }
 \NormalTok{yp }\OtherTok{=} \SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ p)}
 
 \CommentTok{\# Calculate return levels for each return period}
@@ -1439,8 +1436,9 @@ similar, only the results for Halifax are presented. Before model
 estimation, the stationarity of all time series variables---average
 water surge, average temperature, average wind speed, and rainfall-was
 tested using the Augmented Dickey-Fuller (ADF) test. The results below
-indicated that all variables were stationary (p-value = 0.01 for each),
-permitting the use of VAR modeling without the need for differencing.
+indicated that all variables were stationary (\texttt{p-value\ =\ 0.01}
+for each), permitting the use of VAR modeling without the need for
+differencing.
 
 \begin{verbatim}
 $avg_water_surge
@@ -1481,14 +1479,15 @@ alternative hypothesis: stationary
 
 The initial model used a VAR(7) specification, incorporating all
 climatic factors---average water surge, temperature, wind speed, and
-rainfall---using seven lags. This choice was based on the observation
-that increasing the number of lags beyond seven did not significantly
-affect the AIC value, leading to a more complicated model that would be
-harder to interpret. The output of the VAR(7) model for Halifax, with
-coefficients ordered by increasing p-value, is presented below. All
-listed variables are statistically significant at the 1\% level,
-indicating a strong influence of their respective lagged values on the
-current storm surge level.
+rainfall---using seven lags. The primary target variable in the analysis
+was water surge. The choice for the number of lags was based on the
+observation that increasing the number of lags beyond seven did not
+significantly affect the AIC value, leading to a more complicated model
+that would be harder to interpret. The output of the VAR(7) model for
+Halifax, with the first 10 coefficients ordered by increasing p-value,
+is presented below. All presented covariates are statistically
+significant at the 1\% level, suggesting a strong influence of their
+respective lagged values on the current storm surge level.
 
 \begin{verbatim}
                         Estimate   Std. Error    t value     Pr(>|t|)
@@ -1508,7 +1507,7 @@ avg_wind_speed.l6   0.0005108945 1.061634e-04   4.812343 1.503458e-06
 \item
   This model explained approximately 63.1\% of the variation in storm
   surge (\texttt{R-squared\ =\ 0.631}) and exhibited the AIC of
-  -39,456.38, suggesting the moderate well fit.
+  -39,456.38.
 \item
   Among the most significant predictors, the strongest influence is
   observed for the storm surge level at lag 1, with an estimated
@@ -1562,8 +1561,8 @@ for Halifax.}
 A simplified model using VAR(1) incorporates only water surge and wind
 speed with a single lag is fitted to evaluate whether wind speed, as a
 significant covariate, can be used to forecast water surge one step
-ahead. The model having AIC of -37,594.7 with the output shown as
-follows:
+ahead. The model having AIC of -37,594.7, which is larger than the
+VAR(7) model, with the output shown as follows:
 
 \begin{verbatim}
 
@@ -1611,8 +1610,8 @@ VAR(1) model of water surge and wind speed in Halifax.}
 \end{figure}%
 
 To further isolate the influence of past water surge levels, the first
-order autoregressive (AR) model was estimated - AR(1). The result is
-shown as follows:
+order autoregressive model was estimated - AR(1). The result is shown as
+follows:
 
 \begin{verbatim}
 
@@ -1828,8 +1827,8 @@ storm surge and covariate data posed a challenge. While linear
 interpolation was applied to impute missing covariate values, it does
 not account for uncertainty, which may introduce bias. To preserve data
 integrity, we only used covariate values corresponding to available
-surge data, reducing the sample size. Additionally, we assumed equal
-time spacing between observations, which may affect estimation accuracy.
+surge data. Additionally, we assumed equal time spacing between
+observations, which may affect estimation accuracy.
 
 Regarding the interaction between covariates and storm surge levels
 using the VAR model, one limitation is the assumption of a fixed lag
@@ -2134,6 +2133,15 @@ Climatic Factors Driving u.s. Coastal City Vulnerability to Storm Surge
 Flooding.''} \emph{Ocean and Coastal Management} 181 (November).
 \url{https://doi.org/10.1016/j.ocecoaman.2019.104902}.
 
+\bibitem[\citeproctext]{ref-R-hyndman2018forecasting}
+Hyndman, Rob J, and George Athanasopoulos. 2018. \emph{Forecasting:
+Principles and Practice}. OTexts.
+
+\bibitem[\citeproctext]{ref-R-mcinnes2003impact}
+McInnes, KL, KJE Walsh, GD Hubbert, and T Beer. 2003. {``Impact of
+Sea-Level Rise and Storm Surges on a Coastal Community.''} \emph{Natural
+Hazards} 30: 187--207.
+
 \bibitem[\citeproctext]{ref-R-Needham2015}
 Needham, Hal F., Barry D. Keim, and Devika Sathiaraj. 2015. {``A Review
 of Tropical Cyclone‐generated Storm Surges: Global Data Sources,
@@ -2144,6 +2152,10 @@ Observations, and Impacts.''} \emph{Reviews of Geophysics} 53 (2):
 Resio, Donald T., and Joannes J. Westerink. 2008. {``Modeling the
 Physics of Storm Surges.''} \emph{Physics Today} 61 (9): 33--38.
 \url{https://doi.org/10.1063/1.2982120}.
+
+\bibitem[\citeproctext]{ref-R-seth2007granger}
+Seth, Anil. 2007. {``Granger Causality.''} \emph{Scholarpedia} 2 (7):
+1667.
 
 \bibitem[\citeproctext]{ref-R-Simonovic2012}
 Simonović, Slobodan P. 2012. \emph{Floods in a Changing Climate: Risk
