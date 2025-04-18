@@ -1837,6 +1837,10 @@ Covariate Case}
 
 \end{figure}%
 
+Table\textasciitilde{}\ref{tab:return-periods} below presents the return
+level estimates in greater detail, complementing the information shown
+in Figure~\ref{fig-returnlev_halifax}.
+
 \begin{table}[ht]
 \centering
 \begin{tabular}{lcccccc}
@@ -1849,34 +1853,92 @@ Covariate Case}
 \label{tab:return-periods}
 \end{table}
 
-Looking at the overall pattern, both locations a higher storm surge
-return level for the longer return periods, following a logarithmic
-curve that flattens at higher return periods. This is typical in extreme
-value analysis with the difference between a 50-year and 100-year event
-is less dramatic than between a 2-year and 10-year event. Comparing both
-location, Halifax consistently shows higher return levels (approximately
-0.08-0.10m higher) compared to Yarmouth across all return periods.
-Halifax's 100-year return level reaches about 0.71m while Yarmouth's
-reaches about 0.62m. See Figure~\ref{fig-eva_halifax},
+Looking at the overall pattern, both locations display higher storm
+surge return level for the longer return periods, following a
+logarithmic curve that flattens at higher return periods. This is
+typical in extreme value analysis with the difference between a 50-year
+and 100-year event is less dramatic than between a 2-year and 10-year
+event. Comparing both location, Halifax consistently shows higher return
+levels (approximately 0.08-0.10m higher) compared to Yarmouth across all
+return periods. Halifax's 100-year return level reaches about 0.71m
+while Yarmouth's reaches about 0.62m. See Figure~\ref{fig-eva_halifax},
 Figure~\ref{fig-evadiag_halifax}, Figure~\ref{fig-returnlev_halifax},
 Table\textasciitilde{}\ref{tab:yarmouth-return-periods} for references
 to the duplicated process for the Yarmouth location in the appendix.
 
-The Figure X and X represent the case with wind as covariates. The
-covariate analysis produced remarkably similar results to the initial
-analysis. For Halifax, differences between initial and covariate models
-are extremely small (0.0001-0.0003m), for Yarmouth, differences are
-slightly larger but still minor (0.0049-0.0116m). Both graphs show upper
-and lower confidence bounds (red dotted lines). The confidence interval
-widens as the return period increases, reflecting greater uncertainty in
-predicting more extreme events. The minimal difference between the
-initial and covariate models suggests that wind speed doesn't
-significantly improve storm surge prediction beyond what the initial EVA
-model already captures. This could mean that wind speed is already
-implicitly represented in your storm surge data; the relationship
-between wind speed and storm surge in these locations isn't strong
-enough to substantially improve predictions or, that other factors might
-be more important in determining extreme storm surge events
+Now, with respect to the incorporation of the covariates, the storm
+surge return levels were computed as explained in Analysis section.
+Figure~\ref{fig-windspeedplot_halifax} displays a visual of the wind
+speed data, while Figure~\ref{fig-windspeedreturnlvl_halifax} is the
+visual plot of the resulting return levels.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.7\textwidth,height=\textheight]{../visualization/windspeedplot_halifax.png}
+
+}
+
+\caption{\label{fig-windspeedplot_halifax}Halifax Wind Speed Plot}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.7\textwidth,height=\textheight]{../visualization/windspeedreturnlvl_halifax.png}
+
+}
+
+\caption{\label{fig-windspeedreturnlvl_halifax}Halifax Return Level Plot
+- Covariate Case}
+
+\end{figure}%
+
+Table\textasciitilde{}\ref{tab:return-periods-covariate} below presents
+the return level estimates in greater detail, complementing the
+information shown in Figure~\ref{fig-windspeedreturnlvl_halifax}.
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccccc}
+\hline
+\textbf{Return Period (years)} & 2 & 5 & 10 & 20 & 50 & 100 \\
+\textbf{Storm Surge Level (m)} & 0.49 & 0.56 & 0.60 & 0.64 & 0.68 & 0.71 \\
+\hline
+\end{tabular}
+\caption{Halifax Storm surge levels (in meters) corresponding to various return periods - Covariate Case.}
+\label{tab:return-periods-covariate}
+\end{table}
+
+It is clear that the covariate analysis produced remarkably similar
+results to the initial analysis, with differences so minimal they are
+indistinguishable at the hundredth decimal place displayed in the
+Table\textasciitilde{}\ref{tab:return-periods} and
+Table\textasciitilde{}\ref{tab:return-periods-covariate}. For Halifax,
+differences between initial and covariate models are extremely small
+(0.0001-0.0003m). For Yarmouth, differences are slightly larger but
+still minor (0.0049-0.0116m). Both graphs show upper and lower
+confidence bounds (red dotted lines). The confidence interval widens as
+the return period increases, reflecting greater uncertainty in
+predicting more extreme events.
+
+The minimal difference between the initial and covariate models suggests
+that wind speed does not significantly enhance the prediction of storm
+surges beyond what is already captured by the initial EVA model with no
+covariate. This may indicate that wind speed is implicitly reflected in
+the storm surge data, that the relationship between wind speed and storm
+surge in these locations is not strong enought to improve predictions,
+or that other environmental factors play a more critical role in driving
+extreme storm surge events. More plausibly, the similarity in results
+may stem from a suspected incorrect implementation of the wind speed
+covariate in the model, as mentioned in an earlier section. Given this
+uncertainty, future work could explore short-term forecasting of storm
+surge levels using wind speed as a covariate through alternative
+methods---such as Long Short-Term Memory (LSTM) networks---which may
+offer smoother implementation and improved predictive performance.
 
 \section{6. Conclusion and Discussion}\label{conclusion-and-discussion}
 
@@ -2235,6 +2297,43 @@ Covariate Case}
 \end{tabular}
 \caption{Yarmouth Storm surge levels (in meters) corresponding to various return periods.}
 \label{tab:yarmouth-return-periods}
+\end{table}
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.7\textwidth,height=\textheight]{../visualization/windspeedplot_yarmouth.png}
+
+}
+
+\caption{\label{fig-windspeedplot_yarmouth}Yarmouth Wind Speed Plot}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.7\textwidth,height=\textheight]{../visualization/windspeedreturnlvl_yarmouth.png}
+
+}
+
+\caption{\label{fig-windspeedreturnlvl_yarmouth}Yarmouth Return Level
+Plot - Covariate Case}
+
+\end{figure}%
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccccc}
+\hline
+\textbf{Return Period (years)} & 2 & 5 & 10 & 20 & 50 & 100 \\
+\textbf{Storm Surge Level (m)} & 0.39 & 0.48 & 0.53 & 0.57 & 0.61 & 0.63 \\
+\hline
+\end{tabular}
+\caption{Halifax Storm surge levels (in meters) corresponding to various return periods - Covariate Case.}
+\label{tab:yarmouth-return-periods-covariate}
 \end{table}
 
 \section*{References}\label{references}

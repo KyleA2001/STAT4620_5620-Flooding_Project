@@ -41,7 +41,10 @@ annual.maximas.Halifax_ws <- full.max.data.Halifax %>%
 # do i have to scale/ standardized
 # 28 years
 plot(annual.maximas.Halifax_ss)
-plot(annual.maximas.Halifax_ws)
+
+png("visualization/windspeedplot_halifax.png", height=800, width=1200)
+plot(annual.maximas.Halifax_ws,xlab = "Years", ylab = "Wind Speed Annual Maxima", main = "Halifax Annual Maxima Wind Speed",cex = 1.5, cex.main = 1.5, cex.lab = 1.5)
+dev.off()
 
 # Fit these Halifax annual maximas using the GEV model with storm surge + wind speed
 
@@ -120,6 +123,7 @@ print(lower_bounds)
 print(return_levels)
 print(upper_bounds)
 
+png("visualization/windspeedreturnlvl_halifax.png", height=800, width=1200)
 # Plot the return levels with their confidence intervals
 plot(T_values, return_levels, type = "b", col = "blue", pch = 19,
      xlab = "Return Period (Years)", ylab = "Return Level",
@@ -130,7 +134,7 @@ lines(T_values, lower_bounds, type = "o", pch = 19, col = "red", lty = 2)
 lines(T_values, upper_bounds, type = "o", pch = 19, col = "red", lty = 2)
 legend("bottomright", legend = c("Return Levels", "95% Confidence Interval"),
        col = c("blue", "red"), lty = c(1, 2), pch = c(19, 19))
-
+dev.off()
 
 data.frame(Return_Period = T_values, Return_Level = return_levels)
 
