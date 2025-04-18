@@ -86,4 +86,6 @@ new_yarmouth_df_interpolation = na.omit(yarmouth_df_interpolation)
 new_df_linear_interpolation <- rbind(new_halifax_df_interpolation, new_yarmouth_df_interpolation)
 head(new_df_linear_interpolation)
 
+new_df_linear_interpolation=new_df_linear_interpolation[,-c(1)]
+
 write.csv(new_df_linear_interpolation, "data/linear_interpolation_df.csv")
