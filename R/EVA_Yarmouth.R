@@ -5,7 +5,7 @@ rm(list=ls())
 full.data = read.csv("Data/linear_interpolation_df.csv") #This part need to be switched to the full dataset created by Thu
 
 # Extract two columns by name
-full.max.data = full.data[, c("date", "location","avg_wind_speed")]
+full.max.data = full.data[, c("date", "location","avg_water_surge")]
 full.max.data.yarmouth = full.max.data[full.max.data$location == "Yarmouth", ]
 
 library(dplyr)
@@ -22,7 +22,7 @@ library(lubridate)
 annual.maximas.yarmouth <- full.max.data.yarmouth %>%
   mutate(year = year(date)) %>%
   group_by(year) %>%
-  summarise(max_wind = max(avg_wind_speed, na.rm = TRUE), .groups = "drop")
+  summarise(max_storm_surge = max(avg_water_surge, na.rm = TRUE), .groups = "drop")
 
 png("visualization/evaannual_yarmouth.png", height=800, width=1200)
 # 28 years
@@ -34,7 +34,7 @@ dev.off()
 library(ismev)
 library(evd)
 
-gev.surge = gev.fit(annual.maximas.yarmouth$max_wind, )
+gev.surge = gev.fit(annual.maximas.yarmouth$max_storm_surge, )
 
 png("visualization/evadiag_yarmouth.png", height=800, width=1200)
 par(mfrow=c(2, 2))

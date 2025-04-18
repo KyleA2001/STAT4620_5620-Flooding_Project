@@ -873,7 +873,7 @@ Using the obtained MLE estimates, return level plots corresponding to return per
 \textbf{Storm Surge Level (m)} & 0.49 & 0.56 & 0.61 & 0.64 & 0.68 & 0.71 \\
 \hline
 \end{tabular}
-\caption{Storm surge levels (in meters) corresponding to various return periods.}
+\caption{Halifax Storm surge levels (in meters) corresponding to various return periods.}
 \label{tab:return-periods}
 \end{table}
 ```
@@ -882,7 +882,6 @@ Looking at the overall pattern, both locations a higher storm surge return level
 
 The Figure X and X represent the case with wind as covariates. The covariate analysis produced remarkably similar results to the initial analysis. For Halifax, differences between initial and covariate models are extremely small (0.0001-0.0003m), for Yarmouth, differences are slightly larger but still minor (0.0049-0.0116m). Both graphs show upper and lower confidence bounds (red dotted lines). The confidence interval widens as the return period increases, reflecting greater uncertainty in predicting more extreme events. 
 The minimal difference between the initial and covariate models suggests that wind speed doesn't significantly improve storm surge prediction beyond what the initial EVA model already captures. This could mean that wind speed is already implicitly represented in your storm surge data; the relationship between wind speed and storm surge in these locations isn't strong enough to substantially improve predictions or, that other factors might be more important in determining extreme storm surge events
-
 
 # 6. Conclusion and Discussion
 
@@ -995,7 +994,7 @@ causality(yarmouth_var_model_rain, 'rain')$Granger
 
 ![Yarmouth Diagnostics plots from the GEV fit - Non Covariate Case](../visualization/evadiag_yarmouth.png){width=90% #fig-evadiag_halifax fig-pos="H"}
 
-![Halifax Return Level Plot - Non Covariate Case](../visualization/returnlev_halifax.png){width=70% #fig-returnlev_yarmouth fig-pos="H"}
+![Yarmouth Return Level Plot - Non Covariate Case](../visualization/returnlev_yarmouth.png){width=70% #fig-returnlev_yarmouth fig-pos="H"}
 
 ```{=latex}
 \begin{table}[ht]
@@ -1003,10 +1002,10 @@ causality(yarmouth_var_model_rain, 'rain')$Granger
 \begin{tabular}{lcccccc}
 \hline
 \textbf{Return Period (years)} & 2 & 5 & 10 & 20 & 50 & 100 \\
-\textbf{Storm Surge Level (m)} & 0.49 & 0.56 & 0.61 & 0.64 & 0.68 & 0.71 \\
+\textbf{Storm Surge Level (m)} & 0.39 & 0.49 & 0.54 & 0.58 & 0.61 & 0.63 \\
 \hline
 \end{tabular}
-\caption{Storm surge levels (in meters) corresponding to various return periods.}
+\caption{Yarmouth Storm surge levels (in meters) corresponding to various return periods.}
 \label{tab:yarmouth-return-periods}
 \end{table}
 ```
