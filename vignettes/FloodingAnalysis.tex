@@ -1863,14 +1863,21 @@ levels (approximately 0.08-0.10m higher) compared to Yarmouth across all
 return periods. Halifax's 100-year return level reaches about 0.71m
 while Yarmouth's reaches about 0.62m. See Figure~\ref{fig-eva_halifax},
 Figure~\ref{fig-evadiag_halifax}, Figure~\ref{fig-returnlev_halifax},
-Table\textasciitilde{}\ref{tab:yarmouth-return-periods} for references
-to the duplicated process for the Yarmouth location in the appendix.
+and Table\textasciitilde{}\ref{tab:yarmouth-return-periods} for
+references to the duplicated process for the Yarmouth location in the
+appendix.
 
 Now, with respect to the incorporation of the covariates, the storm
 surge return levels were computed as explained in Analysis section.
 Figure~\ref{fig-windspeedplot_halifax} displays a visual of the wind
 speed data, while Figure~\ref{fig-windspeedreturnlvl_halifax} is the
-visual plot of the resulting return levels.
+visual plot of the resulting return levels. See
+Figure~\ref{fig-windspeedplot_yarmouth},
+Figure~\ref{fig-windspeedreturnlvl_yarmouth},
+Figure~\ref{fig-returnlev_halifax}, and
+Table\textasciitilde{}\ref{tab:yarmouth-return-periods-covariate} for
+references to the duplicated process for the Yarmouth location in the
+appendix.
 
 \begin{figure}[H]
 
@@ -1935,94 +1942,93 @@ or that other environmental factors play a more critical role in driving
 extreme storm surge events. More plausibly, the similarity in results
 may stem from a suspected incorrect implementation of the wind speed
 covariate in the model, as mentioned in an earlier section. Given this
-uncertainty, future work could explore short-term forecasting of storm
-surge levels using wind speed as a covariate through alternative
-methods---such as Long Short-Term Memory (LSTM) networks---which may
-offer smoother implementation and improved predictive performance.
+uncertainty, future work could explore orecasting of storm surge levels
+using wind speed as a covariate through alternative methods---such as
+Long Short-Term Memory (LSTM) networks---which may offer smoother
+implementation and improved predictive performance.
 
 \section{6. Conclusion and Discussion}\label{conclusion-and-discussion}
 
 \subsection{6.1 Conclusion}\label{conclusion}
 
-Across multiple analytical techniques---including CCF, GAMMs, VAR
-models, and Granger causality tests---there is consistent evidence that,
-beyond the strong temporal dependence of storm surge itself, wind speed
-significantly contributes to variations in surge levels in both Halifax
-and Yarmouth. This effect is observed both immediately and with delay,
-confirming wind as a key driver. Temperature shows a generally negative
-relationship with surge, likely linked to seasonal patterns, while
-rainfall exerts a more limited, short-term effect. The alignment of
-findings across locations and modeling frameworks reinforces the
-robustness of these relationships and highlights the critical role of
-wind in understanding storm surge dynamics in Nova Scotia.
+In conclusion for question one, across multiple analytical
+techniques---including CCF, GAMMs, VAR models, and Granger causality
+tests---there is consistent evidence that, beyond the strong temporal
+dependence of storm surge itself, wind speed significantly contributes
+to variations in surge levels in both Halifax and Yarmouth. Temperature
+shows a generally negative relationship with surge, likely linked to
+seasonal patterns, while rainfall exerts a more limited, short-term
+effect.The alignment of findings across locations and modeling
+frameworks reinforces the robustness of these relationships and
+highlights the critical role of wind in understanding storm surge
+dynamics in Nova Scotia.
 
-(Need to modify for Q2) Different modeling approaches provide
-complementary insights. Vector autoregression captures multivariate
-influences, while generalized additive mixed models account for
-geographic differences but leave residual autocorrelation. Extreme value
-analysis indicates that Halifax experiences higher surge extremes than
-Yarmouth, though adding wind as a covariate yields little improvement,
-suggesting its effect is already embedded in surge data. This implies
-that simpler models may be sufficient for extreme event forecasting,
-while more complex approaches help understand broader surge dynamics.
+As part of the continued analysis addressing question two, the Extreme
+Value Analysis (EVA) suggests that Halifax generally experiences
+slightly higher storm surge extremes than Yarmouth. However,
+incorporating wind speed as a covariate resulted in minimal to no
+improvement in predictive performance. This indicates that either a more
+accurate implementation of the covariate within the EVA framework, or
+the use of an alternative modeling approach, may be more effective for
+forecasting extreme events---an idea that will be explored further in
+the following section.
 
 \subsection{6.2 Discussion}\label{discussion}
 
 Initially, this study aimed to analyze storm surge dynamics across
 multiple locations in Nova Scotia. However, due to limited data
 availability, only two locations were included. Missing values in both
-storm surge and covariate data posed a challenge. While linear
-interpolation was applied to impute missing covariate values, it does
-not account for uncertainty, which may introduce bias. To preserve data
-integrity, we only used covariate values corresponding to available
-surge data. Additionally, we assumed equal time spacing between
-observations, which may affect estimation accuracy.
+storm surge and covariate data posed a challenge. Accounting for the
+missingnesss in our storm surge variable would require other methods
+such as the Bayesian Hierarchial Model, which is beyond the scope of
+this project. While linear interpolation was applied to impute missing
+covariate values, it does not account for uncertainty, which may
+introduce bias. To preserve data integrity, we only used covariate
+values corresponding to available surge data. Additionally, we assumed
+equal time spacing between observations, which may affect estimation
+accuracy.
 
-Regarding the interaction between covariates and storm surge levels
-using the VAR model, one limitation is the assumption of a fixed lag
-structure over time. This may not hold over long periods, potentially
-affecting the model's validity. Additionally, the VAR model's assumption
-of stationarity may not fully capture the evolving nature of the
-underlying climatic processes. Moreover, although Granger causality
-tests indicate statistical dependence, they do not imply true causality
-and are limited to detecting linear relationships.
+For the first question, regarding the interaction between covariates and
+storm surge levels using the VAR model, one limitation is the assumption
+of a fixed lag structure over time. This may not hold over long periods,
+potentially affecting the model's validity. Additionally, the VAR
+model's assumption of stationarity may not fully capture the evolving
+nature of the underlying climatic processes. Moreover, although Granger
+causality tests indicate statistical dependence, they do not imply true
+causality and are limited to detecting linear relationships.
 
-(Need to modify for Q2) For the second question, we considered methods
-for predicting missing values to mitigate this issue. ? Covariates: For
-the second question, we aimed to predict storm surges, initially using
-only water surge data and then incorporating additional correlated
-covariates. We expected different results, potentially leading to more
-accurate predictions. However, adding covariates did not significantly
-improve the predictions, suggesting that storm surge is primarily
-influenced by storm surge itself. This raises several discussion points
-regarding the model: - A flawed implementation can yield unsatisfactory
-results. Even if we apply the formula as suggested in R, the literature
-indicates that incorporating covariates requires a more complex approach
-than initially assumed. - We selected only highly correlated covariates
-for the model. However, adding a strongly correlated variable may not
-provide additional useful information. The literature suggests that
-experimenting with less correlated variables could lead to more
-meaningful improvements.
+For the second question, the aim was to use question one results to
+improve storm surge return level estimates. Initially only storm surge
+data was used for the predictions with the intention to make comparison
+for when there is incorporation of the correlated covariate. Results
+were not as expected, which raised several discussion points regarding
+the analysis:
 
-(Need to modify for Q2) Non stationarity: A critical aspect of the model
-that needs to be highlighted is its non-stationarity in the context of
-EVA. Our response variable, storm surge, is influenced by sea level,
-which has been shown to be increasing over time (as documented in the
-literature). Consequently, storm surge is also expected to rise over
-time. Despite this, we assumed that non-stationarity does not affect our
-results, even though this assumption might not hold. Further
-investigation may be required to assess the impact of this assumption on
-our findings.
-
-For future analysis, we might consider others covariates such as
-atmospheric pressure, tide levels, storm track. It may also be valuable
-to examine whether the relationships between covariates and storm surge
-vary seasonally. Another option would be to investigate whether certain
-storm types make wind speed a more significant factor in storm surge. If
-current methods prove insufficient, Long Short-Term Memory (LSTM) models
-may serve as an alternative. Unlike the more complex EVA with
-covariates, LSTMs can capture long-term dependencies and may provide
-more effective predictions for extreme surge events.
+\begin{itemize}
+\item
+  The highest correlated and most statistically significant covariate
+  was selected for the model. However, adding this covariate did not
+  provide additional useful information. Perhaps experimenting with less
+  correlated variables could lead to more meaningful improvements.
+\item
+  Additionally, a flawed implementation could be the cause of this
+  unsatisfactory results. Even when applying the formula as suggested in
+  description of the used R function, the literature indicates that
+  incorporating covariates requires a more complex approach than
+  initially assumed. Either a more correct implementation can be
+  completed or a different method such as Long Short-Term Memory (LSTM)
+  models may serve as an alternative. Because LSTMs can capture
+  long-term dependencies and may provide more effective predictions for
+  extreme surge events.
+\item
+  A critical aspect of the model, which was briefly indicated
+  previously, is the existing non-stationarity as part of the nature of
+  the data. Our response variable, storm surge, is influenced by sea
+  level, which is known to be increasing over time. Consequently, storm
+  surge is also expected to rise over time. Despite this and for
+  simplicity, non-stationarity was not addressed as it is expected to be
+  a much more complicated procedure.
+\end{itemize}
 
 \section{Appendix}\label{appendix}
 
@@ -2332,7 +2338,7 @@ Plot - Covariate Case}
 \textbf{Storm Surge Level (m)} & 0.39 & 0.48 & 0.53 & 0.57 & 0.61 & 0.63 \\
 \hline
 \end{tabular}
-\caption{Halifax Storm surge levels (in meters) corresponding to various return periods - Covariate Case.}
+\caption{Yarmouth Storm surge levels (in meters) corresponding to various return periods - Covariate Case.}
 \label{tab:yarmouth-return-periods-covariate}
 \end{table}
 
