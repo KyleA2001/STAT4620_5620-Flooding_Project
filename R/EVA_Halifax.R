@@ -24,17 +24,21 @@ annual.maximas.hx <- full.max.data.halifax %>%
   group_by(year) %>%
   summarise(max_storm_surge = max(avg_water_surge, na.rm = TRUE), .groups = "drop")
 
+png("visualization/evaannual_halifax.png", height=800, width=1200)
 # 28 years
-plot(annual.maximas.hx, xlab = "Years", ylab = "Storm Surge Annual Maxima", main = "Halifax Annual Maxima Storm Surge (1961-2014)")
-
+plot(annual.maximas.hx, xlab = "Years", ylab = "Storm Surge Annual Maxima", main = "Halifax Annual Maxima Storm Surge (1961-2014)", cex = 1.5, cex.main = 1.5, cex.lab = 1.5)
+dev.off()
 
 # Fit these Halifax annual maximas using the GEV.
-#| fig.height = 9
 library(ismev)
 library(evd)
 
 gev.surge = gev.fit(annual.maximas.hx$max_storm_surge)
+
+png("visualization/evadiag_halifax.png", height=800, width=1200)
+par(mfrow=c(2, 2))
 gev.diag(gev.surge)
+dev.off()
 
 # Extract the GEV parameters from the fitted model
 mu = gev.surge$mle[1]    # Location parameter (mu)
@@ -73,13 +77,14 @@ lower.bounds
 return_levels
 upper.bounds
 
+png("visualization/returnlev_halifax.png", height=800, width=1200)
 # Plot the return levels for the specified return periods
 plot(T_values, return_levels, type = "b", col = "blue", pch = 19,
      xlab = "Return Period (Years)", ylab = "Return Level",
-     main = "Halifax Return Levels for Different Return Periods", ylim = c(0.45, 0.8))
-
+     main = "Halifax Return Levels for Different Return Periods", ylim = c(0.45, 0.8),cex = 1.5, cex.main = 1.5, cex.lab = 1.5)
 lines(T_values,lower.bounds, type = "o", pch = 19, col = "red",lty = 2)
 lines(T_values,upper.bounds, type = "o", pch = 19, col = "red",lty = 2)
+dev.off()
 
 # # Calculating the maximum storm surges for Halifax using less data which matches the full timeseries with other variables:
 # all.data = read.csv("Data/combination_df_v1.csv") #This part need to be switched to the full dataset created by Thu

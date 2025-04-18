@@ -577,8 +577,8 @@ max_wind_speed = data.frame(max_wind_speed = annual.maximas.Halifax_ws$max_wind_
 
 # Fitting the GEV model with a covariate.
 gev.surge_wind = gev.fit(xdat = annual.maximas.Halifax_ss$max_storm_surge,
-                          ydat = max_wind_speed,
-                          mul = 1)
+                         ydat = max_wind_speed, 
+                         mul = 1)
 gev.diag(gev.surge_wind)
 
 # Extract the parameters from the fitted model:
@@ -821,7 +821,66 @@ causality(halifax_var_model_rain, 'rain')$Granger
 
 ## 5.4 EVA
 
-Looking at the overall pattern, both locations show storm surge return levels increasing with longer return periods, following a logarithmic curve that flattens at higher return periods. This is typical in extreme value analysis with the difference between a 50-year and 100-year event is less dramatic than between a 2-year and 10-year event.  Comparing both location, Halifax consistently shows higher return levels (approximately 0.08-0.10m higher) compared to Yarmouth across all return periods. Halifax's 100-year return level reaches about 0.71m while Yarmouth's reaches about 0.62m. The Figure X and X represent the case with wind as covariates. The covariate analysis produced remarkably similar results to the initial analysis. For Halifax, differences between initial and covariate models are extremely small (0.0001-0.0003m), for Yarmouth, differences are slightly larger but still minor (0.0049-0.0116m). Both graphs show upper and lower confidence bounds (red dotted lines). The confidence interval widens as the return period increases, reflecting greater uncertainty in predicting more extreme events. 
+The extraction of annual maxima for each location enables the visualization of extreme values over time. As outlined in the Analysis section, these annual maxima are initially modeled using the Generalized Extreme Value (GEV) distribution without incorporating the wind speed covariate. Figures @fig-eva_halifax and @fig-evadiag_halifax display the annual maxima over time and the corresponding GEV diagnostic plots, respectively.
+
+![Halifax Annual Maximas Plotted against time](../visualization/evaannual_halifax.png){width=70% #fig-eva_halifax fig-pos="H"}
+
+![Halifax Diagnostics plots from the GEV fit - Non Covariate Case](../visualization/evadiag_halifax.png){width=90% #fig-evadiag_halifax fig-pos="H"}
+
+From these figures, two key observations can be made:
+
+- The annual maximas exhibit a subtle positive linear trend over time. This suggests the presence of non-stationarity inherent in the data. Although this non-stationarity likely contributes to some uncertainty in the model results, addressing it falls outside the scope of this project.
+
+- The GEV diagnostic plots do not indicate any significant deviations, suggesting that the GEV model provides an adequate fit to the data.
+
+The maximum likelihood estimates (MLEs) of the three GEV parameters obtained from this fit are summarized in the following table:
+
+```{=latex}
+\begin{table}[ht]
+\centering
+\begin{tabular}{l c}
+\hline
+\textbf{Parameter} & \textbf{MLE Estimate} \\
+\hline
+Location ($\hat\mu$) & 0.46 \\
+Scale ($\hat\sigma$) & 0.08 \\
+Shape ($\hat\xi$) & -0.18 \\
+\hline
+\end{tabular}
+\caption{Maximum Likelihood Estimates (MLEs) for the GEV parameters.}
+\label{tab:gev-mle}
+\end{table}
+```
+
+These parameters have some accompanying interpretations:
+
+- $\hat\mu = 0.46$ is the baseline strom surge level expected annually. 
+
+- $\hat\sigma = 0.08$ is the level of variability between the annual maximas. 
+
+- $\hat\xi = -0.08 < 0$ is an indication that there is a bounded upper tail which is a physical cap on how high these storm surge levels can get.  
+
+Using the obtained MLE estimates, return level plots corresponding to return periods of $2$, $5$, $10$, $20$, $50$, and $100$ years can be constructed. Figure @fig-returnlev_halifax presents the return level plot for storm surges in Halifax, including confidence intervals for each return level estimate.
+
+![Halifax Return Level Plot - Non Covariate Case](../visualization/returnlev_halifax.png){width=70% #fig-returnlev_halifax fig-pos="H"}
+
+```{=latex}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccccc}
+\hline
+\textbf{Return Period (years)} & 2 & 5 & 10 & 20 & 50 & 100 \\
+\textbf{Storm Surge Level (m)} & 0.49 & 0.56 & 0.61 & 0.64 & 0.68 & 0.71 \\
+\hline
+\end{tabular}
+\caption{Storm surge levels (in meters) corresponding to various return periods.}
+\label{tab:return-periods}
+\end{table}
+```
+
+Looking at the overall pattern, both locations a higher storm surge return level for the longer return periods, following a logarithmic curve that flattens at higher return periods. This is typical in extreme value analysis with the difference between a 50-year and 100-year event is less dramatic than between a 2-year and 10-year event. Comparing both location, Halifax consistently shows higher return levels (approximately 0.08-0.10m higher) compared to Yarmouth across all return periods. Halifax's 100-year return level reaches about 0.71m while Yarmouth's reaches about 0.62m. See @fig-eva_halifax, @fig-evadiag_halifax, @fig-returnlev_halifax, Table~\ref{tab:yarmouth-return-periods} for references to the duplicated process for the Yarmouth location in the appendix.
+
+The Figure X and X represent the case with wind as covariates. The covariate analysis produced remarkably similar results to the initial analysis. For Halifax, differences between initial and covariate models are extremely small (0.0001-0.0003m), for Yarmouth, differences are slightly larger but still minor (0.0049-0.0116m). Both graphs show upper and lower confidence bounds (red dotted lines). The confidence interval widens as the return period increases, reflecting greater uncertainty in predicting more extreme events. 
 The minimal difference between the initial and covariate models suggests that wind speed doesn't significantly improve storm surge prediction beyond what the initial EVA model already captures. This could mean that wind speed is already implicitly represented in your storm surge data; the relationship between wind speed and storm surge in these locations isn't strong enough to substantially improve predictions or, that other factors might be more important in determining extreme storm surge events
 
 
@@ -930,6 +989,26 @@ causality(yarmouth_var_model_temp, 'avg_temperature')$Granger
 print("Rain")
 yarmouth_var_model_rain <- VAR(yarmouth_var[, c("avg_water_surge", "rain")], p = 1, type = "none")
 causality(yarmouth_var_model_rain, 'rain')$Granger
+```
+
+![Yarmouth Annual Maximas Plotted against time](../visualization/evaannual_yarmouth.png){width=70% #fig-eva_halifax fig-pos="H"}
+
+![Yarmouth Diagnostics plots from the GEV fit - Non Covariate Case](../visualization/evadiag_yarmouth.png){width=90% #fig-evadiag_halifax fig-pos="H"}
+
+![Halifax Return Level Plot - Non Covariate Case](../visualization/returnlev_halifax.png){width=70% #fig-returnlev_yarmouth fig-pos="H"}
+
+```{=latex}
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccccc}
+\hline
+\textbf{Return Period (years)} & 2 & 5 & 10 & 20 & 50 & 100 \\
+\textbf{Storm Surge Level (m)} & 0.49 & 0.56 & 0.61 & 0.64 & 0.68 & 0.71 \\
+\hline
+\end{tabular}
+\caption{Storm surge levels (in meters) corresponding to various return periods.}
+\label{tab:yarmouth-return-periods}
+\end{table}
 ```
 
 # References

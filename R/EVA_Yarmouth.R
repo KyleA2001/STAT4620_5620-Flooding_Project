@@ -24,16 +24,22 @@ annual.maximas.yarmouth <- full.max.data.yarmouth %>%
   group_by(year) %>%
   summarise(max_wind = max(avg_wind_speed, na.rm = TRUE), .groups = "drop")
 
+png("visualization/evaannual_yarmouth.png", height=800, width=1200)
 # 28 years
 plot(annual.maximas.yarmouth, xlab = "years", ylab= "Storm surge annual maxima")
-title("Yarmouth annual maxima storm surge (1956-2024)")
+title("Yarmouth annual maxima storm surge (1956-2024)",cex = 1.5, cex.main = 1.5, cex.lab = 1.5)
+dev.off()
 
 # Fit these yarmouth annual maximas using the GEV.
 library(ismev)
 library(evd)
 
 gev.surge = gev.fit(annual.maximas.yarmouth$max_wind, )
+
+png("visualization/evadiag_yarmouth.png", height=800, width=1200)
+par(mfrow=c(2, 2))
 gev.diag(gev.surge)
+dev.off()
 
 # Extract the GEV parameters from the fitted model
 mu = gev.surge$mle[1]    # Location parameter (mu)
@@ -74,6 +80,7 @@ lower.bounds
 return_levels
 upper.bounds
 
+png("visualization/returnlev_yarmouth.png", height=800, width=1200)
 # Plot the return levels for the specified return periods
 plot(T_values, return_levels, type = "b", col = "blue", pch = 19,
      xlab = "Return Period (Years)", ylab = "Return Level",
@@ -81,6 +88,7 @@ plot(T_values, return_levels, type = "b", col = "blue", pch = 19,
 
 lines(T_values,lower.bounds, type = "o", pch = 19, col = "red",lty = 2)
 lines(T_values,upper.bounds, type = "o", pch = 19, col = "red",lty = 2)
+dev.off()
 
 ###############################################################################
 # Same analysis but with an other data set less complete

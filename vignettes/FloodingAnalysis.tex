@@ -43,28 +43,14 @@
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 % Make \paragraph and \subparagraph free-standing
-\makeatletter
 \ifx\paragraph\undefined\else
   \let\oldparagraph\paragraph
-  \renewcommand{\paragraph}{
-    \@ifstar
-      \xxxParagraphStar
-      \xxxParagraphNoStar
-  }
-  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
-  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+  \renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
 \fi
 \ifx\subparagraph\undefined\else
   \let\oldsubparagraph\subparagraph
-  \renewcommand{\subparagraph}{
-    \@ifstar
-      \xxxSubParagraphStar
-      \xxxSubParagraphNoStar
-  }
-  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
-  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+  \renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
 \fi
-\makeatother
 
 \usepackage{color}
 \usepackage{fancyvrb}
@@ -84,7 +70,7 @@
 \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
 \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
-\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
 \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
@@ -94,7 +80,7 @@
 \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
 \newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
 \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
-\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
 \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
 \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
@@ -216,7 +202,6 @@
 \@ifpackageloaded{caption}{}{\usepackage{caption}}
 \@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
 \makeatother
-
 \ifLuaTeX
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
@@ -234,7 +219,6 @@
   urlcolor={Blue},
   pdfcreator={LaTeX via pandoc}}
 
-
 \title{Climate Conditions and Flooding Disasters in Nova Scotia}
 \usepackage{etoolbox}
 \makeatletter
@@ -248,7 +232,6 @@
 
 \begin{document}
 \maketitle
-
 
 \begin{center}
   \vspace{2mm}
@@ -736,20 +719,16 @@ factors including storm surge, wind speed, temperature and rain in
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Storm surge}
-\NormalTok{hf\_acf\_surge }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }
-                   \AttributeTok{main=}\StringTok{"Halifax{-}ACF{-}Storm Surge"}\NormalTok{)}
+\NormalTok{hf\_acf\_surge }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }\AttributeTok{main =} \StringTok{"Halifax{-}ACF{-}Storm Surge"}\NormalTok{)}
 
 \CommentTok{\# Wind speed}
-\NormalTok{hf\_acf\_wind }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_wind\_speed, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }
-                  \AttributeTok{main=}\StringTok{"Halifax{-}ACF{-}Wind Speed"}\NormalTok{)}
+\NormalTok{hf\_acf\_wind }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_wind\_speed, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }\AttributeTok{main =} \StringTok{"Halifax{-}ACF{-}Wind Speed"}\NormalTok{)}
 
 \CommentTok{\# Temperature}
-\NormalTok{hf\_acf\_temp }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_temperature, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }
-                  \AttributeTok{main=}\StringTok{"Halifax{-}ACF{-}Temperature"}\NormalTok{)}
+\NormalTok{hf\_acf\_temp }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_temperature, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }\AttributeTok{main =} \StringTok{"Halifax{-}ACF{-}Temperature"}\NormalTok{)}
 
 \CommentTok{\# Rain}
-\NormalTok{hf\_acf\_rain }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{rain, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }
-                  \AttributeTok{main=}\StringTok{"Halifax{-}ACF{-}Rain"}\NormalTok{)}
+\NormalTok{hf\_acf\_rain }\OtherTok{=} \FunctionTok{acf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{rain, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }\AttributeTok{main =} \StringTok{"Halifax{-}ACF{-}Rain"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -759,16 +738,15 @@ climatic factors are given in the \texttt{R} code below.
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Storm surge and Wind speed}
-\NormalTok{hf\_ccf\_surge\_wind }\OtherTok{=} \FunctionTok{ccf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, halifax}\SpecialCharTok{$}\NormalTok{avg\_wind\_speed, }
-                        \AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }\AttributeTok{plot=}\NormalTok{F)}
+\NormalTok{hf\_ccf\_surge\_wind }\OtherTok{=} \FunctionTok{ccf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, halifax}\SpecialCharTok{$}\NormalTok{avg\_wind\_speed, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{,}
+    \AttributeTok{plot =}\NormalTok{ F)}
 
 \CommentTok{\# Storm surge and Temperature}
-\NormalTok{hf\_ccf\_surge\_temp }\OtherTok{=} \FunctionTok{ccf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, halifax}\SpecialCharTok{$}\NormalTok{avg\_temperature, }
-                        \AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }\AttributeTok{plot=}\NormalTok{F)}
+\NormalTok{hf\_ccf\_surge\_temp }\OtherTok{=} \FunctionTok{ccf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, halifax}\SpecialCharTok{$}\NormalTok{avg\_temperature, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{,}
+    \AttributeTok{plot =}\NormalTok{ F)}
 
-\CommentTok{\# Storm surge and Rain }
-\NormalTok{hf\_ccf\_surge\_rain }\OtherTok{=} \FunctionTok{ccf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, halifax}\SpecialCharTok{$}\NormalTok{rain, }
-                        \AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }\AttributeTok{plot=}\NormalTok{F)}
+\CommentTok{\# Storm surge and Rain}
+\NormalTok{hf\_ccf\_surge\_rain }\OtherTok{=} \FunctionTok{ccf}\NormalTok{(halifax}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, halifax}\SpecialCharTok{$}\NormalTok{rain, }\AttributeTok{lag.max =} \DecValTok{50}\NormalTok{, }\AttributeTok{plot =}\NormalTok{ F)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -824,10 +802,10 @@ as follows:
 \begin{Shaded}
 \begin{Highlighting}[]
 \CommentTok{\# Random Effect}
-\FunctionTok{acf}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{lme), }\AttributeTok{main=}\StringTok{"ACF of residuals of Random Effect part in GAMM"}\NormalTok{)}
+\FunctionTok{acf}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{lme), }\AttributeTok{main =} \StringTok{"ACF of residuals of Random Effect part in GAMM"}\NormalTok{)}
 
 \CommentTok{\# Smooth part}
-\FunctionTok{acf}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{gam), }\AttributeTok{main=}\StringTok{"ACF of residuals of Smooth part in GAMM"}\NormalTok{)}
+\FunctionTok{acf}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{gam), }\AttributeTok{main =} \StringTok{"ACF of residuals of Smooth part in GAMM"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -845,9 +823,8 @@ as follows:
 \NormalTok{residuals\_gamm\_location\_lme }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{lme)}
 \NormalTok{residuals\_pearson\_location\_lme }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{lme, }\AttributeTok{type =} \StringTok{"pearson"}\NormalTok{)}
 \CommentTok{\# Seem to scatter around 0}
-\FunctionTok{plot}\NormalTok{(}\FunctionTok{fitted}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{lme), residuals\_gamm\_location\_lme,}
-     \AttributeTok{xlab =} \StringTok{"Fitted Values"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{,}
-     \AttributeTok{main =} \StringTok{"Residuals vs Fitted"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{fitted}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{lme), residuals\_gamm\_location\_lme, }\AttributeTok{xlab =} \StringTok{"Fitted Values"}\NormalTok{,}
+    \AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{, }\AttributeTok{main =} \StringTok{"Residuals vs Fitted"}\NormalTok{)}
 \FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
 \CommentTok{\# QQ plot: not normal}
 \FunctionTok{qqnorm}\NormalTok{(residuals\_gamm\_location\_lme, }\AttributeTok{main =} \StringTok{"QQ Plot of Residuals"}\NormalTok{)}
@@ -857,9 +834,8 @@ as follows:
 \NormalTok{residuals\_gamm\_location\_gam }\OtherTok{\textless{}{-}} \FunctionTok{resid}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{gam)}
 \NormalTok{residuals\_pearson\_location\_gam }\OtherTok{\textless{}{-}} \FunctionTok{residuals}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{gam, }\AttributeTok{type =} \StringTok{"pearson"}\NormalTok{)}
 \CommentTok{\# Seem to scatter around 0}
-\FunctionTok{plot}\NormalTok{(}\FunctionTok{fitted}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{gam), residuals\_gamm\_location\_gam,}
-     \AttributeTok{xlab =} \StringTok{"Fitted Values"}\NormalTok{, }\AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{,}
-     \AttributeTok{main =} \StringTok{"Residuals vs Fitted"}\NormalTok{)}
+\FunctionTok{plot}\NormalTok{(}\FunctionTok{fitted}\NormalTok{(location\_gamm}\SpecialCharTok{$}\NormalTok{gam), residuals\_gamm\_location\_gam, }\AttributeTok{xlab =} \StringTok{"Fitted Values"}\NormalTok{,}
+    \AttributeTok{ylab =} \StringTok{"Residuals"}\NormalTok{, }\AttributeTok{main =} \StringTok{"Residuals vs Fitted"}\NormalTok{)}
 \FunctionTok{abline}\NormalTok{(}\AttributeTok{h =} \DecValTok{0}\NormalTok{, }\AttributeTok{col =} \StringTok{"red"}\NormalTok{)}
 \CommentTok{\# QQ plot: not normal}
 \FunctionTok{qqnorm}\NormalTok{(residuals\_gamm\_location\_gam, }\AttributeTok{main =} \StringTok{"QQ Plot of Residuals"}\NormalTok{)}
@@ -892,10 +868,8 @@ performed to check the stationarity of the time series data.
 \FunctionTok{library}\NormalTok{(tseries)}
 \FunctionTok{library}\NormalTok{(forecast)}
 
-\NormalTok{halifax\_var }\OtherTok{\textless{}{-}}\NormalTok{ new\_halifax\_df\_interpolation[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }
-                                                \StringTok{"avg\_temperature"}\NormalTok{, }
-                                                \StringTok{"avg\_wind\_speed"}\NormalTok{, }
-                                                \StringTok{"rain"}\NormalTok{)]}
+\NormalTok{halifax\_var }\OtherTok{\textless{}{-}}\NormalTok{ new\_halifax\_df\_interpolation[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"avg\_temperature"}\NormalTok{,}
+    \StringTok{"avg\_wind\_speed"}\NormalTok{, }\StringTok{"rain"}\NormalTok{)]}
 
 \CommentTok{\# ADF test for each time series}
 \NormalTok{adf\_test }\OtherTok{\textless{}{-}} \FunctionTok{apply}\NormalTok{(halifax\_var, }\DecValTok{2}\NormalTok{, adf.test)}
@@ -914,8 +888,7 @@ Then, the \texttt{VAR()} model can be applied as follows:
 \FunctionTok{AIC}\NormalTok{(halifax\_var\_model}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{avg\_water\_surge)}
 
 \CommentTok{\# Residual ACF plot}
-\FunctionTok{acf}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(halifax\_var\_model)[,}\DecValTok{1}\NormalTok{], }
-    \AttributeTok{main=}\StringTok{"VAR ACF Residuals Model 1 {-} Halifax"}\NormalTok{)}
+\FunctionTok{acf}\NormalTok{(}\FunctionTok{residuals}\NormalTok{(halifax\_var\_model)[, }\DecValTok{1}\NormalTok{], }\AttributeTok{main =} \StringTok{"VAR ACF Residuals Model 1 {-} Halifax"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -933,7 +906,7 @@ specifically written for this purpose.
 \NormalTok{rmse\_model }\OtherTok{=} \FunctionTok{sqrt}\NormalTok{(}\FunctionTok{mean}\NormalTok{(halifax\_var\_model}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{avg\_water\_surge}\SpecialCharTok{$}\NormalTok{residuals}\SpecialCharTok{\^{}}\DecValTok{2}\NormalTok{))}
 
 \CommentTok{\# Cross{-}validation RMSE}
-\NormalTok{cv\_res\_1 }\OtherTok{=} \FunctionTok{tsCV\_VAR}\NormalTok{(halifax\_var, }\AttributeTok{start=}\DecValTok{18000}\NormalTok{, }\AttributeTok{h=}\DecValTok{1}\NormalTok{, }\AttributeTok{p=}\DecValTok{7}\NormalTok{, }\AttributeTok{target\_var=}\StringTok{"avg\_water\_surge"}\NormalTok{)}
+\NormalTok{cv\_res\_1 }\OtherTok{=} \FunctionTok{tsCV\_VAR}\NormalTok{(halifax\_var, }\AttributeTok{start =} \DecValTok{18000}\NormalTok{, }\AttributeTok{h =} \DecValTok{1}\NormalTok{, }\AttributeTok{p =} \DecValTok{7}\NormalTok{, }\AttributeTok{target\_var =} \StringTok{"avg\_water\_surge"}\NormalTok{)}
 \NormalTok{cv\_res\_1}\SpecialCharTok{$}\NormalTok{rmse}
 \end{Highlighting}
 \end{Shaded}
@@ -956,8 +929,7 @@ reduced model is given by:
 \FunctionTok{AIC}\NormalTok{(halifax\_var\_model2}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{avg\_water\_surge)}
 
 \CommentTok{\# Residual ACF plot}
-\FunctionTok{acf}\NormalTok{(halifax\_var\_model2}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{avg\_water\_surge}\SpecialCharTok{$}\NormalTok{residuals, }
-    \AttributeTok{main=}\StringTok{"VAR ACF Residuals Model 2 {-} Halifax"}\NormalTok{)}
+\FunctionTok{acf}\NormalTok{(halifax\_var\_model2}\SpecialCharTok{$}\NormalTok{varresult}\SpecialCharTok{$}\NormalTok{avg\_water\_surge}\SpecialCharTok{$}\NormalTok{residuals, }\AttributeTok{main =} \StringTok{"VAR ACF Residuals Model 2 {-} Halifax"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -970,11 +942,10 @@ modeled by its own previous value alone, we fitted an AR(1) model:
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\NormalTok{halifax\_var\_model3 }\OtherTok{=} \FunctionTok{arima}\NormalTok{(halifax\_var}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, }\AttributeTok{order=}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{,}\DecValTok{0}\NormalTok{,}\DecValTok{0}\NormalTok{))}
+\NormalTok{halifax\_var\_model3 }\OtherTok{=} \FunctionTok{arima}\NormalTok{(halifax\_var}\SpecialCharTok{$}\NormalTok{avg\_water\_surge, }\AttributeTok{order =} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\DecValTok{0}\NormalTok{, }\DecValTok{0}\NormalTok{))}
 \FunctionTok{summary}\NormalTok{(halifax\_var\_model3)}
 
-\CommentTok{\# {-}{-}{-} Model Evaluation {-}{-}{-}}
-\CommentTok{\# Get fitted values}
+\CommentTok{\# {-}{-}{-} Model Evaluation {-}{-}{-} Get fitted values}
 \NormalTok{fitted\_values }\OtherTok{\textless{}{-}}\NormalTok{ halifax\_var}\SpecialCharTok{$}\NormalTok{avg\_water\_surge }\SpecialCharTok{{-}} \FunctionTok{residuals}\NormalTok{(halifax\_var\_model3)}
 
 \CommentTok{\# R{-}squared}
@@ -986,7 +957,7 @@ modeled by its own previous value alone, we fitted an AR(1) model:
 \FunctionTok{AIC}\NormalTok{(halifax\_var\_model3)}
 
 \CommentTok{\# {-}{-}{-} ACF of Residuals {-}{-}{-}}
-\FunctionTok{acf}\NormalTok{(}\FunctionTok{na.omit}\NormalTok{(halifax\_var\_model3}\SpecialCharTok{$}\NormalTok{resid), }\AttributeTok{main=}\StringTok{"VAR ACF Residuals Model 3 {-} Halifax"}\NormalTok{)}
+\FunctionTok{acf}\NormalTok{(}\FunctionTok{na.omit}\NormalTok{(halifax\_var\_model3}\SpecialCharTok{$}\NormalTok{resid), }\AttributeTok{main =} \StringTok{"VAR ACF Residuals Model 3 {-} Halifax"}\NormalTok{)}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1000,22 +971,22 @@ speed, temperature, and rainfall as potential predictors of storm surge.
 \begin{Highlighting}[]
 \CommentTok{\# Wind speed, temperature and rain at lag 1 Granger{-}cause storm surge?}
 \NormalTok{halifax\_var\_model }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var, }\AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
-\FunctionTok{causality}\NormalTok{(halifax\_var\_model, }\FunctionTok{c}\NormalTok{(}\StringTok{\textquotesingle{}avg\_wind\_speed\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}avg\_temperature\textquotesingle{}}\NormalTok{, }\StringTok{\textquotesingle{}rain\textquotesingle{}}\NormalTok{))}\SpecialCharTok{$}\NormalTok{Granger}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_wind\_speed"}\NormalTok{, }\StringTok{"avg\_temperature"}\NormalTok{, }\StringTok{"rain"}\NormalTok{))}\SpecialCharTok{$}\NormalTok{Granger}
 
 \CommentTok{\# Wind speed at lag 1 Granger{-}causes storm surge?}
-\NormalTok{halifax\_var\_model\_wind }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"avg\_wind\_speed"}\NormalTok{)], }
-                              \AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
-\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_wind, }\StringTok{\textquotesingle{}avg\_wind\_speed\textquotesingle{}}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Granger}
+\NormalTok{halifax\_var\_model\_wind }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"avg\_wind\_speed"}\NormalTok{)],}
+    \AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_wind, }\StringTok{"avg\_wind\_speed"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Granger}
 
 \CommentTok{\# Temperature at lag 1 Granger{-}causes storm surge?}
-\NormalTok{halifax\_var\_model\_temp }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"avg\_temperature"}\NormalTok{)], }
-                              \AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
-\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_temp, }\StringTok{\textquotesingle{}avg\_temperature\textquotesingle{}}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Granger}
+\NormalTok{halifax\_var\_model\_temp }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"avg\_temperature"}\NormalTok{)],}
+    \AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_temp, }\StringTok{"avg\_temperature"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Granger}
 
 \CommentTok{\# Rain at lag 1 Granger{-}causes storm surge?}
-\NormalTok{halifax\_var\_model\_rain }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"rain"}\NormalTok{)], }
-                              \AttributeTok{p =} \DecValTok{1}\NormalTok{, }\AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
-\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_rain, }\StringTok{\textquotesingle{}rain\textquotesingle{}}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Granger}
+\NormalTok{halifax\_var\_model\_rain }\OtherTok{\textless{}{-}} \FunctionTok{VAR}\NormalTok{(halifax\_var[, }\FunctionTok{c}\NormalTok{(}\StringTok{"avg\_water\_surge"}\NormalTok{, }\StringTok{"rain"}\NormalTok{)], }\AttributeTok{p =} \DecValTok{1}\NormalTok{,}
+    \AttributeTok{type =} \StringTok{"none"}\NormalTok{)}
+\FunctionTok{causality}\NormalTok{(halifax\_var\_model\_rain, }\StringTok{"rain"}\NormalTok{)}\SpecialCharTok{$}\NormalTok{Granger}
 \end{Highlighting}
 \end{Shaded}
 
@@ -1058,11 +1029,11 @@ confidence intervals.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Annual max storm surges extracted from the data. }
+\CommentTok{\# Annual max storm surges extracted from the data.}
 \NormalTok{annual.maximas.hx }\OtherTok{=}\NormalTok{ full.max.data.halifax }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(date)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max\_storm\_surge =} \FunctionTok{max}\NormalTok{(avg\_water\_surge, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{)}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(date)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max\_storm\_surge =} \FunctionTok{max}\NormalTok{(avg\_water\_surge, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{)}
 
 \CommentTok{\# Required libraries.}
 \FunctionTok{library}\NormalTok{(ismev)}
@@ -1073,40 +1044,41 @@ confidence intervals.
 \FunctionTok{gev.diag}\NormalTok{(gev.surge)}
 
 \CommentTok{\# Extract the GEV parameters from the fitted model}
-\NormalTok{mu }\OtherTok{=}\NormalTok{ gev.surge}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{1}\NormalTok{]    }\CommentTok{\# Location parameter (mu)}
-\NormalTok{sigma }\OtherTok{=}\NormalTok{ gev.surge}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{2}\NormalTok{] }\CommentTok{\# Scale parameter (sigma)}
-\NormalTok{xi }\OtherTok{=}\NormalTok{ gev.surge}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{3}\NormalTok{]    }\CommentTok{\# Shape parameter (xi)}
-\CommentTok{\#The variance covariance matrix. }
+\NormalTok{mu }\OtherTok{=}\NormalTok{ gev.surge}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{1}\NormalTok{]  }\CommentTok{\# Location parameter (mu)}
+\NormalTok{sigma }\OtherTok{=}\NormalTok{ gev.surge}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{2}\NormalTok{]  }\CommentTok{\# Scale parameter (sigma)}
+\NormalTok{xi }\OtherTok{=}\NormalTok{ gev.surge}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{3}\NormalTok{]  }\CommentTok{\# Shape parameter (xi)}
+\CommentTok{\# The variance covariance matrix.}
 \NormalTok{V }\OtherTok{=}\NormalTok{ gev.surge}\SpecialCharTok{$}\NormalTok{cov}
 
-\CommentTok{\# Define the return periods  representing years.}
+\CommentTok{\# Define the return periods representing years.}
 \NormalTok{T\_values }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{100}\NormalTok{)}
 \NormalTok{p }\OtherTok{=} \DecValTok{1}\SpecialCharTok{/}\NormalTok{T\_values}
-\CommentTok{\# yp will be used in the return levels confidence interval calculations. }
+\CommentTok{\# yp will be used in the return levels confidence interval calculations.}
 \NormalTok{yp }\OtherTok{=} \SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ p)}
 
 \CommentTok{\# Calculate return levels for each return period}
 \NormalTok{return\_levels }\OtherTok{=} \FunctionTok{sapply}\NormalTok{(T\_values, }\ControlFlowTok{function}\NormalTok{(T) \{}
-\CommentTok{\# The return levels are essentially the quantiles of the GEV at the MLE }
-\CommentTok{\# from the GEV fit with probabilities calculated for the different return periods.}
-\NormalTok{  return\_level }\OtherTok{=} \FunctionTok{qgev}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{T, }\AttributeTok{loc =}\NormalTok{ mu, }\AttributeTok{scale =}\NormalTok{ sigma ,}\AttributeTok{shape =}\NormalTok{ xi, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+    \CommentTok{\# The return levels are essentially the quantiles of the GEV at the MLE}
+    \CommentTok{\# from the GEV fit with probabilities calculated for the different return}
+    \CommentTok{\# periods.}
+\NormalTok{    return\_level }\OtherTok{=} \FunctionTok{qgev}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{T, }\AttributeTok{loc =}\NormalTok{ mu, }\AttributeTok{scale =}\NormalTok{ sigma, }\AttributeTok{shape =}\NormalTok{ xi, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
 \NormalTok{\})}
-\NormalTok{grad }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{,}\AttributeTok{nrow =} \FunctionTok{length}\NormalTok{(p), }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{)}
-\NormalTok{var\_return\_levels }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{,}\FunctionTok{length}\NormalTok{(p))}
+\NormalTok{grad }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, }\AttributeTok{nrow =} \FunctionTok{length}\NormalTok{(p), }\AttributeTok{ncol =} \DecValTok{3}\NormalTok{)}
+\NormalTok{var\_return\_levels }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{length}\NormalTok{(p))}
 \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(p)) \{}
-  \CommentTok{\# Compute Gradient Vector (∇zp) of Return Levels}
-\NormalTok{  grad[i,] }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)), }
-\NormalTok{               sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)) }\SpecialCharTok{{-}}\NormalTok{ sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi) }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(yp[i]))}
-  \CommentTok{\# Compute Variance of Return Levels}
-\NormalTok{  var\_return\_levels[i] }\OtherTok{=} \FunctionTok{t}\NormalTok{(grad[i,]) }\SpecialCharTok{\%*\%}\NormalTok{ V }\SpecialCharTok{\%*\%}\NormalTok{ grad[i,]}
+    \CommentTok{\# Compute Gradient Vector (∇zp) of Return Levels}
+\NormalTok{    grad[i, ] }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, }\SpecialCharTok{{-}}\NormalTok{xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)), sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)) }\SpecialCharTok{{-}}
+\NormalTok{        sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi) }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(yp[i]))}
+    \CommentTok{\# Compute Variance of Return Levels}
+\NormalTok{    var\_return\_levels[i] }\OtherTok{=} \FunctionTok{t}\NormalTok{(grad[i, ]) }\SpecialCharTok{\%*\%}\NormalTok{ V }\SpecialCharTok{\%*\%}\NormalTok{ grad[i, ]}
 \NormalTok{\}}
 
 \CommentTok{\# Compute Standard Errors of Return Levels}
-\NormalTok{se\_return\_levels }\OtherTok{=}\FunctionTok{sqrt}\NormalTok{(var\_return\_levels)}
+\NormalTok{se\_return\_levels }\OtherTok{=} \FunctionTok{sqrt}\NormalTok{(var\_return\_levels)}
 
 \CommentTok{\# 95\% Confidence Interval}
 \NormalTok{alpha }\OtherTok{=} \FloatTok{0.05}
-\NormalTok{z\_value }\OtherTok{=} \FunctionTok{qnorm}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha }\SpecialCharTok{/} \DecValTok{2}\NormalTok{)}
+\NormalTok{z\_value }\OtherTok{=} \FunctionTok{qnorm}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
 \NormalTok{lower.bounds }\OtherTok{=}\NormalTok{ return\_levels }\SpecialCharTok{{-}}\NormalTok{ z\_value }\SpecialCharTok{*}\NormalTok{ se\_return\_levels}
 \NormalTok{upper.bounds }\OtherTok{=}\NormalTok{ return\_levels }\SpecialCharTok{+}\NormalTok{ z\_value }\SpecialCharTok{*}\NormalTok{ se\_return\_levels}
 \end{Highlighting}
@@ -1120,11 +1092,11 @@ using the Halifax dataset.
 
 \begin{Shaded}
 \begin{Highlighting}[]
-\CommentTok{\# Annual max wind speed extracted from the data. }
+\CommentTok{\# Annual max wind speed extracted from the data.}
 \NormalTok{annual.maximas.Halifax\_ws }\OtherTok{\textless{}{-}}\NormalTok{ full.max.data.Halifax }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(date)) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
-  \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max\_wind\_speed =} \FunctionTok{max}\NormalTok{(avg\_wind\_speed, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{)}
+    \FunctionTok{mutate}\NormalTok{(}\AttributeTok{year =} \FunctionTok{year}\NormalTok{(date)) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{group\_by}\NormalTok{(year) }\SpecialCharTok{\%\textgreater{}\%}
+    \FunctionTok{summarise}\NormalTok{(}\AttributeTok{max\_wind\_speed =} \FunctionTok{max}\NormalTok{(avg\_wind\_speed, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{.groups =} \StringTok{"drop"}\NormalTok{)}
 
 \CommentTok{\# Load required libraries}
 \FunctionTok{library}\NormalTok{(ismev)}
@@ -1134,17 +1106,16 @@ using the Halifax dataset.
 \NormalTok{max\_wind\_speed }\OtherTok{=} \FunctionTok{data.frame}\NormalTok{(}\AttributeTok{max\_wind\_speed =}\NormalTok{ annual.maximas.Halifax\_ws}\SpecialCharTok{$}\NormalTok{max\_wind\_speed)}
 
 \CommentTok{\# Fitting the GEV model with a covariate.}
-\NormalTok{gev.surge\_wind }\OtherTok{=} \FunctionTok{gev.fit}\NormalTok{(}\AttributeTok{xdat =}\NormalTok{ annual.maximas.Halifax\_ss}\SpecialCharTok{$}\NormalTok{max\_storm\_surge,}
-                          \AttributeTok{ydat =}\NormalTok{ max\_wind\_speed,}
-                          \AttributeTok{mul =} \DecValTok{1}\NormalTok{)}
+\NormalTok{gev.surge\_wind }\OtherTok{=} \FunctionTok{gev.fit}\NormalTok{(}\AttributeTok{xdat =}\NormalTok{ annual.maximas.Halifax\_ss}\SpecialCharTok{$}\NormalTok{max\_storm\_surge, }\AttributeTok{ydat =}\NormalTok{ max\_wind\_speed,}
+    \AttributeTok{mul =} \DecValTok{1}\NormalTok{)}
 \FunctionTok{gev.diag}\NormalTok{(gev.surge\_wind)}
 
 \CommentTok{\# Extract the parameters from the fitted model:}
-\NormalTok{mu\_intercept }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{1}\NormalTok{]      }\CommentTok{\# Intercept for mu}
-\NormalTok{mu\_slope     }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{2}\NormalTok{]      }\CommentTok{\# Effect of wind speed on mu}
-\NormalTok{sigma        }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{3}\NormalTok{]      }\CommentTok{\# Scale parameter (must be \textgreater{} 0)}
-\NormalTok{xi           }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{4}\NormalTok{]      }\CommentTok{\# Shape parameter}
-\NormalTok{V            }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{cov         }\CommentTok{\# Covariance matrix for parameters}
+\NormalTok{mu\_intercept }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{1}\NormalTok{]  }\CommentTok{\# Intercept for mu}
+\NormalTok{mu\_slope }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{2}\NormalTok{]  }\CommentTok{\# Effect of wind speed on mu}
+\NormalTok{sigma }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{3}\NormalTok{]  }\CommentTok{\# Scale parameter (must be \textgreater{} 0)}
+\NormalTok{xi }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{mle[}\DecValTok{4}\NormalTok{]  }\CommentTok{\# Shape parameter}
+\NormalTok{V }\OtherTok{=}\NormalTok{ gev.surge\_wind}\SpecialCharTok{$}\NormalTok{cov  }\CommentTok{\# Covariance matrix for parameters}
 
 \CommentTok{\# Choose a reference value for the covariate (e.g., mean wind speed)}
 \NormalTok{mean\_wind }\OtherTok{=} \FunctionTok{mean}\NormalTok{(annual.maximas.Halifax\_ws}\SpecialCharTok{$}\NormalTok{max\_wind\_speed, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{)}
@@ -1154,27 +1125,26 @@ using the Halifax dataset.
 
 \CommentTok{\# Define the return periods (in years)}
 \NormalTok{T\_values }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{2}\NormalTok{, }\DecValTok{5}\NormalTok{, }\DecValTok{10}\NormalTok{, }\DecValTok{20}\NormalTok{, }\DecValTok{50}\NormalTok{, }\DecValTok{100}\NormalTok{)}
-\NormalTok{p }\OtherTok{=} \DecValTok{1} \SpecialCharTok{/}\NormalTok{ T\_values}
+\NormalTok{p }\OtherTok{=} \DecValTok{1}\SpecialCharTok{/}\NormalTok{T\_values}
 \NormalTok{yp }\OtherTok{=} \SpecialCharTok{{-}}\FunctionTok{log}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ p)}
 
 \CommentTok{\# Calculate return levels for each return period using the qgev function.}
 \NormalTok{return\_levels }\OtherTok{=} \FunctionTok{sapply}\NormalTok{(T\_values, }\ControlFlowTok{function}\NormalTok{(T) \{}
-  \FunctionTok{qgev}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{T, }\AttributeTok{loc =}\NormalTok{ mu, }\AttributeTok{scale =}\NormalTok{ sigma, }\AttributeTok{shape =}\NormalTok{ xi, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
+    \FunctionTok{qgev}\NormalTok{(}\DecValTok{1}\SpecialCharTok{/}\NormalTok{T, }\AttributeTok{loc =}\NormalTok{ mu, }\AttributeTok{scale =}\NormalTok{ sigma, }\AttributeTok{shape =}\NormalTok{ xi, }\AttributeTok{lower.tail =} \ConstantTok{FALSE}\NormalTok{)}
 \NormalTok{\})}
 
-\CommentTok{\# Calculate the variance of the return levels via the delta method.}
-\CommentTok{\# Since we now have 4 parameters, we define a gradient vector of length 4.}
+\CommentTok{\# Calculate the variance of the return levels via the delta method.  Since we}
+\CommentTok{\# now have 4 parameters, we define a gradient vector of length 4.}
 \NormalTok{grad }\OtherTok{=} \FunctionTok{matrix}\NormalTok{(}\DecValTok{0}\NormalTok{, }\AttributeTok{nrow =} \FunctionTok{length}\NormalTok{(p), }\AttributeTok{ncol =} \DecValTok{4}\NormalTok{)}
 \NormalTok{var\_return\_levels }\OtherTok{=} \FunctionTok{rep}\NormalTok{(}\DecValTok{0}\NormalTok{, }\FunctionTok{length}\NormalTok{(p))}
 
 \ControlFlowTok{for}\NormalTok{ (i }\ControlFlowTok{in} \DecValTok{1}\SpecialCharTok{:}\FunctionTok{length}\NormalTok{(p)) \{}
-\CommentTok{\# Here, we assume the derivative with respect to mu\_slope is equal to the }
-\CommentTok{\# reference covariate value (mean\_wind).}
-\NormalTok{  grad[i, ] }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, mean\_wind,}
-                 \SpecialCharTok{{-}}\NormalTok{xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)),}
-\NormalTok{                 sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)) }\SpecialCharTok{{-}}\NormalTok{ sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi) }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(yp[i]))}
-  \CommentTok{\# Compute variance using the delta method}
-\NormalTok{  var\_return\_levels[i] }\OtherTok{=} \FunctionTok{t}\NormalTok{(grad[i, ]) }\SpecialCharTok{\%*\%}\NormalTok{ V }\SpecialCharTok{\%*\%}\NormalTok{ grad[i, ]}
+    \CommentTok{\# Here, we assume the derivative with respect to mu\_slope is equal to the}
+    \CommentTok{\# reference covariate value (mean\_wind).}
+\NormalTok{    grad[i, ] }\OtherTok{=} \FunctionTok{c}\NormalTok{(}\DecValTok{1}\NormalTok{, mean\_wind, }\SpecialCharTok{{-}}\NormalTok{xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)), sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{2}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ (}\DecValTok{1} \SpecialCharTok{{-}}
+\NormalTok{        yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi)) }\SpecialCharTok{{-}}\NormalTok{ sigma }\SpecialCharTok{*}\NormalTok{ xi}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\DecValTok{1}\NormalTok{) }\SpecialCharTok{*}\NormalTok{ yp[i]}\SpecialCharTok{\^{}}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{xi) }\SpecialCharTok{*} \FunctionTok{log}\NormalTok{(yp[i]))}
+    \CommentTok{\# Compute variance using the delta method}
+\NormalTok{    var\_return\_levels[i] }\OtherTok{=} \FunctionTok{t}\NormalTok{(grad[i, ]) }\SpecialCharTok{\%*\%}\NormalTok{ V }\SpecialCharTok{\%*\%}\NormalTok{ grad[i, ]}
 \NormalTok{\}}
 
 \CommentTok{\# Compute Standard Errors for the return levels}
@@ -1182,7 +1152,7 @@ using the Halifax dataset.
 
 \CommentTok{\# 95\% Confidence Intervals for return levels}
 \NormalTok{alpha }\OtherTok{=} \FloatTok{0.05}
-\NormalTok{z\_value }\OtherTok{=} \FunctionTok{qnorm}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha }\SpecialCharTok{/} \DecValTok{2}\NormalTok{)}
+\NormalTok{z\_value }\OtherTok{=} \FunctionTok{qnorm}\NormalTok{(}\DecValTok{1} \SpecialCharTok{{-}}\NormalTok{ alpha}\SpecialCharTok{/}\DecValTok{2}\NormalTok{)}
 \NormalTok{lower\_bounds }\OtherTok{=}\NormalTok{ return\_levels }\SpecialCharTok{{-}}\NormalTok{ z\_value }\SpecialCharTok{*}\NormalTok{ se\_return\_levels}
 \NormalTok{upper\_bounds }\OtherTok{=}\NormalTok{ return\_levels }\SpecialCharTok{+}\NormalTok{ z\_value }\SpecialCharTok{*}\NormalTok{ se\_return\_levels}
 \end{Highlighting}
@@ -1767,30 +1737,146 @@ F-Test = 89.911, df1 = 1, df2 = 37132, p-value < 2.2e-16
 
 \subsection{5.4 EVA}\label{eva}
 
-Looking at the overall pattern, both locations show storm surge return
-levels increasing with longer return periods, following a logarithmic
+The extraction of annual maxima for each location enables the
+visualization of extreme values over time. As outlined in the Analysis
+section, these annual maxima are initially modeled using the Generalized
+Extreme Value (GEV) distribution without incorporating the wind speed
+covariate. Figures Figure~\ref{fig-eva_halifax} and
+Figure~\ref{fig-evadiag_halifax} display the annual maxima over time and
+the corresponding GEV diagnostic plots, respectively.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.7\textwidth,height=\textheight]{../visualization/evaannual_halifax.png}
+
+}
+
+\caption{\label{fig-eva_halifax}Halifax Annual Maximas Plotted against
+time}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.9\textwidth,height=\textheight]{../visualization/evadiag_halifax.png}
+
+}
+
+\caption{\label{fig-evadiag_halifax}Halifax Diagnostics plots from the
+GEV fit - Non Covariate Case}
+
+\end{figure}%
+
+From these figures, two key observations can be made:
+
+\begin{itemize}
+\item
+  The annual maximas exhibit a subtle positive linear trend over time.
+  This suggests the presence of non-stationarity inherent in the data.
+  Although this non-stationarity likely contributes to some uncertainty
+  in the model results, addressing it falls outside the scope of this
+  project.
+\item
+  The GEV diagnostic plots do not indicate any significant deviations,
+  suggesting that the GEV model provides an adequate fit to the data.
+\end{itemize}
+
+The maximum likelihood estimates (MLEs) of the three GEV parameters
+obtained from this fit are summarized in the following table:
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{l c}
+\hline
+\textbf{Parameter} & \textbf{MLE Estimate} \\
+\hline
+Location ($\hat\mu$) & 0.46 \\
+Scale ($\hat\sigma$) & 0.08 \\
+Shape ($\hat\xi$) & -0.18 \\
+\hline
+\end{tabular}
+\caption{Maximum Likelihood Estimates (MLEs) for the GEV parameters.}
+\label{tab:gev-mle}
+\end{table}
+
+These parameters have some accompanying interpretations:
+
+\begin{itemize}
+\item
+  \(\hat\mu = 0.46\) is the baseline strom surge level expected
+  annually.
+\item
+  \(\hat\sigma = 0.08\) is the level of variability between the annual
+  maximas.
+\item
+  \(\hat\xi = -0.08 < 0\) is an indication that there is a bounded upper
+  tail which is a physical cap on how high these storm surge levels can
+  get.
+\end{itemize}
+
+Using the obtained MLE estimates, return level plots corresponding to
+return periods of \(2\), \(5\), \(10\), \(20\), \(50\), and \(100\)
+years can be constructed. Figure Figure~\ref{fig-returnlev_halifax}
+presents the return level plot for storm surges in Halifax, including
+confidence intervals for each return level estimate.
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.7\textwidth,height=\textheight]{../visualization/returnlev_halifax.png}
+
+}
+
+\caption{\label{fig-returnlev_halifax}Halifax Return Level Plot - Non
+Covariate Case}
+
+\end{figure}%
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccccc}
+\hline
+\textbf{Return Period (years)} & 2 & 5 & 10 & 20 & 50 & 100 \\
+\textbf{Storm Surge Level (m)} & 0.49 & 0.56 & 0.61 & 0.64 & 0.68 & 0.71 \\
+\hline
+\end{tabular}
+\caption{Storm surge levels (in meters) corresponding to various return periods.}
+\label{tab:return-periods}
+\end{table}
+
+Looking at the overall pattern, both locations a higher storm surge
+return level for the longer return periods, following a logarithmic
 curve that flattens at higher return periods. This is typical in extreme
 value analysis with the difference between a 50-year and 100-year event
 is less dramatic than between a 2-year and 10-year event. Comparing both
 location, Halifax consistently shows higher return levels (approximately
 0.08-0.10m higher) compared to Yarmouth across all return periods.
 Halifax's 100-year return level reaches about 0.71m while Yarmouth's
-reaches about 0.62m. The Figure X and X represent the case with wind as
-covariates. The covariate analysis produced remarkably similar results
-to the initial analysis. For Halifax, differences between initial and
-covariate models are extremely small (0.0001-0.0003m), for Yarmouth,
-differences are slightly larger but still minor (0.0049-0.0116m). Both
-graphs show upper and lower confidence bounds (red dotted lines). The
-confidence interval widens as the return period increases, reflecting
-greater uncertainty in predicting more extreme events. The minimal
-difference between the initial and covariate models suggests that wind
-speed doesn't significantly improve storm surge prediction beyond what
-the initial EVA model already captures. This could mean that wind speed
-is already implicitly represented in your storm surge data; the
-relationship between wind speed and storm surge in these locations isn't
-strong enough to substantially improve predictions or, that other
-factors might be more important in determining extreme storm surge
-events
+reaches about 0.62m. See Figure~\ref{fig-eva_halifax},
+Figure~\ref{fig-evadiag_halifax}, Figure~\ref{fig-returnlev_halifax},
+Table\textasciitilde{}\ref{tab:yarmouth-return-periods} for references
+to the duplicated process for the Yarmouth location in the appendix.
+
+The Figure X and X represent the case with wind as covariates. The
+covariate analysis produced remarkably similar results to the initial
+analysis. For Halifax, differences between initial and covariate models
+are extremely small (0.0001-0.0003m), for Yarmouth, differences are
+slightly larger but still minor (0.0049-0.0116m). Both graphs show upper
+and lower confidence bounds (red dotted lines). The confidence interval
+widens as the return period increases, reflecting greater uncertainty in
+predicting more extreme events. The minimal difference between the
+initial and covariate models suggests that wind speed doesn't
+significantly improve storm surge prediction beyond what the initial EVA
+model already captures. This could mean that wind speed is already
+implicitly represented in your storm surge data; the relationship
+between wind speed and storm surge in these locations isn't strong
+enough to substantially improve predictions or, that other factors might
+be more important in determining extreme storm surge events
 
 \section{6. Conclusion and Discussion}\label{conclusion-and-discussion}
 
@@ -2100,6 +2186,57 @@ data:  VAR object yarmouth_var_model_rain
 F-Test = 20.206, df1 = 1, df2 = 39158, p-value = 6.972e-06
 \end{verbatim}
 
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.7\textwidth,height=\textheight]{../visualization/evaannual_halifax.png}
+
+}
+
+\caption{\label{fig-eva_halifax}Yarmouth Annual Maximas Plotted against
+time}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.9\textwidth,height=\textheight]{../visualization/evadiag_halifax.png}
+
+}
+
+\caption{\label{fig-evadiag_halifax}Yarmouth Diagnostics plots from the
+GEV fit - Non Covariate Case}
+
+\end{figure}%
+
+\begin{figure}[H]
+
+\centering{
+
+\includegraphics[width=0.7\textwidth,height=\textheight]{../visualization/returnlev_halifax.png}
+
+}
+
+\caption{\label{fig-returnlev_halifax}Halifax Return Level Plot - Non
+Covariate Case}
+
+\end{figure}%
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lcccccc}
+\hline
+\textbf{Return Period (years)} & 2 & 5 & 10 & 20 & 50 & 100 \\
+\textbf{Storm Surge Level (m)} & 0.49 & 0.56 & 0.61 & 0.64 & 0.68 & 0.71 \\
+\hline
+\end{tabular}
+\caption{Storm surge levels (in meters) corresponding to various return periods.}
+\label{tab:yarmouth-return-periods}
+\end{table}
+
 \section*{References}\label{references}
 \addcontentsline{toc}{section}{References}
 
@@ -2175,7 +2312,6 @@ weatherstats.ca. 2024. {``Weather Statistics for Canadian Locations.''}
 \url{https://www.weatherstats.ca}.
 
 \end{CSLReferences}
-
 
 
 
